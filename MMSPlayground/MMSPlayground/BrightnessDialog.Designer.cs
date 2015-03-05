@@ -79,7 +79,7 @@
             -2147483648});
             this.numericUpDown.Name = "numericUpDown";
             this.numericUpDown.Size = new System.Drawing.Size(185, 20);
-            this.numericUpDown.TabIndex = 7;
+            this.numericUpDown.TabIndex = 0;
             this.numericUpDown.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numericUpDown_KeyUp);
             // 
             // BrightnessDialog
