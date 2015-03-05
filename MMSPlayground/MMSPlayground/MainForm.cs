@@ -8,53 +8,193 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using MMSPlayground.Presenters;
+using MMSPlayground.Views;
 
 namespace MMSPlayground
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMainView
     {
-        private ChannelForm m_channelsView = null;
+        private MainPresenter m_presenter = null;
 
-        public MainForm()
+        private int m_topMargin = 5;
+        private int m_leftMargin = 5;
+        private int m_rightMargin = 5;
+        private int m_bottomMargin = 5;
+
+        private float m_cachedAspectRatio = 1.0f;
+
+        private ToolStripMenuItem m_activeResizeItem = null;
+        private IResizeStrategy m_resizeMode = new PreserveAspectResize();
+
+        public MainForm(MainPresenter presenter)
         {
             InitializeComponent();
+
+            useWin32CoreToolStripMenuItem.Checked = true;
+            m_activeResizeItem = preserveAspectToolStripMenuItem;
+            m_activeResizeItem.Checked = true;
+
+            m_topMargin += mainMenuStrip.Size.Height;
+            m_bottomMargin += statusStrip.Size.Height;
+            
+            m_presenter = presenter;
+            m_presenter.SetMainView(this);
+
+            brightnessToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestBrightness);
+            contrastToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestContrast);
+            undoToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestUndo);
+            redoToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestRedo);
         }
 
-        private void mainPictureBox_DoubleClick(object sender, EventArgs e)
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            ApplyResize();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Title = "Open Image";
-            dlg.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF";
+            dlg.Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Bitmap bitmap = new Bitmap(dlg.FileName);
-                SetImage(bitmap);
+                Text = dlg.SafeFileName;
+                EnableMenuItems();
+
+                m_presenter.SetBitmapFileName(dlg.FileName);
             }
             dlg.Dispose();
         }
 
-        private void SetImage(Bitmap bitmap)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.RequestSaveBitmap();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void displayChannelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            displayChannelsToolStripMenuItem.Checked = !displayChannelsToolStripMenuItem.Checked;
+            m_presenter.ShowChannelsView(displayChannelsToolStripMenuItem.Checked);
+        }
+
+        private void brightnessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO : Add brightness form
+        }
+
+        private void contrastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO : Add contrast form
+        }
+
+        private void useWin32CoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            useWin32CoreToolStripMenuItem.Checked = !useWin32CoreToolStripMenuItem.Checked;
+            m_presenter.UseWin32Core(useWin32CoreToolStripMenuItem.Checked);
+        }
+
+        private void resizeToOriginalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.RequestResize();
+        }
+
+        private void preserveAspectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_activeResizeItem != preserveAspectToolStripMenuItem)
+                SetResizeMode(preserveAspectToolStripMenuItem, new PreserveAspectResize());
+        }
+
+        private void stretchToFitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_activeResizeItem != stretchToFitToolStripMenuItem)
+                SetResizeMode(stretchToFitToolStripMenuItem, new StretchResize());
+        }
+
+        public void DisplayImage(Bitmap bitmap)
         {
             mainPictureBox.Image = bitmap;
 
-            if (m_channelsView == null)
-                m_channelsView = new ChannelForm();
-
-            m_channelsView.SetImage(bitmap);
-            m_channelsView.Show();
-
-            ResizeComponents(bitmap.Width, bitmap.Height);
+            imgToolStripStatusLabel.Text = Text;
+            dimToolStripStatusLabel.Text = bitmap.Width + " x " + bitmap.Height + " px";
+            bppToolStripStatusLabel.Text = Image.GetPixelFormatSize(bitmap.PixelFormat).ToString();
+            
+            m_cachedAspectRatio = (float)bitmap.Size.Width / (float)bitmap.Size.Height;
+            
+            ResizeImage(bitmap.Size);
         }
 
-        private void ResizeComponents(int width, int height)
+        public void ResizeImage(Size imgSize)
         {
-            mainPictureBox.Size = new Size(width, height);
-            mainPictureBox.Parent.ClientSize = new Size(width + 10, height + 10);
+            mainPictureBox.Size = new Size(imgSize.Width, imgSize.Height);
+            mainPictureBox.Parent.ClientSize = new Size(m_leftMargin + imgSize.Width + m_rightMargin,
+                m_topMargin + imgSize.Height + m_bottomMargin);
 
-            Point picLocation = new Point();
-            picLocation.X = (mainPictureBox.Parent.ClientSize.Width - mainPictureBox.Size.Width) / 2;
-            picLocation.Y = (mainPictureBox.Parent.ClientSize.Height - mainPictureBox.Size.Height) / 2;
-            mainPictureBox.Location = picLocation;
+            mainPictureBox.Location = new Point(m_leftMargin, m_topMargin);
+        }
+
+        public void SaveImage(Bitmap bitmap)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save Image";
+            dlg.Filter = "Windows Bitmap(*.bmp)|*.bmp|JPG Image(*.jpg)|*.jpg|Portable Network Graphics (*.png)|*.png";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                m_presenter.SaveBitmap(dlg.FileName);
+            }
+            dlg.Dispose();
+        }
+
+        public void DisplayErrorMessage(string message, string title)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+        }
+
+        public void SetChannelsViewStatus(bool status)
+        {
+            displayChannelsToolStripMenuItem.Checked = status;
+        }
+
+        public void InvalidateView()
+        {
+            mainPictureBox.Invalidate();
+        }
+
+        public void SetUndoEnabled(bool enabled)
+        {
+            undoToolStripMenuItem.Enabled = enabled;
+            redoToolStripMenuItem.Enabled = enabled;
+        }
+
+        private void SetResizeMode(ToolStripMenuItem clickedItem, IResizeStrategy resizeMode)
+        {
+            m_resizeMode = resizeMode;
+            m_activeResizeItem.Checked = false;
+            m_activeResizeItem = clickedItem;
+            m_activeResizeItem.Checked = true;
+
+            ApplyResize();
+        }
+
+        private void ApplyResize()
+        {
+            m_resizeMode.Resize(mainPictureBox, m_cachedAspectRatio, m_leftMargin, m_topMargin, m_rightMargin, m_bottomMargin);
+        }
+
+        private void EnableMenuItems()
+        {
+            saveToolStripMenuItem.Enabled = true;
+
+            displayChannelsToolStripMenuItem.Enabled = true;
+            brightnessToolStripMenuItem.Enabled = true;
+            contrastToolStripMenuItem.Enabled = true;
+
+            resizeToolStripMenuItem.Enabled = true;
         }
     }
 }

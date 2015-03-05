@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using MMSPlayground.Presenters;
+using MMSPlayground.Model;
+
 namespace MMSPlayground
 {
     static class Program
@@ -16,7 +19,11 @@ namespace MMSPlayground
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            ImageModel model = new ImageModel();
+            MainPresenter presenter = new MainPresenter(model);
+            
+            Application.Run(new MainForm(presenter));
         }
     }
 }

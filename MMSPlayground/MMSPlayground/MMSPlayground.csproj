@@ -47,22 +47,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChannelForm.cs">
+    <Compile Include="BrightnessDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChannelForm.Designer.cs">
-      <DependentUpon>ChannelForm.cs</DependentUpon>
+    <Compile Include="BrightnessDialog.Designer.cs">
+      <DependentUpon>BrightnessDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChannelsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChannelsForm.Designer.cs">
+      <DependentUpon>ChannelsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\BrightnessFilter.cs" />
+    <Compile Include="Filters\ContrastFilter.cs" />
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="ContrastDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContrastDialog.Designer.cs">
+      <DependentUpon>ContrastDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BitmapChangedEventArgs.cs" />
+    <Compile Include="Model\ImageModel.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\ImageUtils.cs" />
+    <Compile Include="Presenters\ChannelsPresenter.cs" />
+    <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ChannelForm.resx">
-      <DependentUpon>ChannelForm.cs</DependentUpon>
+    <Compile Include="Views\IChannelsView.cs" />
+    <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Views\IResizeStrategy.cs" />
+    <Compile Include="Views\PreserveAspectResize.cs" />
+    <Compile Include="Views\StretchResize.cs" />
+    <EmbeddedResource Include="BrightnessDialog.resx">
+      <DependentUpon>BrightnessDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChannelsForm.resx">
+      <DependentUpon>ChannelsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContrastDialog.resx">
+      <DependentUpon>ContrastDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -90,6 +121,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

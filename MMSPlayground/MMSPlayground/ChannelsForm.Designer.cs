@@ -1,6 +1,6 @@
 ﻿namespace MMSPlayground
 {
-    partial class ChannelForm
+    partial class ChannelsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -74,7 +74,7 @@
             this.bluePictureBox.TabIndex = 3;
             this.bluePictureBox.TabStop = false;
             // 
-            // ChannelForm
+            // ChannelsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -83,8 +83,9 @@
             this.Controls.Add(this.greenPictureBox);
             this.Controls.Add(this.redPictureBox);
             this.Controls.Add(this.fullPictureBox);
-            this.Name = "ChannelForm";
-            this.Text = "ChannelForm";
+            this.Name = "ChannelsForm";
+            this.Text = "Channels View";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChannelsForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.fullPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.redPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.greenPictureBox)).EndInit();
