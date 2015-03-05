@@ -73,5 +73,12 @@ namespace MMSPlayground.Filters
 
             m_model.SetBitmap(m_prevBitmap);
         }
+
+        public IFilter Clone()
+        {
+            ContrastFilter clone = new ContrastFilter(m_model, m_coeff);
+
+            return clone;
+        }
     }
 }

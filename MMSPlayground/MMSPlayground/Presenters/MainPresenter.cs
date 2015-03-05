@@ -93,7 +93,7 @@ namespace MMSPlayground.Presenters
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ExecuteCommand(new BrightnessFilter(m_model, dialog.GetBrightnessBias()));
+                ApplyFilter(new BrightnessFilter(m_model, dialog.GetBrightnessBias()));
             }
 
             dialog.Dispose();
@@ -105,7 +105,7 @@ namespace MMSPlayground.Presenters
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ExecuteCommand(new ContrastFilter(m_model, dialog.GetContrastCoeff()));
+                ApplyFilter(new ContrastFilter(m_model, dialog.GetContrastCoeff()));
             }
 
             dialog.Dispose();
@@ -127,15 +127,12 @@ namespace MMSPlayground.Presenters
         {
             if (m_filterHistory.Count > 0)
             {
-                IFilter filter = m_filterHistory.Peek();
-                filter.Apply();
-
-                if (m_filterHistory.Count == 0)
-                    m_mainView.SetUndoEnabled(false);
+                IFilter redoFilter = m_filterHistory.Peek().Clone();
+                ApplyFilter(redoFilter);
             }
         }
 
-        private void ExecuteCommand(IFilter filter)
+        private void ApplyFilter(IFilter filter)
         {
             filter.Apply();
 

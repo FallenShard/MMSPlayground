@@ -9,5 +9,6 @@ namespace MMSPlayground.Filters
     {
         void Apply();
         void Undo();
+        IFilter Clone();
     }
 }

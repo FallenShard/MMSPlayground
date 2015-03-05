@@ -67,5 +67,12 @@ namespace MMSPlayground.Filters
 
             m_model.SetBitmap(m_prevBitmap);
         }
+
+        public IFilter Clone()
+        {
+            BrightnessFilter clone = new BrightnessFilter(m_model, m_bias);
+
+            return clone;
+        }
     }
 }
