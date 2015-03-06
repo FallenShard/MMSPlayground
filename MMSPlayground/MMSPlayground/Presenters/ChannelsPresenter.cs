@@ -20,7 +20,7 @@ namespace MMSPlayground.Presenters
         {
             m_model = model;
 
-            m_model.BitmapChange += new ImageModel.BitmapChangedHandler(this.BitmapChanged);
+            m_model.BitmapChanged += new ImageModel.BitmapChangedEventHandler(this.BitmapChanged);
 
             m_mainPresenter = mainPresenter;
         }
