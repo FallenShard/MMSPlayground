@@ -44,5 +44,10 @@ namespace MMSPlayground.Presenters
         {
             m_mainPresenter.SetChannelsViewStatus(visible);
         }
+
+        public void ReceiveResizeMode(IResizeStrategy resizeMode)
+        {
+            m_channelsView.SetResizeMode(resizeMode);
+        }
     }
 }

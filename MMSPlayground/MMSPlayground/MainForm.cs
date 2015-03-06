@@ -183,6 +183,8 @@ namespace MMSPlayground
             m_activeResizeItem = clickedItem;
             m_activeResizeItem.Checked = true;
 
+            m_presenter.ReceiveResizeMode(m_resizeMode);
+
             ApplyResize();
         }
 
