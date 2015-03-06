@@ -10,5 +10,6 @@ namespace MMSPlayground.Views
     {
         void DisplayImages(Bitmap bitmap, Bitmap[] channels);
         void SetVisible(bool visible);
+        void SetResizeMode(IResizeStrategy resizeMode);
     }
 }

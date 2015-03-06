@@ -17,27 +17,21 @@ namespace MMSPlayground
     {
         private ChannelsPresenter m_presenter;
 
+        private int m_leftMargin = 5;
+        private int m_topMargin = 5;
+        private int m_rightMargin = 5;
+        private int m_bottomMargin = 5;
+        private int m_middleMargin = 5;
+        private float m_cachedAspectRatio = 1.0f;
+
+        private IResizeStrategy m_resizeMode = new PreserveAspectResize();
+
         public ChannelsForm(ChannelsPresenter presenter)
         {
             InitializeComponent();
 
             m_presenter = presenter;
             m_presenter.SetChannelsView(this);
-        }
-
-        private void ResizeComponents(int width, int height)
-        {
-            fullPictureBox.Size  = new Size(width / 2, height / 2);
-            redPictureBox.Size   = new Size(width / 2, height / 2);
-            greenPictureBox.Size = new Size(width / 2, height / 2);
-            bluePictureBox.Size  = new Size(width / 2, height / 2);
-
-            this.ClientSize = new Size(width + 15, height + 15);
-
-            fullPictureBox.Location  = new Point(5, 5);
-            redPictureBox.Location   = new Point(10 + width / 2, 5);
-            greenPictureBox.Location = new Point(5, 10 + height / 2);
-            bluePictureBox.Location  = new Point(10 + width / 2, 10 + height / 2);
         }
 
         public void DisplayImages(Bitmap bitmap, Bitmap[] channels)
@@ -47,7 +41,10 @@ namespace MMSPlayground
             greenPictureBox.Image = channels[1];
             bluePictureBox.Image = channels[2];
 
-            ResizeComponents(bitmap.Width, bitmap.Height);
+            m_cachedAspectRatio = (float)bitmap.Width / (float)bitmap.Height;
+            //ResizeComponents(bitmap.Width, bitmap.Height);
+
+            ApplyResize();
         }
 
         public void SetVisible(bool visible)
@@ -56,6 +53,13 @@ namespace MMSPlayground
                 Show();
             else
                 Hide();
+        }
+
+        public void SetResizeMode(IResizeStrategy resizeMode)
+        {
+            m_resizeMode = resizeMode;
+
+            ApplyResize();
         }
 
         private void ChannelsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -67,6 +71,32 @@ namespace MMSPlayground
                 Hide();
                 m_presenter.SetChannelsViewStatus(false);
             }
+        }
+
+        private void ApplyResize()
+        {
+            Console.WriteLine("Resizing Channels!");
+            m_resizeMode.Resize(imagePanel, m_cachedAspectRatio, m_leftMargin, m_topMargin, m_rightMargin, m_bottomMargin);
+
+            int adjWidth = (imagePanel.Size.Width - m_middleMargin) / 2;
+            int adjHeight = (imagePanel.Size.Height - m_middleMargin) / 2;
+
+            Size picBoxSize = new Size(adjWidth, adjHeight);
+
+            fullPictureBox.Size = picBoxSize;
+            redPictureBox.Size = picBoxSize;
+            greenPictureBox.Size = picBoxSize;
+            bluePictureBox.Size = picBoxSize;
+
+            fullPictureBox.Location = new Point(0, 0);
+            redPictureBox.Location = new Point(adjWidth + m_middleMargin, 0);
+            greenPictureBox.Location = new Point(0, adjHeight + m_middleMargin);
+            bluePictureBox.Location = new Point(adjWidth + m_middleMargin, adjHeight + m_middleMargin);
+        }
+
+        private void ChannelsForm_Resize(object sender, EventArgs e)
+        {
+            ApplyResize();
         }
     }
 }
