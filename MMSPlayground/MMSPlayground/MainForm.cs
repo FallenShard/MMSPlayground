@@ -131,7 +131,7 @@ namespace MMSPlayground
             
             m_cachedAspectRatio = (float)bitmap.Size.Width / (float)bitmap.Size.Height;
             
-            ResizeImage(bitmap.Size);
+            ApplyResize();
         }
 
         public void ResizeImage(Size imgSize)
