@@ -9,9 +9,9 @@ namespace MMSPlayground.Views
 {
     public class PreserveAspectResize : IResizeStrategy
     {
-        public void Resize(PictureBox pictureBox, float aspectRatio, int leftMargin, int topMargin, int rightMargin, int bottomMargin)
+        public void Resize(Control control, float aspectRatio, int leftMargin, int topMargin, int rightMargin, int bottomMargin)
         {
-            Size parentSize = pictureBox.Parent.ClientSize;
+            Size parentSize = control.Parent.ClientSize;
 
             int adjHeight = parentSize.Height - topMargin - bottomMargin;
             int adjWidth = parentSize.Width - leftMargin - rightMargin;
@@ -44,8 +44,8 @@ namespace MMSPlayground.Views
                 y += (adjHeight - newHeight) / 2;
             }
 
-            pictureBox.Size = new Size(newWidth, newHeight);
-            pictureBox.Location = new Point(x, y);
+            control.Size = new Size(newWidth, newHeight);
+            control.Location = new Point(x, y);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace MMSPlayground.Views
 {
     public interface IResizeStrategy
     {
-        void Resize(PictureBox pictureBox, float aspectRatio, int leftMargin, int topMargin, int rightMargin, int bottomMargin);
+        void Resize(Control control, float aspectRatio, int leftMargin, int topMargin, int rightMargin, int bottomMargin);
     }
 }
