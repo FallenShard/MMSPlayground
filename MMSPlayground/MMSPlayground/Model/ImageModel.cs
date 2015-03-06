@@ -9,8 +9,8 @@ namespace MMSPlayground.Model
 {
     public class ImageModel
     {
-        public event BitmapChangedHandler BitmapChange;
-        public delegate void BitmapChangedHandler(ImageModel model, BitmapChangedEventArgs args);
+        public event BitmapChangedEventHandler BitmapChanged;
+        public delegate void BitmapChangedEventHandler(ImageModel model, BitmapChangedEventArgs args);
 
         public static readonly Size ErrorSize = new Size(-1, -1);
 
@@ -31,7 +31,7 @@ namespace MMSPlayground.Model
 
             ComputeChannels();
 
-            BitmapChange(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps));
+            BitmapChanged(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps));
         }
 
         public Size GetSize()

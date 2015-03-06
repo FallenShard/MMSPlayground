@@ -8,14 +8,14 @@ namespace MMSPlayground.Model
 {
     public class BitmapChangedEventArgs : EventArgs
     {
-        private Bitmap bitmapPriv;
-        private Bitmap[] channelsPriv;
+        private Bitmap bitmap;
+        private Bitmap[] channels;
 
         public Bitmap Bitmap
         {
             get
             {
-                return this.bitmapPriv;
+                return this.bitmap;
             }
         }
 
@@ -23,15 +23,15 @@ namespace MMSPlayground.Model
         {
             get
             {
-                return this.channelsPriv;
+                return this.channels;
             }
         }
 
 
         public BitmapChangedEventArgs(Bitmap bitmap, Bitmap[] channels)
         {
-            bitmapPriv = bitmap;
-            channelsPriv = channels;
+            this.bitmap = bitmap;
+            this.channels = channels;
         }
     }
 }
