@@ -30,33 +30,54 @@ namespace MMSPlayground.Filters
             Bitmap bitmap = m_model.GetBitmap();
             m_prevBitmap = (Bitmap)bitmap.Clone();
 
-            Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-            BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
-
-            int bpp = ImageUtils.GetComponentsPerPixel(bmd);
-
-            unsafe
+            if (m_model.GetWin32UsageMode())
             {
-                for (int y = 0; y < bmd.Height; y++)
+                Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+
+                int bpp = ImageUtils.GetComponentsPerPixel(bmd);
+
+                unsafe
                 {
-                    byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
-
-                    for (int x = 0; x < bmd.Width; x++)
+                    for (int y = 0; y < bmd.Height; y++)
                     {
-                        int index = x * bpp;
+                        byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
 
-                        int newR = ImageUtils.Clamp(dataRow[index + 2] + m_bias, 0, 255);
-                        int newG = ImageUtils.Clamp(dataRow[index + 1] + m_bias, 0, 255);
-                        int newB = ImageUtils.Clamp(dataRow[index + 0] + m_bias, 0, 255);
+                        for (int x = 0; x < bmd.Width; x++)
+                        {
+                            int index = x * bpp;
 
-                        dataRow[index + 2] = (byte)newR;
-                        dataRow[index + 1] = (byte)newG;
-                        dataRow[index + 0] = (byte)newB;
+                            int newR = ImageUtils.Clamp(dataRow[index + 2] + m_bias, 0, 255);
+                            int newG = ImageUtils.Clamp(dataRow[index + 1] + m_bias, 0, 255);
+                            int newB = ImageUtils.Clamp(dataRow[index + 0] + m_bias, 0, 255);
+
+                            dataRow[index + 2] = (byte)newR;
+                            dataRow[index + 1] = (byte)newG;
+                            dataRow[index + 0] = (byte)newB;
+                        }
+                    }
+                }
+
+                bitmap.UnlockBits(bmd);
+            }
+            else
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        Color currPixel = bitmap.GetPixel(x, y);
+
+                        int newR = ImageUtils.Clamp(currPixel.R + m_bias, 0, 255);
+                        int newG = ImageUtils.Clamp(currPixel.G + m_bias, 0, 255);
+                        int newB = ImageUtils.Clamp(currPixel.B + m_bias, 0, 255);
+
+                        Color newPixel = Color.FromArgb(newR, newG, newB);
+
+                        bitmap.SetPixel(x, y, newPixel);
                     }
                 }
             }
-
-            bitmap.UnlockBits(bmd);
 
             m_model.SetBitmap(bitmap);
         }

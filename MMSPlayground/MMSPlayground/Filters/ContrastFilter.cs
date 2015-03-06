@@ -30,29 +30,50 @@ namespace MMSPlayground.Filters
             Bitmap bitmap = m_model.GetBitmap();
             m_prevBitmap = (Bitmap)bitmap.Clone();
 
-            Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-            BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
-
-            int bpp = ImageUtils.GetComponentsPerPixel(bmd);
-
-            unsafe
+            if (m_model.GetWin32UsageMode())
             {
-                for (int y = 0; y < bmd.Height; y++)
+                Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+
+                int bpp = ImageUtils.GetComponentsPerPixel(bmd);
+
+                unsafe
                 {
-                    byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
-
-                    for (int x = 0; x < bmd.Width; x++)
+                    for (int y = 0; y < bmd.Height; y++)
                     {
-                        int index = x * bpp;
+                        byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
 
-                        dataRow[index + 2] = Transform(dataRow[index + 2]);
-                        dataRow[index + 1] = Transform(dataRow[index + 1]);
-                        dataRow[index + 0] = Transform(dataRow[index + 0]);
+                        for (int x = 0; x < bmd.Width; x++)
+                        {
+                            int index = x * bpp;
+
+                            dataRow[index + 2] = Transform(dataRow[index + 2]);
+                            dataRow[index + 1] = Transform(dataRow[index + 1]);
+                            dataRow[index + 0] = Transform(dataRow[index + 0]);
+                        }
+                    }
+                }
+
+                bitmap.UnlockBits(bmd);
+            }
+            else
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        Color currPixel = bitmap.GetPixel(x, y);
+
+                        int newR = Transform(currPixel.R);
+                        int newG = Transform(currPixel.G);
+                        int newB = Transform(currPixel.B);
+
+                        Color newPixel = Color.FromArgb(newR, newG, newB);
+
+                        bitmap.SetPixel(x, y, newPixel);
                     }
                 }
             }
-
-            bitmap.UnlockBits(bmd);
 
             m_model.SetBitmap(bitmap);
         }
