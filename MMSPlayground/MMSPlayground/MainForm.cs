@@ -199,7 +199,7 @@ namespace MMSPlayground
             brightnessToolStripMenuItem.Enabled = true;
             contrastToolStripMenuItem.Enabled = true;
 
-            resizeToolStripMenuItem.Enabled = true;
+            resizeToOriginalToolStripMenuItem.Enabled = true;
         }
     }
 }
