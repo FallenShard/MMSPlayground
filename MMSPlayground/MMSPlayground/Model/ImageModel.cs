@@ -52,6 +52,11 @@ namespace MMSPlayground.Model
             return m_channelBmps;
         }
 
+        public bool GetWin32UsageMode()
+        {
+            return m_win32Mode;
+        }
+
         public void ComputeChannels()
         {
             m_channelBmps[0] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
