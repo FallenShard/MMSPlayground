@@ -87,7 +87,7 @@ namespace MMSPlayground.Presenters
             m_model.UseWin32Core(enable);
         }
 
-        public void RequestBrightness(object sender, EventArgs args)
+        public void RequestBrightness()
         {
             BrightnessDialog dialog = new BrightnessDialog();
 
@@ -99,7 +99,7 @@ namespace MMSPlayground.Presenters
             dialog.Dispose();
         }
 
-        public void RequestContrast(object sender, EventArgs args)
+        public void RequestContrast()
         {
             ContrastDialog dialog = new ContrastDialog();
 
@@ -111,7 +111,7 @@ namespace MMSPlayground.Presenters
             dialog.Dispose();
         }
 
-        public void RequestUndo(object sender, EventArgs args)
+        public void RequestUndo()
         {
             if (m_filterHistory.Count > 0)
             {
@@ -123,7 +123,7 @@ namespace MMSPlayground.Presenters
             }
         }
 
-        public void RequestRedo(object sender, EventArgs args)
+        public void RequestRedo()
         {
             if (m_filterHistory.Count > 0)
             {

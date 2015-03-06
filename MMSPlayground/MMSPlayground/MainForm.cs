@@ -40,11 +40,6 @@ namespace MMSPlayground
             
             m_presenter = presenter;
             m_presenter.SetMainView(this);
-
-            brightnessToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestBrightness);
-            contrastToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestContrast);
-            undoToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestUndo);
-            redoToolStripMenuItem.Click += new System.EventHandler(m_presenter.RequestRedo);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -85,12 +80,22 @@ namespace MMSPlayground
 
         private void brightnessToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO : Add brightness form
+            m_presenter.RequestBrightness();
         }
 
         private void contrastToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO : Add contrast form
+            m_presenter.RequestContrast();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.RequestUndo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.RequestRedo();
         }
 
         private void useWin32CoreToolStripMenuItem_Click(object sender, EventArgs e)
