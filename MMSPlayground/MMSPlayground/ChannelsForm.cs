@@ -42,7 +42,6 @@ namespace MMSPlayground
             bluePictureBox.Image = channels[2];
 
             m_cachedAspectRatio = (float)bitmap.Width / (float)bitmap.Height;
-            //ResizeComponents(bitmap.Width, bitmap.Height);
 
             ApplyResize();
         }
@@ -75,7 +74,6 @@ namespace MMSPlayground
 
         private void ApplyResize()
         {
-            Console.WriteLine("Resizing Channels!");
             m_resizeMode.Resize(imagePanel, m_cachedAspectRatio, m_leftMargin, m_topMargin, m_rightMargin, m_bottomMargin);
 
             int adjWidth = (imagePanel.Size.Width - m_middleMargin) / 2;
