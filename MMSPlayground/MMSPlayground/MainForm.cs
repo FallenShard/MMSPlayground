@@ -80,12 +80,26 @@ namespace MMSPlayground
 
         private void brightnessToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_presenter.RequestBrightness();
+            BrightnessDialog dialog = new BrightnessDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_presenter.RequestBrightness(dialog.GetBrightnessBias());
+            }
+
+            dialog.Dispose();
         }
 
         private void contrastToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            m_presenter.RequestContrast();
+            ContrastDialog dialog = new ContrastDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_presenter.RequestContrast(dialog.GetContrastCoeff());
+            }
+
+            dialog.Dispose();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

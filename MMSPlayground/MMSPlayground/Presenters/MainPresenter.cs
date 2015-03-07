@@ -87,28 +87,14 @@ namespace MMSPlayground.Presenters
             m_model.UseWin32Core(enable);
         }
 
-        public void RequestBrightness()
+        public void RequestBrightness(int bias)
         {
-            BrightnessDialog dialog = new BrightnessDialog();
-
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ApplyFilter(new BrightnessFilter(m_model, dialog.GetBrightnessBias()));
-            }
-
-            dialog.Dispose();
+            ApplyFilter(new BrightnessFilter(m_model, bias));
         }
 
-        public void RequestContrast()
+        public void RequestContrast(double coefficient)
         {
-            ContrastDialog dialog = new ContrastDialog();
-
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ApplyFilter(new ContrastFilter(m_model, dialog.GetContrastCoeff()));
-            }
-
-            dialog.Dispose();
+            ApplyFilter(new ContrastFilter(m_model, coefficient));
         }
 
         public void RequestUndo()
