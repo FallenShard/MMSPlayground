@@ -24,7 +24,7 @@ namespace MMSPlayground.Presenters
         public MainPresenter(ImageModel model)
         {
             m_model = model;
-            m_model.BitmapChanged += new ImageModel.BitmapChangedEventHandler(this.BitmapChanged);
+            m_model.BitmapChanged += new ImageModel.BitmapChangedEventHandler(this.OnBitmapChanged);
 
             m_channelsPresenter = new ChannelsPresenter(model, this);
             IChannelsView channelsView = new ChannelsForm(m_channelsPresenter);
@@ -41,7 +41,7 @@ namespace MMSPlayground.Presenters
             m_model.SetBitmap(bitmap);
         }
 
-        private void BitmapChanged(ImageModel model, BitmapChangedEventArgs args)
+        private void OnBitmapChanged(ImageModel model, BitmapChangedEventArgs args)
         {
             m_mainView.DisplayImage(args.Bitmap);
         }
