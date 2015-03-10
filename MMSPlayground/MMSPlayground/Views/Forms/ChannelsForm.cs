@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MMSPlayground.Presenters;
 using MMSPlayground.Views;
 
-namespace MMSPlayground
+namespace MMSPlayground.Views.Forms
 {
     public partial class ChannelsForm : Form, IChannelsView
     {

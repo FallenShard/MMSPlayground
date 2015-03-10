@@ -1,4 +1,4 @@
-﻿namespace MMSPlayground
+﻿namespace MMSPlayground.Views.Forms
 {
     partial class MainForm
     {

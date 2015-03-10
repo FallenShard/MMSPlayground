@@ -47,33 +47,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BrightnessDialog.cs">
+    <Compile Include="Views\Forms\BrightnessDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BrightnessDialog.Designer.cs">
+    <Compile Include="Views\Forms\BrightnessDialog.Designer.cs">
       <DependentUpon>BrightnessDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChannelsForm.cs">
+    <Compile Include="Views\Forms\ChannelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChannelsForm.Designer.cs">
+    <Compile Include="Views\Forms\ChannelsForm.Designer.cs">
       <DependentUpon>ChannelsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Filters\BrightnessFilter.cs" />
     <Compile Include="Filters\ContrastFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
-    <Compile Include="ContrastDialog.cs">
+    <Compile Include="Views\Forms\ContrastDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ContrastDialog.Designer.cs">
+    <Compile Include="Views\Forms\ContrastDialog.Designer.cs">
       <DependentUpon>ContrastDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\BitmapChangedEventArgs.cs" />
     <Compile Include="Model\ImageModel.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Views\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ImageUtils.cs" />
@@ -86,16 +86,16 @@
     <Compile Include="Views\IResizeStrategy.cs" />
     <Compile Include="Views\PreserveAspectResize.cs" />
     <Compile Include="Views\StretchResize.cs" />
-    <EmbeddedResource Include="BrightnessDialog.resx">
+    <EmbeddedResource Include="Views\Forms\BrightnessDialog.resx">
       <DependentUpon>BrightnessDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChannelsForm.resx">
+    <EmbeddedResource Include="Views\Forms\ChannelsForm.resx">
       <DependentUpon>ChannelsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ContrastDialog.resx">
+    <EmbeddedResource Include="Views\Forms\ContrastDialog.resx">
       <DependentUpon>ContrastDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Views\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 using MMSPlayground.Presenters;
 using MMSPlayground.Model;
+using MMSPlayground.Views.Forms;
 
 namespace MMSPlayground
 {

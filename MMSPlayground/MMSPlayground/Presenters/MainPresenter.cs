@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 
 using MMSPlayground.Views;
+using MMSPlayground.Views.Forms;
 using MMSPlayground.Model;
 using MMSPlayground.Filters;
 
