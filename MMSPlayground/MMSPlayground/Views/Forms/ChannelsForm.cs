@@ -80,7 +80,7 @@ namespace MMSPlayground.Views.Forms
                 e.Cancel = true;
 
                 Hide();
-                m_presenter.SetChannelsViewStatus(false);
+                m_presenter.SendChannelsViewStatus(false);
             }
         }
 

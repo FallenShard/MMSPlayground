@@ -8,19 +8,19 @@ using MMSPlayground.Views;
 
 namespace MMSPlayground.Presenters
 {
-    public class ChannelsPresenter
+    public class ChannelsPresenter : IChannelsPresenter
     {
-        ImageModel m_model = null;
+        IImageModel m_model = null;
 
         IChannelsView m_channelsView = null;
 
         MainPresenter m_mainPresenter = null;
 
-        public ChannelsPresenter(ImageModel model, MainPresenter mainPresenter)
+        public ChannelsPresenter(IImageModel model, MainPresenter mainPresenter)
         {
             m_model = model;
 
-            m_model.BitmapChanged += new ImageModel.BitmapChangedEventHandler(this.BitmapChanged);
+            m_model.BitmapChanged += new BitmapChangedEventHandler(this.BitmapChanged);
 
             m_mainPresenter = mainPresenter;
         }
@@ -28,6 +28,11 @@ namespace MMSPlayground.Presenters
         public void SetChannelsView(IChannelsView view)
         {
             m_channelsView = view;
+        }
+
+        public void SendChannelsViewStatus(bool visible)
+        {
+            m_mainPresenter.ReceiveChannelsViewStatus(visible);
         }
 
         public void ShowChannelsView(bool visible)
@@ -38,11 +43,6 @@ namespace MMSPlayground.Presenters
         private void BitmapChanged(ImageModel model, BitmapChangedEventArgs args)
         {
             m_channelsView.DisplayImages(args.Bitmap, args.Channels, args.ChannelHistograms);
-        }
-
-        public void SetChannelsViewStatus(bool visible)
-        {
-            m_mainPresenter.SetChannelsViewStatus(visible);
         }
     }
 }

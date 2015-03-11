@@ -12,9 +12,9 @@ using MMSPlayground.Filters;
 
 namespace MMSPlayground.Presenters
 {
-    public class MainPresenter
+    public class MainPresenter : IMainPresenter
     {
-        private ImageModel m_model = null;
+        private IImageModel m_model = null;
 
         private IMainView m_mainView = null;
 
@@ -23,10 +23,10 @@ namespace MMSPlayground.Presenters
         private Stack<IFilter> m_filterHistory = new Stack<IFilter>();
         private IFilter m_redoFilter = null;
 
-        public MainPresenter(ImageModel model)
+        public MainPresenter(IImageModel model)
         {
             m_model = model;
-            m_model.BitmapChanged += new ImageModel.BitmapChangedEventHandler(this.OnBitmapChanged);
+            m_model.BitmapChanged += new BitmapChangedEventHandler(this.OnBitmapChanged);
 
             m_channelsPresenter = new ChannelsPresenter(model, this);
             IChannelsView channelsView = new ChannelsForm(m_channelsPresenter);
@@ -37,25 +37,25 @@ namespace MMSPlayground.Presenters
             m_mainView = view;
         }
 
-        public void SetBitmapFileName(string fileName)
+        public void ShowChannelsView(bool show)
+        {
+            m_channelsPresenter.ShowChannelsView(show);
+        }
+
+        public void ReceiveChannelsViewStatus(bool visible)
+        {
+            m_mainView.SetChannelsViewStatus(visible);
+        }
+
+        public void UseWin32Core(bool enable)
+        {
+            m_model.SetWin32CoreUsageMode(enable);
+        }
+
+        public void OpenBitmap(string fileName)
         {
             Bitmap bitmap = new Bitmap(fileName);
             m_model.SetBitmap(bitmap);
-        }
-
-        private void OnBitmapChanged(ImageModel model, BitmapChangedEventArgs args)
-        {
-            m_mainView.DisplayImage(args.Bitmap);
-        }
-
-        public void RequestSaveBitmap()
-        {
-            Bitmap bitmap = m_model.GetBitmap();
-
-            if (bitmap == null)
-                m_mainView.DisplayErrorMessage("Could not save image. No image has been opened yet.", "Save Image");
-            else
-                m_mainView.SaveImage(bitmap);
         }
 
         public void SaveBitmap(string fileName)
@@ -64,29 +64,14 @@ namespace MMSPlayground.Presenters
             bitmap.Save(fileName);
         }
 
-        public void ShowChannelsView(bool show)
+        public void RequestSaveBitmap()
         {
-            m_channelsPresenter.ShowChannelsView(show);
+            m_mainView.SaveImage(m_model.GetBitmap());
         }
 
         public void RequestResize()
         {
-            Size modelSize = m_model.GetSize();
-
-            if (modelSize == ImageModel.ErrorSize)
-                m_mainView.DisplayErrorMessage("Could not resize image. No image has been opened yet.", "Resize Image");
-            else
-                m_mainView.ResizeImage(modelSize);
-        }
-
-        public void SetChannelsViewStatus(bool visible)
-        {
-            m_mainView.SetChannelsViewStatus(visible);
-        }
-
-        public void UseWin32Core(bool enable)
-        {
-            m_model.UseWin32Core(enable);
+            m_mainView.ResizeImage(m_model.GetSize());
         }
 
         public void RequestBrightness(int bias)
@@ -104,9 +89,9 @@ namespace MMSPlayground.Presenters
             ApplyFilter(new SharpenFilter(m_model, kernelSize, baseFactor));
         }
 
-        public void RequestEdgeEnhancement(double coefficient)
+        public void RequestEdgeEnhancement(int kernelSize)
         {
-            //ApplyFilter(new EdgeEnhancementFilter(m_model, coefficient));
+            //ApplyFilter(new EdgeEnhancementFilter(kernelSize));
         }
 
         public void RequestUndo()
@@ -138,6 +123,11 @@ namespace MMSPlayground.Presenters
 
             m_redoFilter = filter.Clone();
             m_mainView.SetRedoEnabled(true);
+        }
+
+        private void OnBitmapChanged(IImageModel model, BitmapChangedEventArgs args)
+        {
+            m_mainView.DisplayImage(args.Bitmap);
         }
     }
 }

@@ -7,12 +7,9 @@ using System.Text;
 
 namespace MMSPlayground.Model
 {
-    public class ImageModel
+    public class ImageModel : IImageModel
     {
         public event BitmapChangedEventHandler BitmapChanged;
-        public delegate void BitmapChangedEventHandler(ImageModel model, BitmapChangedEventArgs args);
-
-        public static readonly Size ErrorSize = new Size(-1, -1);
 
         private bool m_win32Mode = true;
 
@@ -36,14 +33,6 @@ namespace MMSPlayground.Model
             BitmapChanged(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps, m_channelHistograms));
         }
 
-        public Size GetSize()
-        {
-            if (m_bitmap == null)
-                return ErrorSize;
-
-            return m_bitmap.Size;
-        }
-
         public Bitmap GetBitmap()
         {
             return m_bitmap;
@@ -54,12 +43,22 @@ namespace MMSPlayground.Model
             return m_channelBmps;
         }
 
-        public bool GetWin32UsageMode()
+        public Size GetSize()
+        {
+            return m_bitmap.Size;
+        }
+
+        public bool GetWin32CoreUsageMode()
         {
             return m_win32Mode;
         }
 
-        public void ComputeChannels()
+        public void SetWin32CoreUsageMode(bool enabled)
+        {
+            m_win32Mode = enabled;
+        }
+
+        private void ComputeChannels()
         {
             InitializeChannelBitmaps();
             InitializeChannelHistograms();
@@ -116,13 +115,6 @@ namespace MMSPlayground.Model
             m_channelBmps[0].UnlockBits(bmdY);
             m_channelBmps[1].UnlockBits(bmdCb);
             m_channelBmps[2].UnlockBits(bmdCr);
-        }
-
-        public void UseWin32Core(bool enabled)
-        {
-            m_win32Mode = enabled;
-
-            Console.WriteLine("Win32 mode set to: " + m_win32Mode);
         }
 
         private void InitializeChannelBitmaps()

@@ -15,7 +15,7 @@ namespace MMSPlayground.Views.Forms
 {
     public partial class MainForm : Form, IMainView
     {
-        private MainPresenter m_presenter = null;
+        private IMainPresenter m_presenter = null;
 
         private int m_topMargin = 5;
         private int m_leftMargin = 5;
@@ -57,7 +57,7 @@ namespace MMSPlayground.Views.Forms
                 Text = dlg.SafeFileName;
                 EnableMenuItems();
 
-                m_presenter.SetBitmapFileName(dlg.FileName);
+                m_presenter.OpenBitmap(dlg.FileName);
             }
             dlg.Dispose();
         }

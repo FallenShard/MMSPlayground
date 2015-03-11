@@ -9,6 +9,11 @@ namespace MMSPlayground.Model
 {
     public class ImageUtils
     {
+        public enum PaddingMode
+        {
+            Zero
+        }
+
         public static void RgbToYCbCr(byte[] rgb, byte[] ycbcr)
         {
             ycbcr[0] = (byte)((0.299 * (float)rgb[0] + 0.587 * (float)rgb[1] + 0.114 * (float)rgb[2]));
@@ -29,6 +34,53 @@ namespace MMSPlayground.Model
         public static int Clamp(int value, int min, int max)
         {
             return Math.Max(min, Math.Min(value, max));
+        }
+
+        public unsafe static void ExtractNeighbourhood(BitmapData data, int bpp, int x, int y, int kernelSize, int[][,] neighbourhood)
+        {
+            int halfSize = kernelSize / 2;
+            for (int row = -halfSize; row <= halfSize; row++)
+            {
+                byte* dataRow = (byte*)data.Scan0 + ((y + row) * data.Stride);
+
+                for (int col = -halfSize; col <= halfSize; col++)
+                {
+                    int index = (x + col) * bpp;
+
+                    int val1 = dataRow[index + 0];
+                    int val2 = dataRow[index + 1];
+                    int val3 = dataRow[index + 2];
+
+                    neighbourhood[0][row + halfSize, col + halfSize] = dataRow[index + 0];
+                    neighbourhood[1][row + halfSize, col + halfSize] = dataRow[index + 1];
+                    neighbourhood[2][row + halfSize, col + halfSize] = dataRow[index + 2];
+                }
+            }
+        }
+
+        public static Bitmap PadBitmap(Bitmap orig, int paddingSize, PaddingMode paddingMode)
+        {
+            switch (paddingMode)
+            {
+                case PaddingMode.Zero:
+                    return PadWithZeros(orig, paddingSize);
+
+                default:
+                    return null;
+            }
+        }
+
+        private static Bitmap PadWithZeros(Bitmap orig, int size)
+        {
+            Bitmap paddedBitmap = new Bitmap(orig.Width + 2 * size, orig.Height + 2 * size, orig.PixelFormat);
+
+            Graphics g = Graphics.FromImage(paddedBitmap);
+
+            g.DrawImage(orig, size, size, orig.Width, orig.Height);
+
+            g.Dispose();
+
+            return paddedBitmap;
         }
     }
 }
