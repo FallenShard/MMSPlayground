@@ -14,9 +14,9 @@ namespace MMSPlayground.Filters
         private double m_coeff = 0;
         private Bitmap m_prevBitmap = null;
 
-        private ImageModel m_model = null;
+        private IImageModel m_model = null;
 
-        public ContrastFilter(ImageModel model, double coeff)
+        public ContrastFilter(IImageModel model, double coeff)
         {
             m_coeff = coeff;
 
@@ -30,7 +30,7 @@ namespace MMSPlayground.Filters
             Bitmap bitmap = m_model.GetBitmap();
             m_prevBitmap = (Bitmap)bitmap.Clone();
 
-            if (m_model.GetWin32UsageMode())
+            if (m_model.GetWin32CoreUsageMode())
             {
                 Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
                 BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
