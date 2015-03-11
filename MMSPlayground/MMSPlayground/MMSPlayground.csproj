@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\Controls\Histogram.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\Histogram.Designer.cs">
+      <DependentUpon>Histogram.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Forms\BrightnessDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,9 @@
     <Compile Include="Views\IResizeStrategy.cs" />
     <Compile Include="Views\PreserveAspectResize.cs" />
     <Compile Include="Views\StretchResize.cs" />
+    <EmbeddedResource Include="Views\Controls\Histogram.resx">
+      <DependentUpon>Histogram.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\BrightnessDialog.resx">
       <DependentUpon>BrightnessDialog.cs</DependentUpon>
     </EmbeddedResource>

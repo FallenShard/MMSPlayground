@@ -24,7 +24,10 @@ namespace MMSPlayground.Views.Forms
         private int m_middleMargin = 5;
         private float m_cachedAspectRatio = 1.0f;
 
+        private ToolStripMenuItem m_activeResizeItem = null;
         private IResizeStrategy m_resizeMode = new PreserveAspectResize();
+
+
 
         public ChannelsForm(ChannelsPresenter presenter)
         {
@@ -32,6 +35,11 @@ namespace MMSPlayground.Views.Forms
 
             m_presenter = presenter;
             m_presenter.SetChannelsView(this);
+
+            m_activeResizeItem = preserveAspectToolStripMenuItem;
+            m_activeResizeItem.Checked = true;
+
+            m_topMargin += channelsMenuStrip.Size.Height;
         }
 
         public void DisplayImages(Bitmap bitmap, Bitmap[] channels)
@@ -52,13 +60,6 @@ namespace MMSPlayground.Views.Forms
                 Show();
             else
                 Hide();
-        }
-
-        public void SetResizeMode(IResizeStrategy resizeMode)
-        {
-            m_resizeMode = resizeMode;
-
-            ApplyResize();
         }
 
         private void ChannelsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -94,6 +95,28 @@ namespace MMSPlayground.Views.Forms
 
         private void ChannelsForm_Resize(object sender, EventArgs e)
         {
+            ApplyResize();
+        }
+
+        private void preserveAspectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_activeResizeItem != preserveAspectToolStripMenuItem)
+                SetResizeMode(preserveAspectToolStripMenuItem, new PreserveAspectResize());
+        }
+
+        private void stretchToFitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_activeResizeItem != stretchToFitToolStripMenuItem)
+                SetResizeMode(stretchToFitToolStripMenuItem, new StretchResize());
+        }
+
+        private void SetResizeMode(ToolStripMenuItem item, IResizeStrategy resizeMode)
+        {
+            m_resizeMode = resizeMode;
+            m_activeResizeItem.Checked = false;
+            m_activeResizeItem = item;
+            m_activeResizeItem.Checked = true;
+
             ApplyResize();
         }
     }

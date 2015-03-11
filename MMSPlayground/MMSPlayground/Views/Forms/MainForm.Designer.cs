@@ -78,7 +78,7 @@
             this.optionsToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(534, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(541, 24);
             this.mainMenuStrip.TabIndex = 1;
             this.mainMenuStrip.Text = "mainMenuStrip";
             // 
@@ -253,9 +253,9 @@
             this.dimToolStripStatusLabel,
             this.bppMetaToolStripStatusLabel,
             this.bppToolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 529);
+            this.statusStrip.Location = new System.Drawing.Point(0, 521);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(534, 22);
+            this.statusStrip.Size = new System.Drawing.Size(541, 22);
             this.statusStrip.TabIndex = 2;
             // 
             // imgMetaToolStripStatusLabel
@@ -298,7 +298,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 551);
+            this.ClientSize = new System.Drawing.Size(541, 543);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.mainPictureBox);
             this.Controls.Add(this.mainMenuStrip);

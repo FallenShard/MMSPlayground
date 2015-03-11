@@ -126,10 +126,5 @@ namespace MMSPlayground.Presenters
             m_mainView.SetUndoEnabled(true);
             m_filterHistory.Push(filter);
         }
-
-        public void ReceiveResizeMode(IResizeStrategy resizeMode)
-        {
-            m_channelsPresenter.ReceiveResizeMode(resizeMode);
-        }
     }
 }
