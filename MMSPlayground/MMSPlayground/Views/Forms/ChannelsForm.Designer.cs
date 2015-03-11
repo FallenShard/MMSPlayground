@@ -30,14 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChannelsForm));
             this.fullPictureBox = new System.Windows.Forms.PictureBox();
-            this.redPictureBox = new System.Windows.Forms.PictureBox();
-            this.greenPictureBox = new System.Windows.Forms.PictureBox();
-            this.bluePictureBox = new System.Windows.Forms.PictureBox();
+            this.yPictureBox = new System.Windows.Forms.PictureBox();
+            this.cbPictureBox = new System.Windows.Forms.PictureBox();
+            this.crPictureBox = new System.Windows.Forms.PictureBox();
             this.imagePanel = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.histogram1 = new MMSPlayground.Views.Controls.Histogram();
-            this.histogram2 = new MMSPlayground.Views.Controls.Histogram();
-            this.histogram3 = new MMSPlayground.Views.Controls.Histogram();
+            this.yHistogram = new MMSPlayground.Views.Controls.Histogram();
+            this.cbHistogram = new MMSPlayground.Views.Controls.Histogram();
+            this.crHistogram = new MMSPlayground.Views.Controls.Histogram();
             this.channelsMenuStrip = new System.Windows.Forms.MenuStrip();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,11 +45,10 @@
             this.channelsViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.fullPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.redPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.greenPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bluePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.crPictureBox)).BeginInit();
             this.imagePanel.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.channelsMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,83 +61,79 @@
             this.fullPictureBox.TabIndex = 0;
             this.fullPictureBox.TabStop = false;
             // 
-            // redPictureBox
+            // yPictureBox
             // 
-            this.redPictureBox.Location = new System.Drawing.Point(234, 14);
-            this.redPictureBox.Name = "redPictureBox";
-            this.redPictureBox.Size = new System.Drawing.Size(188, 182);
-            this.redPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.redPictureBox.TabIndex = 1;
-            this.redPictureBox.TabStop = false;
+            this.yPictureBox.Location = new System.Drawing.Point(234, 14);
+            this.yPictureBox.Name = "yPictureBox";
+            this.yPictureBox.Size = new System.Drawing.Size(188, 182);
+            this.yPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.yPictureBox.TabIndex = 1;
+            this.yPictureBox.TabStop = false;
             // 
-            // greenPictureBox
+            // cbPictureBox
             // 
-            this.greenPictureBox.Location = new System.Drawing.Point(32, 222);
-            this.greenPictureBox.Name = "greenPictureBox";
-            this.greenPictureBox.Size = new System.Drawing.Size(163, 133);
-            this.greenPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.greenPictureBox.TabIndex = 2;
-            this.greenPictureBox.TabStop = false;
+            this.cbPictureBox.Location = new System.Drawing.Point(32, 222);
+            this.cbPictureBox.Name = "cbPictureBox";
+            this.cbPictureBox.Size = new System.Drawing.Size(163, 133);
+            this.cbPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cbPictureBox.TabIndex = 2;
+            this.cbPictureBox.TabStop = false;
             // 
-            // bluePictureBox
+            // crPictureBox
             // 
-            this.bluePictureBox.Location = new System.Drawing.Point(234, 222);
-            this.bluePictureBox.Name = "bluePictureBox";
-            this.bluePictureBox.Size = new System.Drawing.Size(188, 145);
-            this.bluePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.bluePictureBox.TabIndex = 3;
-            this.bluePictureBox.TabStop = false;
+            this.crPictureBox.Location = new System.Drawing.Point(234, 222);
+            this.crPictureBox.Name = "crPictureBox";
+            this.crPictureBox.Size = new System.Drawing.Size(188, 145);
+            this.crPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.crPictureBox.TabIndex = 3;
+            this.crPictureBox.TabStop = false;
             // 
             // imagePanel
             // 
+            this.imagePanel.Controls.Add(this.cbHistogram);
+            this.imagePanel.Controls.Add(this.crHistogram);
             this.imagePanel.Controls.Add(this.fullPictureBox);
-            this.imagePanel.Controls.Add(this.bluePictureBox);
-            this.imagePanel.Controls.Add(this.redPictureBox);
-            this.imagePanel.Controls.Add(this.greenPictureBox);
+            this.imagePanel.Controls.Add(this.crPictureBox);
+            this.imagePanel.Controls.Add(this.yHistogram);
+            this.imagePanel.Controls.Add(this.yPictureBox);
+            this.imagePanel.Controls.Add(this.cbPictureBox);
             this.imagePanel.Location = new System.Drawing.Point(12, 40);
             this.imagePanel.Name = "imagePanel";
             this.imagePanel.Size = new System.Drawing.Size(490, 386);
             this.imagePanel.TabIndex = 4;
             // 
-            // panel1
+            // yHistogram
             // 
-            this.panel1.Controls.Add(this.histogram3);
-            this.panel1.Controls.Add(this.histogram2);
-            this.panel1.Controls.Add(this.histogram1);
-            this.panel1.Location = new System.Drawing.Point(508, 40);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(462, 386);
-            this.panel1.TabIndex = 5;
+            this.yHistogram.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("yHistogram.Data")));
+            this.yHistogram.Location = new System.Drawing.Point(275, 14);
+            this.yHistogram.MaxValue = 256;
+            this.yHistogram.MinValue = 0;
+            this.yHistogram.Name = "yHistogram";
+            this.yHistogram.Size = new System.Drawing.Size(212, 182);
+            this.yHistogram.TabIndex = 0;
+            this.yHistogram.Visible = false;
             // 
-            // histogram1
+            // cbHistogram
             // 
-            this.histogram1.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("histogram1.Data")));
-            this.histogram1.Location = new System.Drawing.Point(234, 14);
-            this.histogram1.MaxValue = 256;
-            this.histogram1.MinValue = 0;
-            this.histogram1.Name = "histogram1";
-            this.histogram1.Size = new System.Drawing.Size(212, 182);
-            this.histogram1.TabIndex = 0;
+            this.cbHistogram.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("cbHistogram.Data")));
+            this.cbHistogram.Location = new System.Drawing.Point(57, 222);
+            this.cbHistogram.MaxValue = 256;
+            this.cbHistogram.MinValue = 0;
+            this.cbHistogram.Name = "cbHistogram";
+            this.cbHistogram.Size = new System.Drawing.Size(212, 145);
+            this.cbHistogram.TabIndex = 1;
+            this.cbHistogram.Visible = false;
             // 
-            // histogram2
+            // crHistogram
             // 
-            this.histogram2.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("histogram2.Data")));
-            this.histogram2.Location = new System.Drawing.Point(13, 222);
-            this.histogram2.MaxValue = 256;
-            this.histogram2.MinValue = 0;
-            this.histogram2.Name = "histogram2";
-            this.histogram2.Size = new System.Drawing.Size(212, 145);
-            this.histogram2.TabIndex = 1;
-            // 
-            // histogram3
-            // 
-            this.histogram3.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("histogram3.Data")));
-            this.histogram3.Location = new System.Drawing.Point(234, 222);
-            this.histogram3.MaxValue = 256;
-            this.histogram3.MinValue = 0;
-            this.histogram3.Name = "histogram3";
-            this.histogram3.Size = new System.Drawing.Size(212, 145);
-            this.histogram3.TabIndex = 2;
+            this.crHistogram.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("crHistogram.Data")));
+            this.crHistogram.Location = new System.Drawing.Point(295, 222);
+            this.crHistogram.MaxValue = 256;
+            this.crHistogram.MinValue = 0;
+            this.crHistogram.Name = "crHistogram";
+            this.crHistogram.Size = new System.Drawing.Size(212, 145);
+            this.crHistogram.TabIndex = 2;
+            this.crHistogram.Visible = false;
             // 
             // channelsMenuStrip
             // 
@@ -147,7 +141,7 @@
             this.viewToolStripMenuItem});
             this.channelsMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.channelsMenuStrip.Name = "channelsMenuStrip";
-            this.channelsMenuStrip.Size = new System.Drawing.Size(995, 24);
+            this.channelsMenuStrip.Size = new System.Drawing.Size(559, 24);
             this.channelsMenuStrip.TabIndex = 6;
             this.channelsMenuStrip.Text = "menuStrip1";
             // 
@@ -189,19 +183,20 @@
             this.channelsViewToolStripMenuItem.Name = "channelsViewToolStripMenuItem";
             this.channelsViewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.channelsViewToolStripMenuItem.Text = "Channels";
+            this.channelsViewToolStripMenuItem.Click += new System.EventHandler(this.channelsViewToolStripMenuItem_Click);
             // 
             // histogramsToolStripMenuItem
             // 
             this.histogramsToolStripMenuItem.Name = "histogramsToolStripMenuItem";
             this.histogramsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.histogramsToolStripMenuItem.Text = "Histograms";
+            this.histogramsToolStripMenuItem.Click += new System.EventHandler(this.histogramsToolStripMenuItem_Click);
             // 
             // ChannelsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(995, 598);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(559, 469);
             this.Controls.Add(this.imagePanel);
             this.Controls.Add(this.channelsMenuStrip);
             this.MainMenuStrip = this.channelsMenuStrip;
@@ -210,11 +205,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChannelsForm_FormClosing);
             this.Resize += new System.EventHandler(this.ChannelsForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.fullPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.redPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.greenPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bluePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.crPictureBox)).EndInit();
             this.imagePanel.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.channelsMenuStrip.ResumeLayout(false);
             this.channelsMenuStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -225,14 +219,13 @@
         #endregion
 
         private System.Windows.Forms.PictureBox fullPictureBox;
-        private System.Windows.Forms.PictureBox redPictureBox;
-        private System.Windows.Forms.PictureBox greenPictureBox;
-        private System.Windows.Forms.PictureBox bluePictureBox;
+        private System.Windows.Forms.PictureBox yPictureBox;
+        private System.Windows.Forms.PictureBox cbPictureBox;
+        private System.Windows.Forms.PictureBox crPictureBox;
         private System.Windows.Forms.Panel imagePanel;
-        private System.Windows.Forms.Panel panel1;
-        private Controls.Histogram histogram3;
-        private Controls.Histogram histogram2;
-        private Controls.Histogram histogram1;
+        private Controls.Histogram crHistogram;
+        private Controls.Histogram cbHistogram;
+        private Controls.Histogram yHistogram;
         private System.Windows.Forms.MenuStrip channelsMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeModeToolStripMenuItem;

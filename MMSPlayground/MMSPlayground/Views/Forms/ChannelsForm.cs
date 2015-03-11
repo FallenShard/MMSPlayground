@@ -27,7 +27,8 @@ namespace MMSPlayground.Views.Forms
         private ToolStripMenuItem m_activeResizeItem = null;
         private IResizeStrategy m_resizeMode = new PreserveAspectResize();
 
-
+        private ToolStripMenuItem m_activeViewItem = null;
+        private IList<Control> m_activeControls = new List<Control>();
 
         public ChannelsForm(ChannelsPresenter presenter)
         {
@@ -36,20 +37,28 @@ namespace MMSPlayground.Views.Forms
             m_presenter = presenter;
             m_presenter.SetChannelsView(this);
 
+            m_topMargin += channelsMenuStrip.Size.Height;
+
             m_activeResizeItem = preserveAspectToolStripMenuItem;
             m_activeResizeItem.Checked = true;
 
-            m_topMargin += channelsMenuStrip.Size.Height;
+            m_activeViewItem = channelsViewToolStripMenuItem;
+            m_activeViewItem.Checked = true;
+            m_activeControls.Add(yPictureBox);
+            m_activeControls.Add(cbPictureBox);
+            m_activeControls.Add(crPictureBox);
         }
 
         public void DisplayImages(Bitmap bitmap, Bitmap[] channels)
         {
             fullPictureBox.Image = bitmap;
-            redPictureBox.Image = channels[0];
-            greenPictureBox.Image = channels[1];
-            bluePictureBox.Image = channels[2];
+            yPictureBox.Image = channels[0];
+            cbPictureBox.Image = channels[1];
+            crPictureBox.Image = channels[2];
 
             m_cachedAspectRatio = (float)bitmap.Width / (float)bitmap.Height;
+
+
 
             ApplyResize();
         }
@@ -83,14 +92,14 @@ namespace MMSPlayground.Views.Forms
             Size picBoxSize = new Size(adjWidth, adjHeight);
 
             fullPictureBox.Size = picBoxSize;
-            redPictureBox.Size = picBoxSize;
-            greenPictureBox.Size = picBoxSize;
-            bluePictureBox.Size = picBoxSize;
+            m_activeControls[0].Size = picBoxSize;
+            m_activeControls[1].Size = picBoxSize;
+            m_activeControls[2].Size = picBoxSize;                
 
             fullPictureBox.Location = new Point(0, 0);
-            redPictureBox.Location = new Point(adjWidth + m_middleMargin, 0);
-            greenPictureBox.Location = new Point(0, adjHeight + m_middleMargin);
-            bluePictureBox.Location = new Point(adjWidth + m_middleMargin, adjHeight + m_middleMargin);
+            m_activeControls[0].Location = new Point(adjWidth + m_middleMargin, 0);
+            m_activeControls[1].Location = new Point(0, adjHeight + m_middleMargin);
+            m_activeControls[2].Location = new Point(adjWidth + m_middleMargin, adjHeight + m_middleMargin);
         }
 
         private void ChannelsForm_Resize(object sender, EventArgs e)
@@ -116,6 +125,49 @@ namespace MMSPlayground.Views.Forms
             m_activeResizeItem.Checked = false;
             m_activeResizeItem = item;
             m_activeResizeItem.Checked = true;
+
+            ApplyResize();
+        }
+
+        private void channelsViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_activeViewItem != channelsViewToolStripMenuItem)
+            {
+                IList<Control> activeCtrls = new List<Control>();
+                activeCtrls.Add(yPictureBox);
+                activeCtrls.Add(cbPictureBox);
+                activeCtrls.Add(crPictureBox);
+
+                SetActiveView(channelsViewToolStripMenuItem, activeCtrls);
+            }
+        }
+
+        private void histogramsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (m_activeViewItem != histogramsToolStripMenuItem)
+            {
+                IList<Control> activeCtrls = new List<Control>();
+                activeCtrls.Add(yHistogram);
+                activeCtrls.Add(cbHistogram);
+                activeCtrls.Add(crHistogram);
+
+                SetActiveView(histogramsToolStripMenuItem, activeCtrls);
+            }
+        }
+
+        private void SetActiveView(ToolStripMenuItem activeItem, IList<Control> activeControls)
+        {
+            m_activeViewItem.Checked = false;
+            m_activeViewItem = activeItem;
+            m_activeViewItem.Checked = true;
+
+            foreach (Control ctrl in m_activeControls)
+                ctrl.Visible = false;
+
+            m_activeControls = activeControls;
+
+            foreach (Control ctrl in m_activeControls)
+                ctrl.Visible = true;
 
             ApplyResize();
         }
