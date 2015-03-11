@@ -89,9 +89,9 @@ namespace MMSPlayground.Presenters
             ApplyFilter(new SharpenFilter(m_model, kernelSize, baseFactor));
         }
 
-        public void RequestEdgeEnhancement(int kernelSize)
+        public void RequestEdgeEnhancement(int kernelSize, int threshold)
         {
-            //ApplyFilter(new EdgeEnhancementFilter(kernelSize));
+            ApplyFilter(new EdgeEnhancementFilter(m_model, kernelSize, threshold));
         }
 
         public void RequestUndo()

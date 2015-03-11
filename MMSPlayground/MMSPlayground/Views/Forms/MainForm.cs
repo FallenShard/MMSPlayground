@@ -116,7 +116,14 @@ namespace MMSPlayground.Views.Forms
 
         private void edgeEnhancementToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TO DO
+            EdgeEnhancementDialog dialog = new EdgeEnhancementDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_presenter.RequestEdgeEnhancement(dialog.GetKernelSize(), dialog.GetThreshold());
+            }
+
+            dialog.Dispose();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)

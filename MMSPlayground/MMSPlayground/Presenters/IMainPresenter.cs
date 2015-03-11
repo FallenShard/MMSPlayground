@@ -24,7 +24,7 @@ namespace MMSPlayground.Presenters
         void RequestBrightness(int bias);
         void RequestContrast(double coefficient);
         void RequestSharpen(int kernelSize, int baseFactor);
-        void RequestEdgeEnhancement(int kernelSize);
+        void RequestEdgeEnhancement(int kernelSize, int threshold);
 
         void RequestUndo();
         void RequestRedo();

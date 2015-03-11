@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Filters\ConvolutionFilter.cs" />
     <Compile Include="Filters\Convolution\Kernel.cs" />
+    <Compile Include="Filters\EdgeEnhancementFilter.cs" />
     <Compile Include="Filters\SharpenFilter.cs" />
     <Compile Include="Model\IImageModel.cs" />
     <Compile Include="Presenters\IChannelsPresenter.cs" />
@@ -82,6 +83,12 @@
     </Compile>
     <Compile Include="Model\BitmapChangedEventArgs.cs" />
     <Compile Include="Model\ImageModel.cs" />
+    <Compile Include="Views\Forms\EdgeEnhancementDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Forms\EdgeEnhancementDialog.Designer.cs">
+      <DependentUpon>EdgeEnhancementDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\ContrastDialog.resx">
       <DependentUpon>ContrastDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Forms\EdgeEnhancementDialog.resx">
+      <DependentUpon>EdgeEnhancementDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

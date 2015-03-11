@@ -34,28 +34,10 @@ namespace MMSPlayground.Filters
                 BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
 
                 int bpp = ImageUtils.GetComponentsPerPixel(bmd);
-
                 Kernel kernel = GetConvolutionKernel(m_kernelSize);
                 int[][,] neighbourhood = AllocateNeighbourhood();
 
-                unsafe
-                {
-                    for (int y = 0; y < bmd.Height; y++)
-                    {
-                        byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
-
-                        for (int x = 0; x < bmd.Width; x++)
-                        {
-                            int index = x * bpp;
-
-                            ImageUtils.ExtractNeighbourhood(paddedBmd, bpp, x + paddingSize, y + paddingSize, m_kernelSize, neighbourhood);
-
-                            dataRow[index + 2] = (byte)kernel.Convolve(neighbourhood[2]);
-                            dataRow[index + 1] = (byte)kernel.Convolve(neighbourhood[1]);
-                            dataRow[index + 0] = (byte)kernel.Convolve(neighbourhood[0]);
-                        }
-                    }
-                }
+                TransformUnsafe(bmd, paddedBmd, bpp, kernel, neighbourhood, paddingSize);
 
                 bitmap.UnlockBits(bmd);
                 paddedBitmap.UnlockBits(paddedBmd);
@@ -101,5 +83,24 @@ namespace MMSPlayground.Filters
         public abstract IFilter Clone();
 
         protected abstract Kernel GetConvolutionKernel(int kernelSize);
+
+        protected unsafe virtual void TransformUnsafe(BitmapData bmd, BitmapData paddedBmd, int bpp, Kernel kernel, int[][,] neighbourhood, int paddingSize)
+        {
+            for (int y = 0; y < bmd.Height; y++)
+            {
+                byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
+
+                for (int x = 0; x < bmd.Width; x++)
+                {
+                    int index = x * bpp;
+
+                    ImageUtils.ExtractNeighbourhood(paddedBmd, bpp, x + paddingSize, y + paddingSize, m_kernelSize, neighbourhood);
+
+                    dataRow[index + 2] = (byte)kernel.Convolve(neighbourhood[2]);
+                    dataRow[index + 1] = (byte)kernel.Convolve(neighbourhood[1]);
+                    dataRow[index + 0] = (byte)kernel.Convolve(neighbourhood[0]);
+                }
+            }
+        }
     }
 }
