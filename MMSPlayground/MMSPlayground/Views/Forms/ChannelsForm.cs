@@ -49,16 +49,18 @@ namespace MMSPlayground.Views.Forms
             m_activeControls.Add(crPictureBox);
         }
 
-        public void DisplayImages(Bitmap bitmap, Bitmap[] channels)
+        public void DisplayImages(Bitmap bitmap, Bitmap[] channels, IList<int>[] histograms)
         {
             fullPictureBox.Image = bitmap;
             yPictureBox.Image = channels[0];
             cbPictureBox.Image = channels[1];
             crPictureBox.Image = channels[2];
 
+            yHistogram.Data = histograms[0];
+            cbHistogram.Data = histograms[1];
+            crHistogram.Data = histograms[2];
+
             m_cachedAspectRatio = (float)bitmap.Width / (float)bitmap.Height;
-
-
 
             ApplyResize();
         }

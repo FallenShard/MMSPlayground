@@ -8,7 +8,7 @@ namespace MMSPlayground.Views
 {
     public interface IChannelsView
     {
-        void DisplayImages(Bitmap bitmap, Bitmap[] channels);
+        void DisplayImages(Bitmap bitmap, Bitmap[] channels, IList<int>[] channelHistograms);
         void SetVisible(bool visible);
     }
 }

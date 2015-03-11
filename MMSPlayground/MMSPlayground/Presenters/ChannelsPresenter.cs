@@ -37,7 +37,7 @@ namespace MMSPlayground.Presenters
 
         private void BitmapChanged(ImageModel model, BitmapChangedEventArgs args)
         {
-            m_channelsView.DisplayImages(args.Bitmap, args.Channels);
+            m_channelsView.DisplayImages(args.Bitmap, args.Channels, args.ChannelHistograms);
         }
 
         public void SetChannelsViewStatus(bool visible)

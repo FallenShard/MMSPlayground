@@ -20,6 +20,8 @@ namespace MMSPlayground.Model
 
         private Bitmap[] m_channelBmps = new Bitmap[3];
 
+        private IList<int>[] m_channelHistograms = new IList<int>[3];
+
         public ImageModel()
         {
 
@@ -31,7 +33,7 @@ namespace MMSPlayground.Model
 
             ComputeChannels();
 
-            BitmapChanged(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps));
+            BitmapChanged(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps, m_channelHistograms));
         }
 
         public Size GetSize()
@@ -59,9 +61,8 @@ namespace MMSPlayground.Model
 
         public void ComputeChannels()
         {
-            m_channelBmps[0] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
-            m_channelBmps[1] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
-            m_channelBmps[2] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
+            InitializeChannelBitmaps();
+            InitializeChannelHistograms();
 
             Rectangle bmpRect = new Rectangle(0, 0, m_bitmap.Width, m_bitmap.Height);
             BitmapData bmd = m_bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, m_bitmap.PixelFormat);
@@ -92,6 +93,10 @@ namespace MMSPlayground.Model
 
                         ImageUtils.RgbToYCbCr(rgb, yCbCr);
 
+                        m_channelHistograms[0][yCbCr[0]]++;
+                        m_channelHistograms[1][yCbCr[1]]++;
+                        m_channelHistograms[2][yCbCr[2]]++;
+
                         YRow[index + 2] = yCbCr[0];
                         YRow[index + 1] = yCbCr[0];
                         YRow[index + 0] = yCbCr[0];
@@ -118,6 +123,27 @@ namespace MMSPlayground.Model
             m_win32Mode = enabled;
 
             Console.WriteLine("Win32 mode set to: " + m_win32Mode);
+        }
+
+        private void InitializeChannelBitmaps()
+        {
+            m_channelBmps[0] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
+            m_channelBmps[1] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
+            m_channelBmps[2] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
+        }
+
+        private void InitializeChannelHistograms()
+        {
+            m_channelHistograms[0] = new List<int>(256);
+            m_channelHistograms[1] = new List<int>(256);
+            m_channelHistograms[2] = new List<int>(256);
+
+            for (int i = 0; i < 256; i++)
+            {
+                m_channelHistograms[0].Add(0);
+                m_channelHistograms[1].Add(0);
+                m_channelHistograms[2].Add(0);
+            }
         }
     }
 }
