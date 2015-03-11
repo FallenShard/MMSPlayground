@@ -15,5 +15,6 @@ namespace MMSPlayground.Views
         void SetChannelsViewStatus(bool status);
         void InvalidateView();
         void SetUndoEnabled(bool enabled);
+        void SetRedoEnabled(bool enabled);
     }
 }

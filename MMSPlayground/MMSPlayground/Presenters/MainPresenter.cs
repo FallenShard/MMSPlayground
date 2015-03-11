@@ -21,6 +21,7 @@ namespace MMSPlayground.Presenters
         private ChannelsPresenter m_channelsPresenter = null;
 
         private Stack<IFilter> m_filterHistory = new Stack<IFilter>();
+        private IFilter m_redoFilter = null;
 
         public MainPresenter(ImageModel model)
         {
@@ -98,6 +99,16 @@ namespace MMSPlayground.Presenters
             ApplyFilter(new ContrastFilter(m_model, coefficient));
         }
 
+        public void RequestSharpen(int kernelSize, int baseFactor)
+        {
+            ApplyFilter(new SharpenFilter(m_model, kernelSize, baseFactor));
+        }
+
+        public void RequestEdgeEnhancement(double coefficient)
+        {
+            //ApplyFilter(new EdgeEnhancementFilter(m_model, coefficient));
+        }
+
         public void RequestUndo()
         {
             if (m_filterHistory.Count > 0)
@@ -112,10 +123,9 @@ namespace MMSPlayground.Presenters
 
         public void RequestRedo()
         {
-            if (m_filterHistory.Count > 0)
+            if (m_redoFilter != null)
             {
-                IFilter redoFilter = m_filterHistory.Peek().Clone();
-                ApplyFilter(redoFilter);
+                ApplyFilter(m_redoFilter);
             }
         }
 
@@ -123,8 +133,11 @@ namespace MMSPlayground.Presenters
         {
             filter.Apply();
 
-            m_mainView.SetUndoEnabled(true);
             m_filterHistory.Push(filter);
+            m_mainView.SetUndoEnabled(true);
+
+            m_redoFilter = filter.Clone();
+            m_mainView.SetRedoEnabled(true);
         }
     }
 }

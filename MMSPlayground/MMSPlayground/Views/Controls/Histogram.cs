@@ -44,7 +44,7 @@ namespace MMSPlayground.Views.Controls
                 if (data.Count > 0)
                 {
                     int maxCount = data.Max();
-                    float scaleFactor = 256.0f / maxCount;
+                    float scaleFactor = 255.0f / maxCount;
 
                     for (int index = 0; index < MaxValue; index++)
                     {
@@ -88,16 +88,10 @@ namespace MMSPlayground.Views.Controls
             SmoothingMode smoothing = g.SmoothingMode;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            DrawHistogram();
             DrawMarkers(g);
             DrawScale(g);
 
             g.SmoothingMode = smoothing;
-        }
-
-        private void DrawHistogram()
-        {
-            
         }
 
         private void DrawMarkers(Graphics g)

@@ -204,6 +204,10 @@ namespace MMSPlayground.Views.Forms
         public void SetUndoEnabled(bool enabled)
         {
             undoToolStripMenuItem.Enabled = enabled;
+        }
+
+        public void SetRedoEnabled(bool enabled)
+        {
             redoToolStripMenuItem.Enabled = enabled;
         }
 
