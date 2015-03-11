@@ -102,6 +102,23 @@ namespace MMSPlayground.Views.Forms
             dialog.Dispose();
         }
 
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SharpenDialog dialog = new SharpenDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_presenter.RequestSharpen(dialog.GetKernelSize(), dialog.GetBaseFactor());
+            }
+
+            dialog.Dispose();
+        }
+
+        private void edgeEnhancementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TO DO
+        }
+
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_presenter.RequestUndo();
@@ -212,6 +229,8 @@ namespace MMSPlayground.Views.Forms
             displayChannelsToolStripMenuItem.Enabled = true;
             brightnessToolStripMenuItem.Enabled = true;
             contrastToolStripMenuItem.Enabled = true;
+            sharpenToolStripMenuItem.Enabled = true;
+            edgeEnhancementToolStripMenuItem.Enabled = true;
 
             resizeToOriginalToolStripMenuItem.Enabled = true;
         }

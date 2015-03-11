@@ -56,6 +56,9 @@
             this.dimToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppMetaToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.sharpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.edgeEnhancementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -134,6 +137,9 @@
             this.brightnessToolStripMenuItem,
             this.contrastToolStripMenuItem,
             this.toolStripSeparator3,
+            this.sharpenToolStripMenuItem,
+            this.edgeEnhancementToolStripMenuItem,
+            this.toolStripSeparator4,
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem});
             this.filtersToolStripMenuItem.Name = "filtersToolStripMenuItem";
@@ -294,6 +300,29 @@
             this.bppToolStripStatusLabel.Size = new System.Drawing.Size(29, 17);
             this.bppToolStripStatusLabel.Text = "N/A";
             // 
+            // sharpenToolStripMenuItem
+            // 
+            this.sharpenToolStripMenuItem.Enabled = false;
+            this.sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
+            this.sharpenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
+            this.sharpenToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
+            this.sharpenToolStripMenuItem.Text = "Sharpen";
+            this.sharpenToolStripMenuItem.Click += new System.EventHandler(this.sharpenToolStripMenuItem_Click);
+            // 
+            // edgeEnhancementToolStripMenuItem
+            // 
+            this.edgeEnhancementToolStripMenuItem.Enabled = false;
+            this.edgeEnhancementToolStripMenuItem.Name = "edgeEnhancementToolStripMenuItem";
+            this.edgeEnhancementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.E)));
+            this.edgeEnhancementToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
+            this.edgeEnhancementToolStripMenuItem.Text = "Edge Enhancement";
+            this.edgeEnhancementToolStripMenuItem.Click += new System.EventHandler(this.edgeEnhancementToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(261, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,6 +375,9 @@
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sharpenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem edgeEnhancementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
