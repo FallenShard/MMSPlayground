@@ -14,9 +14,9 @@ namespace MMSPlayground.Filters
     {
         private int m_threshold = 0;
 
-        public EdgeEnhancementFilter(IImageModel model, int kernelSize, int threshold)
+        public EdgeEnhancementFilter(IImageModel model, int threshold)
         {
-            m_kernelSize = kernelSize;
+            m_kernelSize = 3;
             m_threshold = threshold;
 
             m_model = model;
@@ -24,7 +24,7 @@ namespace MMSPlayground.Filters
 
         public override IFilter Clone()
         {
-            EdgeEnhancementFilter clone = new EdgeEnhancementFilter(m_model, m_kernelSize, m_threshold);
+            EdgeEnhancementFilter clone = new EdgeEnhancementFilter(m_model, m_threshold);
 
             return clone;
         }

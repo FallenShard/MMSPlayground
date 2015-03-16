@@ -120,7 +120,7 @@ namespace MMSPlayground.Views.Forms
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                m_presenter.RequestEdgeEnhancement(dialog.GetKernelSize(), dialog.GetThreshold());
+                m_presenter.RequestEdgeEnhancement(dialog.GetThreshold());
             }
 
             dialog.Dispose();

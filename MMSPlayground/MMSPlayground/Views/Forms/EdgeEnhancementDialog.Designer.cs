@@ -32,16 +32,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.closeButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.radioButton7x7 = new System.Windows.Forms.RadioButton();
-            this.radioButton5x5 = new System.Windows.Forms.RadioButton();
-            this.radioButton3x3 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // numericUpDown
             // 
-            this.numericUpDown.Location = new System.Drawing.Point(12, 38);
+            this.numericUpDown.Location = new System.Drawing.Point(12, 68);
             this.numericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -55,7 +51,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 22);
+            this.label1.Location = new System.Drawing.Point(9, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 7;
@@ -81,58 +77,11 @@
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 61);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Kernel Size";
-            // 
-            // radioButton7x7
-            // 
-            this.radioButton7x7.AutoSize = true;
-            this.radioButton7x7.Location = new System.Drawing.Point(12, 123);
-            this.radioButton7x7.Name = "radioButton7x7";
-            this.radioButton7x7.Size = new System.Drawing.Size(48, 17);
-            this.radioButton7x7.TabIndex = 14;
-            this.radioButton7x7.TabStop = true;
-            this.radioButton7x7.Text = "7 x 7";
-            this.radioButton7x7.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5x5
-            // 
-            this.radioButton5x5.AutoSize = true;
-            this.radioButton5x5.Location = new System.Drawing.Point(12, 100);
-            this.radioButton5x5.Name = "radioButton5x5";
-            this.radioButton5x5.Size = new System.Drawing.Size(48, 17);
-            this.radioButton5x5.TabIndex = 13;
-            this.radioButton5x5.TabStop = true;
-            this.radioButton5x5.Text = "5 x 5";
-            this.radioButton5x5.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3x3
-            // 
-            this.radioButton3x3.AutoSize = true;
-            this.radioButton3x3.Checked = true;
-            this.radioButton3x3.Location = new System.Drawing.Point(12, 77);
-            this.radioButton3x3.Name = "radioButton3x3";
-            this.radioButton3x3.Size = new System.Drawing.Size(48, 17);
-            this.radioButton3x3.TabIndex = 12;
-            this.radioButton3x3.TabStop = true;
-            this.radioButton3x3.Text = "3 x 3";
-            this.radioButton3x3.UseVisualStyleBackColor = true;
-            // 
             // EdgeEnhancementDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(209, 195);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.radioButton7x7);
-            this.Controls.Add(this.radioButton5x5);
-            this.Controls.Add(this.radioButton3x3);
             this.Controls.Add(this.numericUpDown);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.closeButton);
@@ -152,9 +101,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Button applyButton;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RadioButton radioButton7x7;
-        private System.Windows.Forms.RadioButton radioButton5x5;
-        private System.Windows.Forms.RadioButton radioButton3x3;
     }
 }

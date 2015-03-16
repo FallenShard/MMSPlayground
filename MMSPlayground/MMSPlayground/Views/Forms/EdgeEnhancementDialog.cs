@@ -21,18 +21,6 @@ namespace MMSPlayground.Views.Forms
             return (int)numericUpDown.Value;
         }
 
-        public int GetKernelSize()
-        {
-            if (radioButton3x3.Checked)
-                return 3;
-            if (radioButton5x5.Checked)
-                return 5;
-            if (radioButton7x7.Checked)
-                return 7;
-
-            return 3;
-        }
-
         private void applyButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
