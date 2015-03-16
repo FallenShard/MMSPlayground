@@ -47,13 +47,23 @@ namespace MMSPlayground.Model
                 {
                     int index = (x + col) * bpp;
 
-                    int val1 = dataRow[index + 0];
-                    int val2 = dataRow[index + 1];
-                    int val3 = dataRow[index + 2];
-
                     neighbourhood[0][row + halfSize][col + halfSize] = dataRow[index + 0];
                     neighbourhood[1][row + halfSize][col + halfSize] = dataRow[index + 1];
                     neighbourhood[2][row + halfSize][col + halfSize] = dataRow[index + 2];
+                }
+            }
+        }
+
+        public static void ExtractNeighbourhood(Bitmap bmp, int x, int y, int kernelSize, int[][][] neighbourhood)
+        {
+            int halfSize = kernelSize / 2;
+            for (int row = -halfSize; row <= halfSize; row++)
+            {
+                for (int col = -halfSize; col <= halfSize; col++)
+                {
+                    neighbourhood[0][row + halfSize][col + halfSize] = bmp.GetPixel(x + col, y + row).B;
+                    neighbourhood[1][row + halfSize][col + halfSize] = bmp.GetPixel(x + col, y + row).G;
+                    neighbourhood[2][row + halfSize][col + halfSize] = bmp.GetPixel(x + col, y + row).R;
                 }
             }
         }

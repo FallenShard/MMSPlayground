@@ -44,21 +44,10 @@ namespace MMSPlayground.Filters
             }
             else
             {
-                //for (int y = 0; y < bitmap.Height; y++)
-                //{
-                //    for (int x = 0; x < bitmap.Width; x++)
-                //    {
-                //        Color currPixel = bitmap.GetPixel(x, y);
+                Kernel kernel = GetConvolutionKernel(m_kernelSize);
+                int[][][] neighbourhood = AllocateNeighbourhood();
 
-                //        int newR = ImageUtils.Clamp(currPixel.R + m_bias, 0, 255);
-                //        int newG = ImageUtils.Clamp(currPixel.G + m_bias, 0, 255);
-                //        int newB = ImageUtils.Clamp(currPixel.B + m_bias, 0, 255);
-
-                //        Color newPixel = Color.FromArgb(newR, newG, newB);
-
-                //        bitmap.SetPixel(x, y, newPixel);
-                //    }
-                //}
+                TransformSafe(bitmap, paddedBitmap, kernel, neighbourhood, paddingSize);
             }
 
             m_model.SetBitmap(bitmap);
@@ -88,6 +77,11 @@ namespace MMSPlayground.Filters
 
         protected abstract Kernel GetConvolutionKernel(int kernelSize);
 
+        public abstract string FilterName
+        {
+            get;
+        }
+
         protected unsafe virtual void TransformUnsafe(BitmapData bmd, BitmapData paddedBmd, int bpp, Kernel kernel, int[][][] neighbourhood, int paddingSize)
         {
             for (int y = 0; y < bmd.Height; y++)
@@ -107,9 +101,21 @@ namespace MMSPlayground.Filters
             }
         }
 
-        public abstract string FilterName
+        protected virtual void TransformSafe(Bitmap bmp, Bitmap paddedBmp, Kernel kernel, int[][][] neighbourhood, int paddingSize)
         {
-             get;
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                for (int x = 0; x < bmp.Width; x++)
+                {
+                    ImageUtils.ExtractNeighbourhood(paddedBmp, x + paddingSize, y + paddingSize, m_kernelSize, neighbourhood);
+
+                    int newR = (byte)kernel.Convolve(neighbourhood[2]);
+                    int newG = (byte)kernel.Convolve(neighbourhood[1]);
+                    int newB = (byte)kernel.Convolve(neighbourhood[0]);
+
+                    bmp.SetPixel(x, y, Color.FromArgb(newR, newG, newB));
+                }
+            }
         }
     }
 }
