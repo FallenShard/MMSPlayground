@@ -95,5 +95,13 @@ namespace MMSPlayground.Filters
 
             return clone;
         }
+
+        public string FilterName
+        {
+            get
+            {
+                return "Brightness";
+            }
+        }
     }
 }

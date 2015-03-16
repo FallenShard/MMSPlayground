@@ -102,5 +102,10 @@ namespace MMSPlayground.Filters
                 }
             }
         }
+
+        public abstract string FilterName
+        {
+             get;
+        }
     }
 }

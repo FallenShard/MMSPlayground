@@ -14,7 +14,7 @@ namespace MMSPlayground.Views
         void DisplayErrorMessage(string message, string title);
         void SetChannelsViewStatus(bool status);
         void InvalidateView();
-        void SetUndoEnabled(bool enabled);
-        void SetRedoEnabled(bool enabled);
+        void SetUndoEnabled(bool enabled, string undoActionName);
+        void SetRedoEnabled(bool enabled, string redoActionName);
     }
 }

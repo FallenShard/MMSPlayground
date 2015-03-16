@@ -102,7 +102,9 @@ namespace MMSPlayground.Presenters
                 filter.Undo();
 
                 if (m_filterHistory.Count == 0)
-                    m_mainView.SetUndoEnabled(false);
+                    m_mainView.SetUndoEnabled(false, "");
+                else
+                    m_mainView.SetUndoEnabled(true, m_filterHistory.Peek().FilterName);
 
                 GC.Collect();
             }
@@ -121,10 +123,10 @@ namespace MMSPlayground.Presenters
             filter.Apply();
 
             m_filterHistory.Push(filter);
-            m_mainView.SetUndoEnabled(true);
+            m_mainView.SetUndoEnabled(true, m_filterHistory.Peek().FilterName);
 
             m_redoFilter = filter.Clone();
-            m_mainView.SetRedoEnabled(true);
+            m_mainView.SetRedoEnabled(true, m_redoFilter.FilterName);
         }
 
         private void OnBitmapChanged(IImageModel model, BitmapChangedEventArgs args)

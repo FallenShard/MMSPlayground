@@ -10,5 +10,6 @@ namespace MMSPlayground.Filters
         void Apply();
         void Undo();
         IFilter Clone();
+        string FilterName { get; }
     }
 }

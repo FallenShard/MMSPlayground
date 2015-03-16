@@ -208,14 +208,16 @@ namespace MMSPlayground.Views.Forms
             mainPictureBox.Invalidate();
         }
 
-        public void SetUndoEnabled(bool enabled)
+        public void SetUndoEnabled(bool enabled, string undoActionName)
         {
             undoToolStripMenuItem.Enabled = enabled;
+            undoToolStripMenuItem.Text = "Undo " + undoActionName;
         }
 
-        public void SetRedoEnabled(bool enabled)
+        public void SetRedoEnabled(bool enabled, string redoActionName)
         {
             redoToolStripMenuItem.Enabled = enabled;
+            redoToolStripMenuItem.Text = "Redo " + redoActionName;
         }
 
         private void SetResizeMode(ToolStripMenuItem clickedItem, IResizeStrategy resizeMode)

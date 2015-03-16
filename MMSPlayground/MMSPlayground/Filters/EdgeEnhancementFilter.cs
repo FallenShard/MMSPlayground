@@ -69,9 +69,15 @@ namespace MMSPlayground.Filters
                         dataRow[index + 1] = (byte)ImageUtils.Clamp(max3, 0, 255);
                         dataRow[index + 0] = (byte)ImageUtils.Clamp(max3, 0, 255);
                     }
-
-                    
                 }
+            }
+        }
+
+        public override string FilterName
+        {
+            get
+            {
+                return "Edge Enhancement";
             }
         }
     }

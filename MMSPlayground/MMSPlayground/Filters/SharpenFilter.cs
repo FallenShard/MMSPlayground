@@ -61,5 +61,13 @@ namespace MMSPlayground.Filters
 
             return new Kernel(ker, n - 8, 0);
         }
+
+        public override string FilterName
+        {
+            get
+            {
+                return "Sharpen";
+            }
+        }
     }
 }
