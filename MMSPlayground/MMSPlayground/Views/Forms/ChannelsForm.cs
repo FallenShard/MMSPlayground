@@ -47,6 +47,10 @@ namespace MMSPlayground.Views.Forms
             m_activeControls.Add(yPictureBox);
             m_activeControls.Add(cbPictureBox);
             m_activeControls.Add(crPictureBox);
+
+            yHistogram.Title = "Y Channel";
+            crHistogram.Title = "Cr Channel";
+            cbHistogram.Title = "Cb Channel";
         }
 
         public void DisplayImages(Bitmap bitmap, Bitmap[] channels, IList<int>[] histograms)

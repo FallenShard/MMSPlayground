@@ -15,7 +15,7 @@ namespace MMSPlayground.Views.Controls
         private static int LeftMargin = 22;
         private static int TopMargin = 25;
         private static int RightMargin = 12;
-        private static int BottomMargin = 34;
+        private static int BottomMargin = 47;
         private static int MarkerYOffset = -7;
 
         public int MinValue { get; set; }
@@ -57,6 +57,19 @@ namespace MMSPlayground.Views.Controls
 
                 pen.Dispose();
                 g.Dispose();
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                return mainLabel.Text;
+            }
+
+            set
+            {
+                mainLabel.Text = value;
             }
         }
 
@@ -148,7 +161,7 @@ namespace MMSPlayground.Views.Controls
         {
             int histoWidth = Width - LeftMargin - RightMargin;
 
-            Rectangle r = new Rectangle(LeftMargin, Height - BottomMargin / 2, histoWidth, BottomMargin / 2);
+            Rectangle r = new Rectangle(LeftMargin, Height - BottomMargin + 15, histoWidth, 12);
 
             LinearGradientBrush linGrBrush = new LinearGradientBrush(
                 new Point(r.Left, r.Top),
@@ -168,6 +181,8 @@ namespace MMSPlayground.Views.Controls
 
             histogramBox.Location = new Point(LeftMargin, TopMargin);
             histogramBox.Size = new Size(histoWidth, histoHeight);
+
+            mainLabel.Location = new Point((Width - mainLabel.Width) / 2, Height - mainLabel.Height);
         }
     }
 }
