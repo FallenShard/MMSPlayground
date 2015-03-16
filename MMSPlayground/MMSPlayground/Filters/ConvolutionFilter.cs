@@ -35,7 +35,7 @@ namespace MMSPlayground.Filters
 
                 int bpp = ImageUtils.GetComponentsPerPixel(bmd);
                 Kernel kernel = GetConvolutionKernel(m_kernelSize);
-                int[][,] neighbourhood = AllocateNeighbourhood();
+                int[][][] neighbourhood = AllocateNeighbourhood();
 
                 TransformUnsafe(bmd, paddedBmd, bpp, kernel, neighbourhood, paddingSize);
 
@@ -69,12 +69,16 @@ namespace MMSPlayground.Filters
             m_model.SetBitmap(m_prevBitmap);
         }
 
-        private int[][,] AllocateNeighbourhood()
+        private int[][][] AllocateNeighbourhood()
         {
-            int[][,] neighbourhood = new int[3][,];
+            int[][][] neighbourhood = new int[3][][];
 
             for (int i = 0; i < 3; i++)
-                neighbourhood[i] = new int[m_kernelSize, m_kernelSize];
+            {
+                neighbourhood[i] = new int[m_kernelSize][];
+                for (int j = 0; j < m_kernelSize; j++)
+                    neighbourhood[i][j] = new int[m_kernelSize];
+            }
 
             return neighbourhood;
         }
@@ -84,7 +88,7 @@ namespace MMSPlayground.Filters
 
         protected abstract Kernel GetConvolutionKernel(int kernelSize);
 
-        protected unsafe virtual void TransformUnsafe(BitmapData bmd, BitmapData paddedBmd, int bpp, Kernel kernel, int[][,] neighbourhood, int paddingSize)
+        protected unsafe virtual void TransformUnsafe(BitmapData bmd, BitmapData paddedBmd, int bpp, Kernel kernel, int[][][] neighbourhood, int paddingSize)
         {
             for (int y = 0; y < bmd.Height; y++)
             {

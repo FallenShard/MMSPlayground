@@ -34,7 +34,7 @@ namespace MMSPlayground.Filters
             return null;
         }
 
-        protected override unsafe void TransformUnsafe(BitmapData bmd, BitmapData paddedBmd, int bpp, Kernel kernel, int[][,] neighbourhood, int paddingSize)
+        protected override unsafe void TransformUnsafe(BitmapData bmd, BitmapData paddedBmd, int bpp, Kernel kernel, int[][][] neighbourhood, int paddingSize)
         {
             int[,] grayNb = new int[m_kernelSize, m_kernelSize];
 
@@ -51,7 +51,7 @@ namespace MMSPlayground.Filters
                     for (int row = 0; row < m_kernelSize; row++)
                         for (int col = 0; col < m_kernelSize; col++)
                         {
-                            grayNb[row, col] = (byte)((0.299 * (float)neighbourhood[2][row, col] + 0.587 * (float)neighbourhood[1][row, col] + 0.114 * (float)neighbourhood[0][row, col]));
+                            grayNb[row, col] = (byte)((0.299 * (float)neighbourhood[2][row][col] + 0.587 * (float)neighbourhood[1][row][col] + 0.114 * (float)neighbourhood[0][row][col]));
                         }
 
                     int diff1 = Math.Abs(grayNb[0, 0] - grayNb[2, 2]);
@@ -63,12 +63,15 @@ namespace MMSPlayground.Filters
                     int max2 = Math.Max(diff3, diff4);
                     int max3 = Math.Max(max1, max2);
 
-                    if (max3 > m_threshold && max3 > grayNb[2, 2])
+                    int finalVal = grayNb[1, 1];
+                    if (max3 > m_threshold && max3 > grayNb[1, 1])
                     {
-                        dataRow[index + 2] = (byte)ImageUtils.Clamp(max3, 0, 255);
-                        dataRow[index + 1] = (byte)ImageUtils.Clamp(max3, 0, 255);
-                        dataRow[index + 0] = (byte)ImageUtils.Clamp(max3, 0, 255);
+                        finalVal = max3;
                     }
+
+                    dataRow[index + 2] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
+                    dataRow[index + 1] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
+                    dataRow[index + 0] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
                 }
             }
         }

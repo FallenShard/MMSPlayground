@@ -36,7 +36,7 @@ namespace MMSPlayground.Model
             return Math.Max(min, Math.Min(value, max));
         }
 
-        public unsafe static void ExtractNeighbourhood(BitmapData data, int bpp, int x, int y, int kernelSize, int[][,] neighbourhood)
+        public unsafe static void ExtractNeighbourhood(BitmapData data, int bpp, int x, int y, int kernelSize, int[][][] neighbourhood)
         {
             int halfSize = kernelSize / 2;
             for (int row = -halfSize; row <= halfSize; row++)
@@ -51,9 +51,9 @@ namespace MMSPlayground.Model
                     int val2 = dataRow[index + 1];
                     int val3 = dataRow[index + 2];
 
-                    neighbourhood[0][row + halfSize, col + halfSize] = dataRow[index + 0];
-                    neighbourhood[1][row + halfSize, col + halfSize] = dataRow[index + 1];
-                    neighbourhood[2][row + halfSize, col + halfSize] = dataRow[index + 2];
+                    neighbourhood[0][row + halfSize][col + halfSize] = dataRow[index + 0];
+                    neighbourhood[1][row + halfSize][col + halfSize] = dataRow[index + 1];
+                    neighbourhood[2][row + halfSize][col + halfSize] = dataRow[index + 2];
                 }
             }
         }

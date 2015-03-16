@@ -9,11 +9,11 @@ namespace MMSPlayground.Filters.Convolution
 {
     public class Kernel
     {
-        private int[,] m_coeffs;
+        private int[][] m_coeffs;
 
         public int Factor { get; set; }
         public int Offset { get; set; }
-        public int[,] Coeff
+        public int[][] Coeff
         {
             get
             {
@@ -21,7 +21,7 @@ namespace MMSPlayground.Filters.Convolution
             }
         }
 
-        public Kernel(int[,] coeffs)
+        public Kernel(int[][] coeffs)
         {
             m_coeffs = coeffs;
 
@@ -29,7 +29,7 @@ namespace MMSPlayground.Filters.Convolution
             Offset = 0;
         }
 
-        public Kernel(int[,] coeffs, int factor, int offset)
+        public Kernel(int[][] coeffs, int factor, int offset)
         {
             m_coeffs = coeffs;
 
@@ -37,18 +37,15 @@ namespace MMSPlayground.Filters.Convolution
             Offset = offset;
         }
 
-        public int Convolve(int[,] pixelValues)
+        public int Convolve(int[][] pixelValues)
         {
-            int rows = pixelValues.GetLength(0);
-            int cols = pixelValues.GetLength(1);
-
             float sum = 0;
 
-            for (int y = 0; y < rows; y++)
+            for (int y = 0; y < pixelValues.Length; y++)
             {
-                for (int x = 0; x < cols; x++)
+                for (int x = 0; x < pixelValues[y].Length; x++)
                 {
-                    sum += m_coeffs[y, x] * pixelValues[y, x];
+                    sum += m_coeffs[y][x] * pixelValues[y][x];
                 }
             }
 
