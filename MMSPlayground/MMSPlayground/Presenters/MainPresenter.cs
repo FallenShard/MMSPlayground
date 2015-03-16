@@ -103,6 +103,8 @@ namespace MMSPlayground.Presenters
 
                 if (m_filterHistory.Count == 0)
                     m_mainView.SetUndoEnabled(false);
+
+                GC.Collect();
             }
         }
 
