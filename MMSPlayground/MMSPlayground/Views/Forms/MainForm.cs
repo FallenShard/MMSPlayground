@@ -164,6 +164,15 @@ namespace MMSPlayground.Views.Forms
                 SetResizeMode(stretchToFitToolStripMenuItem, new StretchResize());
         }
 
+        private void memoryCapacityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CapacityDialog dialog = new CapacityDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_presenter.SetUndoMemoryCapacity(dialog.GetMegabytes());
+            }
+        }
+
         public void DisplayImage(Bitmap bitmap)
         {
             mainPictureBox.Image = bitmap;

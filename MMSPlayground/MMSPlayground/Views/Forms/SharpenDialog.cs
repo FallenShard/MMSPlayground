@@ -14,6 +14,9 @@ namespace MMSPlayground.Views.Forms
         public SharpenDialog()
         {
             InitializeComponent();
+
+            numericUpDown.Select();
+            numericUpDown.Select(0, numericUpDown.Text.Length);
         }
 
         private void applyButton_Click(object sender, EventArgs e)

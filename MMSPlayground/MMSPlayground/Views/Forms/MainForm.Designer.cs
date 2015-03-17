@@ -60,6 +60,7 @@
             this.bppMetaToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.memoryCapacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -233,7 +234,8 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.useWin32CoreToolStripMenuItem,
             this.resizeToOriginalToolStripMenuItem,
-            this.resizeToolStripMenuItem});
+            this.resizeToolStripMenuItem,
+            this.memoryCapacityToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -335,6 +337,13 @@
             this.repeatToolStripMenuItem.Text = "Repeat";
             this.repeatToolStripMenuItem.Click += new System.EventHandler(this.repeatToolStripMenuItem_Click);
             // 
+            // memoryCapacityToolStripMenuItem
+            // 
+            this.memoryCapacityToolStripMenuItem.Name = "memoryCapacityToolStripMenuItem";
+            this.memoryCapacityToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.memoryCapacityToolStripMenuItem.Text = "Memory Capacity...";
+            this.memoryCapacityToolStripMenuItem.Click += new System.EventHandler(this.memoryCapacityToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,6 +400,7 @@
         private System.Windows.Forms.ToolStripMenuItem edgeEnhancementToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem repeatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem memoryCapacityToolStripMenuItem;
     }
 }
 

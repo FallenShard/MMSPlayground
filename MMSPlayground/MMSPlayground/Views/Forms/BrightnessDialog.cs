@@ -14,6 +14,9 @@ namespace MMSPlayground.Views.Forms
         public BrightnessDialog()
         {
             InitializeComponent();
+
+            numericUpDown.Select();
+            numericUpDown.Select(0, numericUpDown.Text.Length);
         }
 
         public int GetBrightnessBias()
