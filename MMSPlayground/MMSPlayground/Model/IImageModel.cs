@@ -16,6 +16,7 @@ namespace MMSPlayground.Model
         Bitmap GetBitmap();
         Bitmap[] GetChannels();
         Size GetSize();
+        int GetBitmapByteSize();
 
         bool GetWin32CoreUsageMode();
         void SetWin32CoreUsageMode(bool enabled);

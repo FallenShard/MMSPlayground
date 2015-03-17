@@ -14,6 +14,7 @@ namespace MMSPlayground.Model
         private bool m_win32Mode = true;
 
         private Bitmap m_bitmap = null;
+        private int m_memorySize = 0;
 
         private Bitmap[] m_channelBmps = new Bitmap[3];
 
@@ -27,6 +28,9 @@ namespace MMSPlayground.Model
         public void SetBitmap(Bitmap bitmap)
         {
             m_bitmap = bitmap;
+            BitmapData data = m_bitmap.LockBits(new Rectangle(0, 0, m_bitmap.Width, m_bitmap.Height), ImageLockMode.ReadWrite, m_bitmap.PixelFormat);
+            m_memorySize = data.Stride * data.Height * ImageUtils.GetComponentsPerPixel(data);
+            m_bitmap.UnlockBits(data);
 
             ComputeChannels();
 
@@ -46,6 +50,11 @@ namespace MMSPlayground.Model
         public Size GetSize()
         {
             return m_bitmap.Size;
+        }
+
+        public int GetBitmapByteSize()
+        {
+            return m_memorySize;
         }
 
         public bool GetWin32CoreUsageMode()

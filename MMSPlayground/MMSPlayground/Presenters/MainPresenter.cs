@@ -20,7 +20,9 @@ namespace MMSPlayground.Presenters
 
         private ChannelsPresenter m_channelsPresenter = null;
 
-        private Stack<IFilter> m_undoStack = new Stack<IFilter>();
+        private long m_memoryCapacity = 0;
+        private long m_memorySize = 0;
+        private LinkedList<IFilter> m_undoDeque = new LinkedList<IFilter>();
         private Stack<IFilter> m_redoStack = new Stack<IFilter>();
         private IFilter m_repeatFilter = null;
 
@@ -97,15 +99,18 @@ namespace MMSPlayground.Presenters
 
         public void RequestUndo()
         {
-            if (m_undoStack.Count > 0)
+            if (m_undoDeque.Count > 0)
             {
-                IFilter filter = m_undoStack.Pop();
+                IFilter filter = m_undoDeque.Last();
+                m_undoDeque.RemoveLast();
                 filter.Undo();
 
-                if (m_undoStack.Count == 0)
+                m_memorySize -= m_model.GetBitmapByteSize();
+
+                if (m_undoDeque.Count == 0)
                     m_mainView.SetUndoEnabled(false, "");
                 else
-                    m_mainView.SetUndoEnabled(true, m_undoStack.Peek().FilterName);
+                    m_mainView.SetUndoEnabled(true, m_undoDeque.Last().FilterName);
 
                 m_redoStack.Push(filter);
                 m_mainView.SetRedoEnabled(true, m_redoStack.Peek().FilterName);
@@ -117,7 +122,14 @@ namespace MMSPlayground.Presenters
             if (m_redoStack.Count > 0)
             {
                 IFilter filter = m_redoStack.Pop();
-                ApplyFilter(filter);
+                filter.Apply();
+
+                m_memorySize += m_model.GetBitmapByteSize();
+                m_undoDeque.AddLast(filter);
+                m_mainView.SetUndoEnabled(true, m_undoDeque.Last().FilterName);
+
+                m_repeatFilter = filter.Clone();
+                m_mainView.SetRepeatEnabled(true, m_repeatFilter.FilterName);
 
                 if (m_redoStack.Count == 0)
                     m_mainView.SetRedoEnabled(false, "");
@@ -134,15 +146,33 @@ namespace MMSPlayground.Presenters
             }
         }
 
+        public void SetUndoMemoryCapacity(int megabytes)
+        {
+            m_memoryCapacity = megabytes << 20;
+        }
+
         private void ApplyFilter(IFilter filter)
         {
             filter.Apply();
 
-            m_undoStack.Push(filter);
-            m_mainView.SetUndoEnabled(true, m_undoStack.Peek().FilterName);
+            m_memorySize += m_model.GetBitmapByteSize();
+            
+            if (m_memoryCapacity != 0 && m_memorySize > m_memoryCapacity && m_undoDeque.Count > 0)
+            {
+                m_undoDeque.RemoveFirst();
+                m_memorySize -= m_model.GetBitmapByteSize();
+            }
+
+            m_undoDeque.AddLast(filter);
+            m_mainView.SetUndoEnabled(true, m_undoDeque.Last().FilterName);
 
             m_repeatFilter = filter.Clone();
             m_mainView.SetRepeatEnabled(true, m_repeatFilter.FilterName);
+
+            m_redoStack.Clear();
+            m_mainView.SetRedoEnabled(false, "");
+
+            GC.Collect();
         }
 
         private void OnBitmapChanged(IImageModel model, BitmapChangedEventArgs args)
