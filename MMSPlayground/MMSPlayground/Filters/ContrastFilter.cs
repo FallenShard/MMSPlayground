@@ -25,8 +25,6 @@ namespace MMSPlayground.Filters
 
         public void Apply()
         {
-            Console.WriteLine("Applying Contrast with coefficient: " + m_coeff);
-
             Bitmap bitmap = m_model.GetBitmap();
             m_prevBitmap = (Bitmap)bitmap.Clone();
 
@@ -90,8 +88,6 @@ namespace MMSPlayground.Filters
 
         public void Undo()
         {
-            Console.WriteLine("Undoing contrast with coefficient: " + m_coeff);
-
             m_model.SetBitmap(m_prevBitmap);
         }
 

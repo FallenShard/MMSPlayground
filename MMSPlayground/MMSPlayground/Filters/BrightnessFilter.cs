@@ -25,8 +25,6 @@ namespace MMSPlayground.Filters
 
         public void Apply()
         {
-            Console.WriteLine("Applying Brightness with bias: " + m_bias);
-
             Bitmap bitmap = m_model.GetBitmap();
             m_prevBitmap = (Bitmap)bitmap.Clone();
 
@@ -84,8 +82,6 @@ namespace MMSPlayground.Filters
 
         public void Undo()
         {
-            Console.WriteLine("Undoing brightness with bias: " + m_bias);
-
             m_model.SetBitmap(m_prevBitmap);
         }
 
