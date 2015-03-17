@@ -136,6 +136,11 @@ namespace MMSPlayground.Views.Forms
             m_presenter.RequestRedo();
         }
 
+        private void repeatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.RequestRepeat();
+        }
+
         private void useWin32CoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             useWin32CoreToolStripMenuItem.Checked = !useWin32CoreToolStripMenuItem.Checked;
@@ -218,6 +223,12 @@ namespace MMSPlayground.Views.Forms
         {
             redoToolStripMenuItem.Enabled = enabled;
             redoToolStripMenuItem.Text = "Redo " + redoActionName;
+        }
+
+        public void SetRepeatEnabled(bool enabled, string repeatActionName)
+        {
+            repeatToolStripMenuItem.Enabled = enabled;
+            repeatToolStripMenuItem.Text = "Repeat " + repeatActionName;
         }
 
         private void SetResizeMode(ToolStripMenuItem clickedItem, IResizeStrategy resizeMode)

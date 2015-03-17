@@ -28,5 +28,6 @@ namespace MMSPlayground.Presenters
 
         void RequestUndo();
         void RequestRedo();
+        void RequestRepeat();
     }
 }

@@ -16,5 +16,6 @@ namespace MMSPlayground.Views
         void InvalidateView();
         void SetUndoEnabled(bool enabled, string undoActionName);
         void SetRedoEnabled(bool enabled, string redoActionName);
+        void SetRepeatEnabled(bool enabled, string repeatActionName);
     }
 }

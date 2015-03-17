@@ -20,8 +20,9 @@ namespace MMSPlayground.Presenters
 
         private ChannelsPresenter m_channelsPresenter = null;
 
-        private Stack<IFilter> m_filterHistory = new Stack<IFilter>();
-        private IFilter m_redoFilter = null;
+        private Stack<IFilter> m_undoStack = new Stack<IFilter>();
+        private Stack<IFilter> m_redoStack = new Stack<IFilter>();
+        private IFilter m_repeatFilter = null;
 
         public MainPresenter(IImageModel model)
         {
@@ -96,25 +97,40 @@ namespace MMSPlayground.Presenters
 
         public void RequestUndo()
         {
-            if (m_filterHistory.Count > 0)
+            if (m_undoStack.Count > 0)
             {
-                IFilter filter = m_filterHistory.Pop();
+                IFilter filter = m_undoStack.Pop();
                 filter.Undo();
 
-                if (m_filterHistory.Count == 0)
+                if (m_undoStack.Count == 0)
                     m_mainView.SetUndoEnabled(false, "");
                 else
-                    m_mainView.SetUndoEnabled(true, m_filterHistory.Peek().FilterName);
+                    m_mainView.SetUndoEnabled(true, m_undoStack.Peek().FilterName);
 
-                GC.Collect();
+                m_redoStack.Push(filter);
+                m_mainView.SetRedoEnabled(true, m_redoStack.Peek().FilterName);
             }
         }
 
         public void RequestRedo()
         {
-            if (m_redoFilter != null)
+            if (m_redoStack.Count > 0)
             {
-                ApplyFilter(m_redoFilter);
+                IFilter filter = m_redoStack.Pop();
+                ApplyFilter(filter);
+
+                if (m_redoStack.Count == 0)
+                    m_mainView.SetRedoEnabled(false, "");
+                else
+                    m_mainView.SetRedoEnabled(true, m_redoStack.Peek().FilterName);
+            }
+        }
+
+        public void RequestRepeat()
+        {
+            if (m_repeatFilter != null)
+            {
+                ApplyFilter(m_repeatFilter);
             }
         }
 
@@ -122,11 +138,11 @@ namespace MMSPlayground.Presenters
         {
             filter.Apply();
 
-            m_filterHistory.Push(filter);
-            m_mainView.SetUndoEnabled(true, m_filterHistory.Peek().FilterName);
+            m_undoStack.Push(filter);
+            m_mainView.SetUndoEnabled(true, m_undoStack.Peek().FilterName);
 
-            m_redoFilter = filter.Clone();
-            m_mainView.SetRedoEnabled(true, m_redoFilter.FilterName);
+            m_repeatFilter = filter.Clone();
+            m_mainView.SetRepeatEnabled(true, m_repeatFilter.FilterName);
         }
 
         private void OnBitmapChanged(IImageModel model, BitmapChangedEventArgs args)
