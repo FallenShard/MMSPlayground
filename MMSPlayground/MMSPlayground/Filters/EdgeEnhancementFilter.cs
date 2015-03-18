@@ -94,9 +94,9 @@ namespace MMSPlayground.Filters
                                 max = grayNb[yy][xx];
 
                     int finalVal = grayNb[1][1];
-                    if (max3 > m_threshold && max3 > grayNb[1][1])
+                    if (max > m_threshold && max > grayNb[1][1])
                     {
-                        finalVal = max3;
+                        finalVal = max;
                     }
 
                     dataRow[index + 2] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
