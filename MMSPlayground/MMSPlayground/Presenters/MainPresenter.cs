@@ -59,6 +59,15 @@ namespace MMSPlayground.Presenters
         {
             Bitmap bitmap = new Bitmap(fileName);
             m_model.SetBitmap(bitmap);
+
+            m_undoDeque.Clear();
+            m_mainView.SetUndoEnabled(false, "");
+
+            m_redoStack.Clear();
+            m_mainView.SetRedoEnabled(false, "");
+
+            m_repeatFilter = null;
+            m_mainView.SetRepeatEnabled(false, "");
         }
 
         public void SaveBitmap(string fileName)
