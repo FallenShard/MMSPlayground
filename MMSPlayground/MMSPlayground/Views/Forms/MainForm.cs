@@ -51,7 +51,7 @@ namespace MMSPlayground.Views.Forms
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Title = "Open Image";
-            dlg.Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG";
+            dlg.Filter = "Image Files(*.BMP;*.JPG;*.PNG;*.BPF)|*.BMP;*.JPG;*.PNG;*.BPF";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Text = "MMS Playground - " + dlg.SafeFileName;
@@ -199,7 +199,7 @@ namespace MMSPlayground.Views.Forms
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Title = "Save Image";
-            dlg.Filter = "Windows Bitmap(*.bmp)|*.bmp|JPG Image(*.jpg)|*.jpg|Portable Network Graphics (*.png)|*.png";
+            dlg.Filter = "Windows Bitmap(*.bmp)|*.bmp|JPG Image(*.jpg)|*.jpg|Portable Network Graphics (*.png)|*.png|Bart Picture Format (*.bpf)|*.bpf";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 m_presenter.SaveBitmap(dlg.FileName);
