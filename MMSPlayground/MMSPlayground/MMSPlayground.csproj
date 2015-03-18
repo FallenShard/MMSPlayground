@@ -51,6 +51,9 @@
     <Compile Include="Filters\Convolution\Kernel.cs" />
     <Compile Include="Filters\EdgeEnhancementFilter.cs" />
     <Compile Include="Filters\SharpenFilter.cs" />
+    <Compile Include="IO\BitmapIO.cs" />
+    <Compile Include="IO\BpfReader.cs" />
+    <Compile Include="IO\BpfWriter.cs" />
     <Compile Include="Model\IImageModel.cs" />
     <Compile Include="Presenters\IChannelsPresenter.cs" />
     <Compile Include="Presenters\IMainPresenter.cs" />

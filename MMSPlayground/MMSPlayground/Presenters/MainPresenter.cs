@@ -8,6 +8,7 @@ using MMSPlayground.Views;
 using MMSPlayground.Views.Forms;
 using MMSPlayground.Model;
 using MMSPlayground.Filters;
+using MMSPlayground.IO;
 
 
 namespace MMSPlayground.Presenters
@@ -57,7 +58,7 @@ namespace MMSPlayground.Presenters
 
         public void OpenBitmap(string fileName)
         {
-            Bitmap bitmap = new Bitmap(fileName);
+            Bitmap bitmap = BitmapIO.Open(fileName);
             m_model.SetBitmap(bitmap);
 
             m_undoDeque.Clear();
@@ -73,7 +74,7 @@ namespace MMSPlayground.Presenters
         public void SaveBitmap(string fileName)
         {
             Bitmap bitmap = m_model.GetBitmap();
-            bitmap.Save(fileName);
+            BitmapIO.Save(bitmap, fileName);
         }
 
         public void RequestSaveBitmap()
