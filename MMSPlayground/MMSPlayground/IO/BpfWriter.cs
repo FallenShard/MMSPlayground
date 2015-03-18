@@ -17,47 +17,55 @@ namespace MMSPlayground.IO
 
         public void SaveToFile(Bitmap bitmap, string fileName)
         {
-            Bitmap[] bitmapChannels = new Bitmap[3];
-            ImageUtils.ComputeYCbCr(bitmap, ref bitmapChannels);
+            Bitmap yCbCrBmp = null;
+            ImageUtils.ComputeYCbCr(bitmap, ref yCbCrBmp);
 
 
-            Rectangle bmpRect = new Rectangle(0, 0, bitmapChannels[0].Width, bitmapChannels[0].Height);
-            BitmapData bmdY = bitmapChannels[0].LockBits(bmpRect, ImageLockMode.ReadWrite, bitmapChannels[0].PixelFormat);
-            BitmapData bmdCb = bitmapChannels[1].LockBits(bmpRect, ImageLockMode.ReadWrite, bitmapChannels[1].PixelFormat);
-            BitmapData bmdCr = bitmapChannels[2].LockBits(bmpRect, ImageLockMode.ReadWrite, bitmapChannels[2].PixelFormat);
+            Rectangle bmpRect = new Rectangle(0, 0, yCbCrBmp.Width, yCbCrBmp.Height);
+            BitmapData bmdYCbCr = yCbCrBmp.LockBits(bmpRect, ImageLockMode.ReadWrite, yCbCrBmp.PixelFormat);
 
             IList<byte> yChannel = new List<byte>();
+            IList<byte> cbChannel = new List<byte>();
+            IList<byte> crChannel = new List<byte>();
 
             unsafe
             {
-                for (int y = 0; y < bmdY.Height; y++)
+                for (int y = 0; y < bmdYCbCr.Height; y++)
                 {
-                    byte* YRow = (byte*)bmdY.Scan0 + (y * bmdY.Stride);
+                    byte* dataRow = (byte*)bmdYCbCr.Scan0 + (y * bmdYCbCr.Stride);
 
-                    for (int x = 0; x < bmdY.Width; x++)
+                    for (int x = 0; x < bmdYCbCr.Width; x++)
                     {
                         int index = x * 3;
 
-                        yChannel.Add(YRow[index]);
+                        yChannel.Add(dataRow[index + 0]);
+                        if (x % 4 == 0)
+                        {
+                            cbChannel.Add(dataRow[index + 1]);
+                            crChannel.Add(dataRow[index + 2]);
+                        }
                     }
                 }
             }
 
             byte[] yBytes = yChannel.ToArray();
+            byte[] cbBytes = cbChannel.ToArray();
+            byte[] crBytes = crChannel.ToArray();
 
             using (FileStream file = File.Create(fileName))
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                memoryStream.Write(BitConverter.GetBytes(bmdY.Width), 0, sizeof(int));
-                memoryStream.Write(BitConverter.GetBytes(bmdY.Height), 0, sizeof(int));
-                memoryStream.Write(BitConverter.GetBytes(bmdY.Stride), 0, sizeof(int));
+                memoryStream.Write(BitConverter.GetBytes(bmdYCbCr.Width), 0, sizeof(int));
+                memoryStream.Write(BitConverter.GetBytes(bmdYCbCr.Height), 0, sizeof(int));
+                memoryStream.Write(BitConverter.GetBytes(bmdYCbCr.Stride), 0, sizeof(int));
                 memoryStream.Write(yBytes, 0, yBytes.Length);
+                memoryStream.Write(cbBytes, 0, cbBytes.Length);
+                memoryStream.Write(crBytes, 0, crBytes.Length);
+
                 memoryStream.WriteTo(file);
             }
 
-            bitmapChannels[0].UnlockBits(bmdY);
-            bitmapChannels[1].UnlockBits(bmdCb);
-            bitmapChannels[2].UnlockBits(bmdCr);
+            yCbCrBmp.UnlockBits(bmdYCbCr);
         }
     }
 }

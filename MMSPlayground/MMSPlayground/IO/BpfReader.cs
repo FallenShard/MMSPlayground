@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMSPlayground.Model;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -35,19 +36,68 @@ namespace MMSPlayground.IO
             int height = BitConverter.ToInt32(buff, HeightOffset);
             int stride = BitConverter.ToInt32(buff, StrideOffset);
 
-            IList<byte> pixelData = new List<byte>();
+            IList<byte> yData = new List<byte>();
+            IList<byte> cbData = new List<byte>();
+            IList<byte> crData = new List<byte>();
 
-            for (int i = 8; i < buff.Length; i++)
+            int iter = 12;
+            int end = iter + width * height;
+
+            while (iter < end)
             {
-                pixelData.Add(buff[i]);
-                pixelData.Add(150);
-                pixelData.Add(175);
+                yData.Add(buff[iter++]);
             }
 
-            byte[] pixelBytes = pixelData.ToArray();
+            int step = width * height / 4;
+            end += step;
+            while (iter < end)
+            {
+                cbData.Add(buff[iter]);
+                crData.Add(buff[iter + step]);
+                iter++;
+            }
 
-            IntPtr unmanagedPointer = Marshal.AllocHGlobal(pixelBytes.Length);
-            Marshal.Copy(pixelBytes, 0, unmanagedPointer, pixelBytes.Length);
+            byte[] yBytes = yData.ToArray();
+            byte[] cbBytes = cbData.ToArray();
+            byte[] crBytes = crData.ToArray();
+
+            byte[] mainData = new byte[height * width * 3];
+
+            byte[] yCbCr = new byte[3];
+            byte[] rgb = new byte[3];
+
+            rgb[0] = 15;
+            rgb[1] = 253;
+            rgb[2] = 67;
+
+            ImageUtils.RgbToYCbCr(rgb, yCbCr);
+
+
+            ImageUtils.YCbCrToRgb(yCbCr, rgb);
+
+
+
+            int chromaIter = 0;
+            for (int i = 0; i < yBytes.Length; i++)
+            {
+                yCbCr[0] = yBytes[i];
+                yCbCr[1] = cbBytes[chromaIter];
+                yCbCr[2] = crBytes[chromaIter];
+
+                ImageUtils.YCbCrToRgb(yCbCr, rgb);
+
+                mainData[3 * i + 2] = rgb[0];
+                mainData[3 * i + 1] = rgb[1];
+                mainData[3 * i + 0] = rgb[2];
+
+                if ((i + 1) % 4 == 0)
+                    chromaIter++;
+            }
+
+
+
+            IntPtr unmanagedPointer = Marshal.AllocHGlobal(mainData.Length);
+            Marshal.Copy(mainData, 0, unmanagedPointer, mainData.Length);
 
             Bitmap bitmap = new Bitmap(width, height, stride, PixelFormat.Format24bppRgb, unmanagedPointer);
 
