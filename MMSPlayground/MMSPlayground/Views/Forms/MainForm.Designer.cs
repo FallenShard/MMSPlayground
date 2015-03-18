@@ -46,12 +46,14 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useWin32CoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToOriginalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preserveAspectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stretchToFitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.memoryCapacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.imgMetaToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.imgToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -59,8 +61,6 @@
             this.dimToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppMetaToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.memoryCapacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -229,6 +229,15 @@
             this.redoToolStripMenuItem.Text = "Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
+            // repeatToolStripMenuItem
+            // 
+            this.repeatToolStripMenuItem.Enabled = false;
+            this.repeatToolStripMenuItem.Name = "repeatToolStripMenuItem";
+            this.repeatToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.repeatToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
+            this.repeatToolStripMenuItem.Text = "Repeat";
+            this.repeatToolStripMenuItem.Click += new System.EventHandler(this.repeatToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -243,7 +252,7 @@
             // useWin32CoreToolStripMenuItem
             // 
             this.useWin32CoreToolStripMenuItem.Name = "useWin32CoreToolStripMenuItem";
-            this.useWin32CoreToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.useWin32CoreToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.useWin32CoreToolStripMenuItem.Text = "Use Win32Core";
             this.useWin32CoreToolStripMenuItem.Click += new System.EventHandler(this.useWin32CoreToolStripMenuItem_Click);
             // 
@@ -251,7 +260,7 @@
             // 
             this.resizeToOriginalToolStripMenuItem.Enabled = false;
             this.resizeToOriginalToolStripMenuItem.Name = "resizeToOriginalToolStripMenuItem";
-            this.resizeToOriginalToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.resizeToOriginalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.resizeToOriginalToolStripMenuItem.Text = "Resize To Original";
             this.resizeToOriginalToolStripMenuItem.Click += new System.EventHandler(this.resizeToOriginalToolStripMenuItem_Click);
             // 
@@ -261,7 +270,7 @@
             this.preserveAspectToolStripMenuItem,
             this.stretchToFitToolStripMenuItem});
             this.resizeToolStripMenuItem.Name = "resizeToolStripMenuItem";
-            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.resizeToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.resizeToolStripMenuItem.Text = "Resize Mode";
             // 
             // preserveAspectToolStripMenuItem
@@ -277,6 +286,13 @@
             this.stretchToFitToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.stretchToFitToolStripMenuItem.Text = "Stretch To Fit";
             this.stretchToFitToolStripMenuItem.Click += new System.EventHandler(this.stretchToFitToolStripMenuItem_Click);
+            // 
+            // memoryCapacityToolStripMenuItem
+            // 
+            this.memoryCapacityToolStripMenuItem.Name = "memoryCapacityToolStripMenuItem";
+            this.memoryCapacityToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.memoryCapacityToolStripMenuItem.Text = "Memory Capacity...";
+            this.memoryCapacityToolStripMenuItem.Click += new System.EventHandler(this.memoryCapacityToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -328,22 +344,6 @@
             this.bppToolStripStatusLabel.Size = new System.Drawing.Size(29, 17);
             this.bppToolStripStatusLabel.Text = "N/A";
             // 
-            // repeatToolStripMenuItem
-            // 
-            this.repeatToolStripMenuItem.Enabled = false;
-            this.repeatToolStripMenuItem.Name = "repeatToolStripMenuItem";
-            this.repeatToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.repeatToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
-            this.repeatToolStripMenuItem.Text = "Repeat";
-            this.repeatToolStripMenuItem.Click += new System.EventHandler(this.repeatToolStripMenuItem_Click);
-            // 
-            // memoryCapacityToolStripMenuItem
-            // 
-            this.memoryCapacityToolStripMenuItem.Name = "memoryCapacityToolStripMenuItem";
-            this.memoryCapacityToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.memoryCapacityToolStripMenuItem.Text = "Memory Capacity...";
-            this.memoryCapacityToolStripMenuItem.Click += new System.EventHandler(this.memoryCapacityToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,6 +352,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.mainPictureBox);
             this.Controls.Add(this.mainMenuStrip);
+            this.ImeMode = System.Windows.Forms.ImeMode.On;
             this.MainMenuStrip = this.mainMenuStrip;
             this.Name = "MainForm";
             this.Text = "MMS Playground";

@@ -54,7 +54,7 @@ namespace MMSPlayground.Views.Forms
             dlg.Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Text = dlg.SafeFileName;
+                Text = "MMS Playground - " + dlg.SafeFileName;
                 EnableMenuItems();
 
                 m_presenter.OpenBitmap(dlg.FileName);
