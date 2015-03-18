@@ -21,6 +21,133 @@ namespace MMSPlayground.Model
             ycbcr[2] = (byte)(128 + (byte)((0.5 * (float)rgb[0] - 0.41869 * (float)rgb[1] - 0.08131 * (float)rgb[2])));
         }
 
+        public static void ComputeYCbCr(Bitmap bitmap, ref Bitmap[] channels, ref IList<int>[] histograms)
+        {
+            channels[0] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+            channels[1] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+            channels[2] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+
+            histograms[0] = new List<int>(256);
+            histograms[1] = new List<int>(256);
+            histograms[2] = new List<int>(256);
+
+            for (int i = 0; i < 256; i++)
+            {
+                histograms[0].Add(0);
+                histograms[1].Add(0);
+                histograms[2].Add(0);
+            }
+
+            Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+            BitmapData bmdY  = channels[0].LockBits(bmpRect, ImageLockMode.ReadWrite, channels[0].PixelFormat);
+            BitmapData bmdCb = channels[1].LockBits(bmpRect, ImageLockMode.ReadWrite, channels[1].PixelFormat);
+            BitmapData bmdCr = channels[2].LockBits(bmpRect, ImageLockMode.ReadWrite, channels[2].PixelFormat);
+
+            int bpp = GetComponentsPerPixel(bmd);
+
+            byte[] rgb = new byte[3];
+            byte[] yCbCr = new byte[3];
+
+            unsafe
+            {
+                for (int y = 0; y < bmd.Height; y++)
+                {
+                    byte* enhRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
+                    byte* YRow   = (byte*)bmdY.Scan0 + (y * bmdY.Stride);
+                    byte* CbRow  = (byte*)bmdCb.Scan0 + (y * bmdCb.Stride);
+                    byte* CrRow  = (byte*)bmdCr.Scan0 + (y * bmdCr.Stride);
+
+                    for (int x = 0; x < bmd.Width; x++)
+                    {
+                        int index = x * bpp;
+                        rgb[0] = enhRow[index + 2];
+                        rgb[1] = enhRow[index + 1];
+                        rgb[2] = enhRow[index + 0];
+
+                        ImageUtils.RgbToYCbCr(rgb, yCbCr);
+
+                        histograms[0][yCbCr[0]]++;
+                        histograms[1][yCbCr[1]]++;
+                        histograms[2][yCbCr[2]]++;
+
+                        YRow[index + 2] = yCbCr[0];
+                        YRow[index + 1] = yCbCr[0];
+                        YRow[index + 0] = yCbCr[0];
+
+                        CbRow[index + 2] = 0;
+                        CbRow[index + 1] = (byte)(0xFF - yCbCr[1]);
+                        CbRow[index + 0] = yCbCr[1];
+
+                        CrRow[index + 2] = yCbCr[2];
+                        CrRow[index + 1] = (byte)(0xFF - yCbCr[2]);
+                        CrRow[index + 0] = 0;
+                    }
+                }
+            }
+
+            bitmap.UnlockBits(bmd);
+            channels[0].UnlockBits(bmdY);
+            channels[1].UnlockBits(bmdCb);
+            channels[2].UnlockBits(bmdCr);
+        }
+
+        public static void ComputeYCbCr(Bitmap bitmap, ref Bitmap[] channels)
+        {
+            channels[0] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+            channels[1] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+            channels[2] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
+
+            Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+            BitmapData bmdY = channels[0].LockBits(bmpRect, ImageLockMode.ReadWrite, channels[0].PixelFormat);
+            BitmapData bmdCb = channels[1].LockBits(bmpRect, ImageLockMode.ReadWrite, channels[1].PixelFormat);
+            BitmapData bmdCr = channels[2].LockBits(bmpRect, ImageLockMode.ReadWrite, channels[2].PixelFormat);
+
+            int bpp = GetComponentsPerPixel(bmd);
+
+            byte[] rgb = new byte[3];
+            byte[] yCbCr = new byte[3];
+
+            unsafe
+            {
+                for (int y = 0; y < bmd.Height; y++)
+                {
+                    byte* enhRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
+                    byte* YRow = (byte*)bmdY.Scan0 + (y * bmdY.Stride);
+                    byte* CbRow = (byte*)bmdCb.Scan0 + (y * bmdCb.Stride);
+                    byte* CrRow = (byte*)bmdCr.Scan0 + (y * bmdCr.Stride);
+
+                    for (int x = 0; x < bmd.Width; x++)
+                    {
+                        int index = x * bpp;
+                        rgb[0] = enhRow[index + 2];
+                        rgb[1] = enhRow[index + 1];
+                        rgb[2] = enhRow[index + 0];
+
+                        ImageUtils.RgbToYCbCr(rgb, yCbCr);
+
+                        YRow[index + 2] = yCbCr[0];
+                        YRow[index + 1] = yCbCr[0];
+                        YRow[index + 0] = yCbCr[0];
+
+                        CbRow[index + 2] = 0;
+                        CbRow[index + 1] = (byte)(0xFF - yCbCr[1]);
+                        CbRow[index + 0] = yCbCr[1];
+
+                        CrRow[index + 2] = yCbCr[2];
+                        CrRow[index + 1] = (byte)(0xFF - yCbCr[2]);
+                        CrRow[index + 0] = 0;
+                    }
+                }
+            }
+
+            bitmap.UnlockBits(bmd);
+            channels[0].UnlockBits(bmdY);
+            channels[1].UnlockBits(bmdCb);
+            channels[2].UnlockBits(bmdCr);
+        }
+
         public static int GetComponentsPerPixel(Bitmap bitmap)
         {
             return Image.GetPixelFormatSize(bitmap.PixelFormat) / 8;

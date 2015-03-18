@@ -20,6 +20,5 @@ namespace MMSPlayground.Model
 
         bool GetWin32CoreUsageMode();
         void SetWin32CoreUsageMode(bool enabled);
-
     }
 }
