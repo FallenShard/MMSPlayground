@@ -54,25 +54,26 @@
     <Compile Include="IO\BitmapIO.cs" />
     <Compile Include="IO\BpfReader.cs" />
     <Compile Include="IO\BpfWriter.cs" />
+    <Compile Include="Model\Histogram.cs" />
     <Compile Include="Model\IImageModel.cs" />
     <Compile Include="Presenters\IChannelsPresenter.cs" />
     <Compile Include="Presenters\IMainPresenter.cs" />
-    <Compile Include="Views\Controls\Histogram.cs">
+    <Compile Include="Views\Controls\HistogramBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\Histogram.Designer.cs">
-      <DependentUpon>Histogram.cs</DependentUpon>
+    <Compile Include="Views\Controls\HistogramBox.Designer.cs">
+      <DependentUpon>HistogramBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Forms\BrightnessDialog.cs">
+    <Compile Include="Views\Dialogs\BrightnessDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Forms\BrightnessDialog.Designer.cs">
+    <Compile Include="Views\Dialogs\BrightnessDialog.Designer.cs">
       <DependentUpon>BrightnessDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Forms\CapacityDialog.cs">
+    <Compile Include="Views\Dialogs\CapacityDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Forms\CapacityDialog.Designer.cs">
+    <Compile Include="Views\Dialogs\CapacityDialog.Designer.cs">
       <DependentUpon>CapacityDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Forms\ChannelsForm.cs">
@@ -84,18 +85,18 @@
     <Compile Include="Filters\BrightnessFilter.cs" />
     <Compile Include="Filters\ContrastFilter.cs" />
     <Compile Include="Filters\IFilter.cs" />
-    <Compile Include="Views\Forms\ContrastDialog.cs">
+    <Compile Include="Views\Dialogs\ContrastDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Forms\ContrastDialog.Designer.cs">
+    <Compile Include="Views\Dialogs\ContrastDialog.Designer.cs">
       <DependentUpon>ContrastDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\BitmapChangedEventArgs.cs" />
     <Compile Include="Model\ImageModel.cs" />
-    <Compile Include="Views\Forms\EdgeEnhancementDialog.cs">
+    <Compile Include="Views\Dialogs\EdgeEnhancementDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Forms\EdgeEnhancementDialog.Designer.cs">
+    <Compile Include="Views\Dialogs\EdgeEnhancementDialog.Designer.cs">
       <DependentUpon>EdgeEnhancementDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Forms\MainForm.cs">
@@ -109,10 +110,10 @@
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Forms\SharpenDialog.cs">
+    <Compile Include="Views\Dialogs\SharpenDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Forms\SharpenDialog.Designer.cs">
+    <Compile Include="Views\Dialogs\SharpenDialog.Designer.cs">
       <DependentUpon>SharpenDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IChannelsView.cs" />
@@ -120,22 +121,22 @@
     <Compile Include="Views\IResizeStrategy.cs" />
     <Compile Include="Views\PreserveAspectResize.cs" />
     <Compile Include="Views\StretchResize.cs" />
-    <EmbeddedResource Include="Views\Controls\Histogram.resx">
-      <DependentUpon>Histogram.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Controls\HistogramBox.resx">
+      <DependentUpon>HistogramBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Forms\BrightnessDialog.resx">
+    <EmbeddedResource Include="Views\Dialogs\BrightnessDialog.resx">
       <DependentUpon>BrightnessDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Forms\CapacityDialog.resx">
+    <EmbeddedResource Include="Views\Dialogs\CapacityDialog.resx">
       <DependentUpon>CapacityDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\ChannelsForm.resx">
       <DependentUpon>ChannelsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Forms\ContrastDialog.resx">
+    <EmbeddedResource Include="Views\Dialogs\ContrastDialog.resx">
       <DependentUpon>ContrastDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Forms\EdgeEnhancementDialog.resx">
+    <EmbeddedResource Include="Views\Dialogs\EdgeEnhancementDialog.resx">
       <DependentUpon>EdgeEnhancementDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\MainForm.resx">
@@ -151,7 +152,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\Forms\SharpenDialog.resx">
+    <EmbeddedResource Include="Views\Dialogs\SharpenDialog.resx">
       <DependentUpon>SharpenDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

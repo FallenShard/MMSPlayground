@@ -10,7 +10,7 @@ namespace MMSPlayground.Model
     {
         private Bitmap bitmap;
         private Bitmap[] channels;
-        private IList<int>[] channelHistograms;
+        private Histogram[] channelHistograms;
 
         public Bitmap Bitmap
         {
@@ -28,17 +28,16 @@ namespace MMSPlayground.Model
             }
         }
 
-        public IList<int>[] ChannelHistograms
+        public Histogram[] ChannelHistograms
         {
             get
             {
                 return this.channelHistograms;
             }
-
         }
 
 
-        public BitmapChangedEventArgs(Bitmap bitmap, Bitmap[] channels, IList<int>[] channelHistograms)
+        public BitmapChangedEventArgs(Bitmap bitmap, Bitmap[] channels, Histogram[] channelHistograms)
         {
             this.bitmap = bitmap;
             this.channels = channels;

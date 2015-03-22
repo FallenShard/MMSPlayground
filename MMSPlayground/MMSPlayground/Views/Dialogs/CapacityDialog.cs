@@ -7,16 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MMSPlayground.Views.Forms
+namespace MMSPlayground.Views.Dialogs
 {
-    public partial class SharpenDialog : Form
+    public partial class CapacityDialog : Form
     {
-        public SharpenDialog()
+        public CapacityDialog()
         {
             InitializeComponent();
 
             numericUpDown.Select();
             numericUpDown.Select(0, numericUpDown.Text.Length);
+        }
+
+        public int GetMegabytes()
+        {
+            return (int)numericUpDown.Value;
+        }
+
+        private void numericUpDown_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (numericUpDown.Value > numericUpDown.Maximum)
+                numericUpDown.Value = numericUpDown.Maximum;
+
+            if (numericUpDown.Value < numericUpDown.Minimum)
+                numericUpDown.Value = numericUpDown.Minimum;
         }
 
         private void applyButton_Click(object sender, EventArgs e)
@@ -27,32 +41,6 @@ namespace MMSPlayground.Views.Forms
         private void closeButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-        }
-
-        public int GetBaseFactor()
-        {
-            return (int)numericUpDown.Value;
-        }
-
-        public int GetKernelSize()
-        {
-            if (radioButton3x3.Checked)
-                return 3;
-            if (radioButton5x5.Checked)
-                return 5;
-            if (radioButton7x7.Checked)
-                return 7;
-
-            return 3;
-        }
-
-        private void numericUpDown_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (numericUpDown.Value > numericUpDown.Maximum)
-                numericUpDown.Value = numericUpDown.Maximum;
-
-            if (numericUpDown.Value < numericUpDown.Minimum)
-                numericUpDown.Value = numericUpDown.Minimum;
         }
     }
 }

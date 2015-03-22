@@ -1,4 +1,4 @@
-﻿namespace MMSPlayground.Views.Forms
+﻿namespace MMSPlayground.Views.Dialogs
 {
     partial class SharpenDialog
     {

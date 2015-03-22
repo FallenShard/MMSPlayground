@@ -19,8 +19,7 @@ namespace MMSPlayground.Model
         private int m_memorySize = 0;
 
         private Bitmap[] m_channelBmps = new Bitmap[3];
-
-        private IList<int>[] m_channelHistograms = new IList<int>[3];
+        private Histogram[] m_channelHistograms = new Histogram[3];
 
         public ImageModel()
         {
@@ -33,6 +32,12 @@ namespace MMSPlayground.Model
             m_memorySize = data.Stride * data.Height * ImageUtils.GetComponentsPerPixel(data);
             m_bitmap.UnlockBits(data);
 
+            for (int i = 0; i < 3; i++)
+            {
+                m_channelBmps[i] = new Bitmap(m_bitmap.Width, m_bitmap.Height, m_bitmap.PixelFormat);
+                m_channelHistograms[i] = new Histogram();
+            }
+                
             ImageUtils.ComputeYCbCr(m_bitmap, ref m_channelBmps, ref m_channelHistograms);
 
             BitmapChanged(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps, m_channelHistograms));

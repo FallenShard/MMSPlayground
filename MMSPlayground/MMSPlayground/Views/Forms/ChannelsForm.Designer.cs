@@ -34,9 +34,9 @@
             this.cbPictureBox = new System.Windows.Forms.PictureBox();
             this.crPictureBox = new System.Windows.Forms.PictureBox();
             this.imagePanel = new System.Windows.Forms.Panel();
-            this.yHistogram = new MMSPlayground.Views.Controls.Histogram();
-            this.cbHistogram = new MMSPlayground.Views.Controls.Histogram();
-            this.crHistogram = new MMSPlayground.Views.Controls.Histogram();
+            this.yHistogram = new MMSPlayground.Views.Controls.HistogramBox();
+            this.cbHistogram = new MMSPlayground.Views.Controls.HistogramBox();
+            this.crHistogram = new MMSPlayground.Views.Controls.HistogramBox();
             this.channelsMenuStrip = new System.Windows.Forms.MenuStrip();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,10 +104,7 @@
             // 
             // yHistogram
             // 
-            this.yHistogram.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("yHistogram.Data")));
             this.yHistogram.Location = new System.Drawing.Point(275, 14);
-            this.yHistogram.MaxValue = 256;
-            this.yHistogram.MinValue = 0;
             this.yHistogram.Name = "yHistogram";
             this.yHistogram.Size = new System.Drawing.Size(212, 182);
             this.yHistogram.TabIndex = 0;
@@ -115,10 +112,7 @@
             // 
             // cbHistogram
             // 
-            this.cbHistogram.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("cbHistogram.Data")));
             this.cbHistogram.Location = new System.Drawing.Point(57, 222);
-            this.cbHistogram.MaxValue = 256;
-            this.cbHistogram.MinValue = 0;
             this.cbHistogram.Name = "cbHistogram";
             this.cbHistogram.Size = new System.Drawing.Size(212, 145);
             this.cbHistogram.TabIndex = 1;
@@ -126,10 +120,7 @@
             // 
             // crHistogram
             // 
-            this.crHistogram.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("crHistogram.Data")));
             this.crHistogram.Location = new System.Drawing.Point(295, 222);
-            this.crHistogram.MaxValue = 256;
-            this.crHistogram.MinValue = 0;
             this.crHistogram.Name = "crHistogram";
             this.crHistogram.Size = new System.Drawing.Size(212, 145);
             this.crHistogram.TabIndex = 2;
@@ -223,9 +214,9 @@
         private System.Windows.Forms.PictureBox cbPictureBox;
         private System.Windows.Forms.PictureBox crPictureBox;
         private System.Windows.Forms.Panel imagePanel;
-        private Controls.Histogram crHistogram;
-        private Controls.Histogram cbHistogram;
-        private Controls.Histogram yHistogram;
+        private Controls.HistogramBox crHistogram;
+        private Controls.HistogramBox cbHistogram;
+        private Controls.HistogramBox yHistogram;
         private System.Windows.Forms.MenuStrip channelsMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resizeModeToolStripMenuItem;

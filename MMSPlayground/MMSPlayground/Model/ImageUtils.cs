@@ -29,21 +29,18 @@ namespace MMSPlayground.Model
             rgb[2] = (byte)Clamp((int)(ycbcr[0] + 1.765 * (float)(ycbcr[1] - 128)), 0, 255);
         }
 
-        public static void ComputeYCbCr(Bitmap bitmap, ref Bitmap[] channels, ref IList<int>[] histograms)
+        public static void ComputeYCbCr(Bitmap bitmap, ref Bitmap[] channels, ref Histogram[] histograms)
         {
-            channels[0] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
-            channels[1] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
-            channels[2] = new Bitmap(bitmap.Width, bitmap.Height, bitmap.PixelFormat);
-
-            histograms[0] = new List<int>(256);
-            histograms[1] = new List<int>(256);
-            histograms[2] = new List<int>(256);
+            IList<int>[] histData = new IList<int>[3];
+            histData[0] = new List<int>(256);
+            histData[1] = new List<int>(256);
+            histData[2] = new List<int>(256);
 
             for (int i = 0; i < 256; i++)
             {
-                histograms[0].Add(0);
-                histograms[1].Add(0);
-                histograms[2].Add(0);
+                histData[0].Add(0);
+                histData[1].Add(0);
+                histData[2].Add(0);
             }
 
             Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
@@ -75,9 +72,9 @@ namespace MMSPlayground.Model
 
                         ImageUtils.RgbToYCbCr(rgb, yCbCr);
 
-                        histograms[0][yCbCr[0]]++;
-                        histograms[1][yCbCr[1]]++;
-                        histograms[2][yCbCr[2]]++;
+                        histData[0][yCbCr[0]]++;
+                        histData[1][yCbCr[1]]++;
+                        histData[2][yCbCr[2]]++;
 
                         YRow[index + 2] = yCbCr[0];
                         YRow[index + 1] = yCbCr[0];
@@ -98,6 +95,10 @@ namespace MMSPlayground.Model
             channels[0].UnlockBits(bmdY);
             channels[1].UnlockBits(bmdCb);
             channels[2].UnlockBits(bmdCr);
+
+            histograms[0].Data = histData[0];
+            histograms[1].Data = histData[1];
+            histograms[2].Data = histData[2];
         }
 
         public static void ComputeYCbCr(Bitmap bitmap, ref Bitmap yCbCrBmp)
@@ -152,7 +153,13 @@ namespace MMSPlayground.Model
 
         public static int Clamp(int value, int min, int max)
         {
-            return Math.Max(min, Math.Min(value, max));
+            if (value > max)
+                return max;
+
+            if (value < min)
+                return min;
+
+            return value;
         }
 
         public unsafe static void ExtractNeighbourhood(BitmapData data, int bpp, int x, int y, int kernelSize, int[][][] neighbourhood)

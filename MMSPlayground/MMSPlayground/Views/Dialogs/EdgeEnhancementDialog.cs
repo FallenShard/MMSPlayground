@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MMSPlayground.Views.Forms
+namespace MMSPlayground.Views.Dialogs
 {
-    public partial class CapacityDialog : Form
+    public partial class EdgeEnhancementDialog : Form
     {
-        public CapacityDialog()
+        public EdgeEnhancementDialog()
         {
             InitializeComponent();
 
@@ -19,18 +19,9 @@ namespace MMSPlayground.Views.Forms
             numericUpDown.Select(0, numericUpDown.Text.Length);
         }
 
-        public int GetMegabytes()
+        public int GetThreshold()
         {
             return (int)numericUpDown.Value;
-        }
-
-        private void numericUpDown_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (numericUpDown.Value > numericUpDown.Maximum)
-                numericUpDown.Value = numericUpDown.Maximum;
-
-            if (numericUpDown.Value < numericUpDown.Minimum)
-                numericUpDown.Value = numericUpDown.Minimum;
         }
 
         private void applyButton_Click(object sender, EventArgs e)
@@ -41,6 +32,15 @@ namespace MMSPlayground.Views.Forms
         private void closeButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void numericUpDown_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (numericUpDown.Value > numericUpDown.Maximum)
+                numericUpDown.Value = numericUpDown.Maximum;
+
+            if (numericUpDown.Value < numericUpDown.Minimum)
+                numericUpDown.Value = numericUpDown.Minimum;
         }
     }
 }

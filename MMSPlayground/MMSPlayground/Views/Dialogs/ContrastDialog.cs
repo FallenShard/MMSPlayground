@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace MMSPlayground.Views.Forms
+namespace MMSPlayground.Views.Dialogs
 {
-    public partial class BrightnessDialog : Form
+    public partial class ContrastDialog : Form
     {
-        public BrightnessDialog()
+        public ContrastDialog()
         {
             InitializeComponent();
 
@@ -19,9 +19,13 @@ namespace MMSPlayground.Views.Forms
             numericUpDown.Select(0, numericUpDown.Text.Length);
         }
 
-        public int GetBrightnessBias()
+        public double GetContrastCoeff()
         {
-            return (int)numericUpDown.Value;
+            double contrast = (double)numericUpDown.Value;
+            contrast = (100.0 + contrast) / 100.0;
+            contrast *= contrast;
+
+            return contrast;
         }
 
         private void applyButton_Click(object sender, EventArgs e)

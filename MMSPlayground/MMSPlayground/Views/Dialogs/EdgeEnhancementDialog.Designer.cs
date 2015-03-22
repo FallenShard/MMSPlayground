@@ -1,6 +1,6 @@
-﻿namespace MMSPlayground.Views.Forms
+﻿namespace MMSPlayground.Views.Dialogs
 {
-    partial class CapacityDialog
+    partial class EdgeEnhancementDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -37,9 +37,9 @@
             // 
             // numericUpDown
             // 
-            this.numericUpDown.Location = new System.Drawing.Point(12, 74);
+            this.numericUpDown.Location = new System.Drawing.Point(12, 68);
             this.numericUpDown.Maximum = new decimal(new int[] {
-            2048,
+            255,
             0,
             0,
             0});
@@ -51,11 +51,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 58);
+            this.label1.Location = new System.Drawing.Point(9, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(185, 13);
+            this.label1.Size = new System.Drawing.Size(102, 13);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Memory Capacity in MB (0 - Unlimited)";
+            this.label1.Text = "Threshold (0 to 255)";
             // 
             // closeButton
             // 
@@ -77,7 +77,7 @@
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
-            // CapacityDialog
+            // EdgeEnhancementDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -87,10 +87,8 @@
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.applyButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "CapacityDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Capacity";
+            this.Name = "EdgeEnhancementDialog";
+            this.Text = "Edge Enhancement";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,6 +1,6 @@
 ﻿namespace MMSPlayground.Views.Controls
 {
-    partial class Histogram
+    partial class HistogramBox
     {
         /// <summary> 
         /// Required designer variable.

@@ -8,9 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
+using MMSPlayground.Model;
+
 namespace MMSPlayground.Views.Controls
 {
-    public partial class Histogram : UserControl
+    public partial class HistogramBox : UserControl
     {
         private static int LeftMargin = 22;
         private static int TopMargin = 25;
@@ -18,47 +20,8 @@ namespace MMSPlayground.Views.Controls
         private static int BottomMargin = 47;
         private static int MarkerYOffset = -7;
 
-        public int MinValue { get; set; }
-        public int MaxValue { get; set; }
-
         private Bitmap histoBmp = new Bitmap(256, 256);
-
-        private IList<int> data;
-        public IList<int> Data
-        {
-            get
-            {
-                return data;
-            }
-            set
-            {
-                data = value;
-                MaxValue = data.Count - 1;
-
-                Graphics g = Graphics.FromImage(histoBmp);
-
-                g.Clear(Color.FromKnownColor(KnownColor.Control));
-
-                Pen pen = new Pen(Color.Black);
-
-                if (data.Count > 0)
-                {
-                    int maxCount = data.Max();
-                    float scaleFactor = 255.0f / maxCount;
-
-                    for (int index = 0; index < MaxValue; index++)
-                    {
-                        g.DrawLine(pen, new Point(index, 255), new Point(index, 255 - (int)(data[index] * scaleFactor)));
-                    }
-                }
-
-                histogramBox.Image = histoBmp;
-                histogramBox.Refresh();
-
-                pen.Dispose();
-                g.Dispose();
-            }
-        }
+        private Histogram m_histogram;
 
         public string Title
         {
@@ -73,8 +36,43 @@ namespace MMSPlayground.Views.Controls
             }
         }
 
+        public Histogram DataSource
+        {
+            get
+            {
+                return m_histogram;
+            }
 
-        public Histogram()
+            set
+            {
+                m_histogram = value;
+
+                Graphics g = Graphics.FromImage(histoBmp);
+
+                g.Clear(Color.FromKnownColor(KnownColor.Control));
+
+                Pen pen = new Pen(Color.Black);
+
+                if (m_histogram.Data.Count > 0)
+                {
+                    float scaleFactor = 255.0f / m_histogram.MaxValue;
+
+                    for (int index = 0; index < m_histogram.Data.Count; index++)
+                    {
+                        g.DrawLine(pen, new Point(index, 255), new Point(index, 255 - (int)(m_histogram.Data[index] * scaleFactor)));
+                    }
+                }
+
+                histogramBox.Image = histoBmp;
+                histogramBox.Refresh();
+
+                pen.Dispose();
+                g.Dispose();
+            }
+        }
+
+
+        public HistogramBox()
         {
             InitializeComponent();
 
@@ -83,15 +81,6 @@ namespace MMSPlayground.Views.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
             UpdateStyles();
-
-            MinValue = 0;
-            MaxValue = 255;
-
-            IList<int> someData = new List<int>();
-            for (int i = 0; i < 256; i++)
-                someData.Add(i);
-
-            Data = someData;
         }
 
         private void Histogram_Paint(object sender, PaintEventArgs e)
@@ -136,13 +125,13 @@ namespace MMSPlayground.Views.Controls
 
             arrowPen.CustomStartCap = new AdjustableArrowCap(0, 0);
 
-            g.DrawString(MinValue.ToString(), myFont, textBrush, new PointF(LeftMargin, valuesHeight));
-            SizeF minSize = g.MeasureString(MinValue.ToString(), myFont);
-            SizeF maxSize = g.MeasureString(MaxValue.ToString(), myFont);
+            g.DrawString(m_histogram.MinBucket.ToString(), myFont, textBrush, new PointF(LeftMargin, valuesHeight));
+            SizeF minSize = g.MeasureString(m_histogram.MinBucket.ToString(), myFont);
+            SizeF maxSize = g.MeasureString(m_histogram.MaxBucket.ToString(), myFont);
             g.DrawLine(arrowPen,
                 new Point(LeftMargin + (int)minSize.Width, valuesHeight + (int)minSize.Height / 2),
                 new Point(Width - RightMargin - (int)maxSize.Width, valuesHeight + (int)minSize.Height / 2));
-            g.DrawString(MaxValue.ToString(), myFont, textBrush, new PointF(Width - RightMargin - maxSize.Width, valuesHeight));
+            g.DrawString(m_histogram.MaxBucket.ToString(), myFont, textBrush, new PointF(Width - RightMargin - maxSize.Width, valuesHeight));
 
             StringFormat format = new StringFormat();
             format.FormatFlags = StringFormatFlags.DirectionVertical;

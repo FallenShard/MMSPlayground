@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using MMSPlayground.Presenters;
 using MMSPlayground.Views;
+using MMSPlayground.Model;
 
 namespace MMSPlayground.Views.Forms
 {
@@ -53,16 +54,16 @@ namespace MMSPlayground.Views.Forms
             cbHistogram.Title = "Cb Channel";
         }
 
-        public void DisplayImages(Bitmap bitmap, Bitmap[] channels, IList<int>[] histograms)
+        public void DisplayImages(Bitmap bitmap, Bitmap[] channels, Histogram[] histograms)
         {
             fullPictureBox.Image = bitmap;
             yPictureBox.Image = channels[0];
             cbPictureBox.Image = channels[1];
             crPictureBox.Image = channels[2];
 
-            yHistogram.Data = histograms[0];
-            cbHistogram.Data = histograms[1];
-            crHistogram.Data = histograms[2];
+            yHistogram.DataSource = histograms[0];
+            cbHistogram.DataSource = histograms[1];
+            crHistogram.DataSource = histograms[2];
 
             m_cachedAspectRatio = (float)bitmap.Width / (float)bitmap.Height;
 
