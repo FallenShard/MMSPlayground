@@ -21,7 +21,7 @@ namespace MMSPlayground.Views.Controls
         private static int MarkerYOffset = -7;
 
         private Bitmap histoBmp = new Bitmap(256, 256);
-        private Histogram m_histogram;
+        private Histogram m_histogram = null;
 
         public string Title
         {
@@ -36,7 +36,7 @@ namespace MMSPlayground.Views.Controls
             }
         }
 
-        public Histogram DataSource
+        public Histogram Histogram
         {
             get
             {
@@ -53,7 +53,7 @@ namespace MMSPlayground.Views.Controls
 
                 Pen pen = new Pen(Color.Black);
 
-                if (m_histogram.Data.Count > 0)
+                if (m_histogram != null && m_histogram.Data.Count > 0)
                 {
                     float scaleFactor = 255.0f / m_histogram.MaxValue;
 
@@ -81,6 +81,8 @@ namespace MMSPlayground.Views.Controls
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
             UpdateStyles();
+
+            Histogram = new Histogram();
         }
 
         private void Histogram_Paint(object sender, PaintEventArgs e)
@@ -92,6 +94,7 @@ namespace MMSPlayground.Views.Controls
 
             DrawMarkers(g);
             DrawScale(g);
+            DrawSelections(g);
 
             g.SmoothingMode = smoothing;
         }
@@ -161,6 +164,11 @@ namespace MMSPlayground.Views.Controls
             g.FillRectangle(linGrBrush, r);
 
             linGrBrush.Dispose();
+        }
+
+        private void DrawSelections(Graphics g)
+        {
+
         }
 
         private void Histogram_Resize(object sender, EventArgs e)

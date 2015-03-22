@@ -71,6 +71,9 @@ namespace MMSPlayground.Model
         public Histogram(int size)
         {
             m_data = new List<int>(size);
+
+            for (int i = 0; i < size; i++)
+                m_data.Add(i);
         }
     }
 }

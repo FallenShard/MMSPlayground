@@ -61,9 +61,9 @@ namespace MMSPlayground.Views.Forms
             cbPictureBox.Image = channels[1];
             crPictureBox.Image = channels[2];
 
-            yHistogram.DataSource = histograms[0];
-            cbHistogram.DataSource = histograms[1];
-            crHistogram.DataSource = histograms[2];
+            yHistogram.Histogram = histograms[0];
+            cbHistogram.Histogram = histograms[1];
+            crHistogram.Histogram = histograms[2];
 
             m_cachedAspectRatio = (float)bitmap.Width / (float)bitmap.Height;
 
