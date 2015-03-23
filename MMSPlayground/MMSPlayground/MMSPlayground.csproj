@@ -50,6 +50,8 @@
     <Compile Include="Filters\ConvolutionFilter.cs" />
     <Compile Include="Filters\Convolution\Kernel.cs" />
     <Compile Include="Filters\EdgeEnhancementFilter.cs" />
+    <Compile Include="Filters\HistoAverageFilter.cs" />
+    <Compile Include="Filters\HistoFilterPackage.cs" />
     <Compile Include="Filters\SharpenFilter.cs" />
     <Compile Include="IO\BitmapIO.cs" />
     <Compile Include="IO\BpfReader.cs" />

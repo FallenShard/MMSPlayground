@@ -126,6 +126,29 @@ namespace MMSPlayground.Views.Forms
                 SetResizeMode(stretchToFitToolStripMenuItem, new StretchResize());
         }
 
+        private void showHandlesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showHandlesToolStripMenuItem.Checked = !showHandlesToolStripMenuItem.Checked;
+            bool showStatus = showHandlesToolStripMenuItem.Checked;
+            applyCorrectionToolStripMenuItem.Enabled = showStatus;
+
+            yHistogram.HandlesEnabled = showStatus;
+            cbHistogram.HandlesEnabled = showStatus;
+            crHistogram.HandlesEnabled = showStatus;
+        }
+
+        private void averageReplacementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.RequestAverageReplacement(yHistogram.LowerBound, yHistogram.UpperBound, 
+                cbHistogram.LowerBound, cbHistogram.UpperBound,
+                crHistogram.LowerBound, crHistogram.UpperBound);
+        }
+
+        private void highestReplacementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void SetResizeMode(ToolStripMenuItem item, IResizeStrategy resizeMode)
         {
             m_resizeMode = resizeMode;

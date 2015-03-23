@@ -28,19 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.histogramBox = new System.Windows.Forms.PictureBox();
             this.mainLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.histogramBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // histogramBox
-            // 
-            this.histogramBox.Location = new System.Drawing.Point(31, 49);
-            this.histogramBox.Name = "histogramBox";
-            this.histogramBox.Size = new System.Drawing.Size(209, 132);
-            this.histogramBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.histogramBox.TabIndex = 0;
-            this.histogramBox.TabStop = false;
             // 
             // mainLabel
             // 
@@ -51,17 +40,18 @@
             this.mainLabel.TabIndex = 1;
             this.mainLabel.Text = "mainLabel";
             // 
-            // Histogram
+            // HistogramBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.mainLabel);
-            this.Controls.Add(this.histogramBox);
-            this.Name = "Histogram";
+            this.Name = "HistogramBox";
             this.Size = new System.Drawing.Size(300, 225);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Histogram_Paint);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HistogramBox_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.HistogramBox_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.HistogramBox_MouseUp);
             this.Resize += new System.EventHandler(this.Histogram_Resize);
-            ((System.ComponentModel.ISupportInitialize)(this.histogramBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -69,7 +59,6 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox histogramBox;
         private System.Windows.Forms.Label mainLabel;
 
     }

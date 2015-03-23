@@ -44,6 +44,11 @@
             this.stretchToFitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.channelsViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.histogramsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.histogramsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.showHandlesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.averageReplacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.highestReplacementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crHistogram = new MMSPlayground.Views.Controls.HistogramBox();
             this.cbHistogram = new MMSPlayground.Views.Controls.HistogramBox();
             this.yHistogram = new MMSPlayground.Views.Controls.HistogramBox();
@@ -108,7 +113,8 @@
             // channelsMenuStrip
             // 
             this.channelsMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.histogramsToolStripMenuItem1});
             this.channelsMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.channelsMenuStrip.Name = "channelsMenuStrip";
             this.channelsMenuStrip.Size = new System.Drawing.Size(881, 24);
@@ -162,8 +168,49 @@
             this.histogramsToolStripMenuItem.Text = "Histograms";
             this.histogramsToolStripMenuItem.Click += new System.EventHandler(this.histogramsToolStripMenuItem_Click);
             // 
+            // histogramsToolStripMenuItem1
+            // 
+            this.histogramsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showHandlesToolStripMenuItem,
+            this.applyCorrectionToolStripMenuItem});
+            this.histogramsToolStripMenuItem1.Name = "histogramsToolStripMenuItem1";
+            this.histogramsToolStripMenuItem1.Size = new System.Drawing.Size(80, 20);
+            this.histogramsToolStripMenuItem1.Text = "Histograms";
+            // 
+            // showHandlesToolStripMenuItem
+            // 
+            this.showHandlesToolStripMenuItem.Name = "showHandlesToolStripMenuItem";
+            this.showHandlesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.showHandlesToolStripMenuItem.Text = "Show Handles";
+            this.showHandlesToolStripMenuItem.Click += new System.EventHandler(this.showHandlesToolStripMenuItem_Click);
+            // 
+            // applyCorrectionToolStripMenuItem
+            // 
+            this.applyCorrectionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.averageReplacementToolStripMenuItem,
+            this.highestReplacementToolStripMenuItem});
+            this.applyCorrectionToolStripMenuItem.Enabled = false;
+            this.applyCorrectionToolStripMenuItem.Name = "applyCorrectionToolStripMenuItem";
+            this.applyCorrectionToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.applyCorrectionToolStripMenuItem.Text = "Apply Correction";
+            // 
+            // averageReplacementToolStripMenuItem
+            // 
+            this.averageReplacementToolStripMenuItem.Name = "averageReplacementToolStripMenuItem";
+            this.averageReplacementToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.averageReplacementToolStripMenuItem.Text = "Average Replacement";
+            this.averageReplacementToolStripMenuItem.Click += new System.EventHandler(this.averageReplacementToolStripMenuItem_Click);
+            // 
+            // highestReplacementToolStripMenuItem
+            // 
+            this.highestReplacementToolStripMenuItem.Name = "highestReplacementToolStripMenuItem";
+            this.highestReplacementToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.highestReplacementToolStripMenuItem.Text = "Highest Replacement";
+            this.highestReplacementToolStripMenuItem.Click += new System.EventHandler(this.highestReplacementToolStripMenuItem_Click);
+            // 
             // crHistogram
             // 
+            this.crHistogram.HandlesEnabled = false;
             histogram1.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("histogram1.Data")));
             this.crHistogram.Histogram = histogram1;
             this.crHistogram.Location = new System.Drawing.Point(346, 207);
@@ -175,6 +222,7 @@
             // 
             // cbHistogram
             // 
+            this.cbHistogram.HandlesEnabled = false;
             histogram2.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("histogram2.Data")));
             this.cbHistogram.Histogram = histogram2;
             this.cbHistogram.Location = new System.Drawing.Point(32, 204);
@@ -186,6 +234,7 @@
             // 
             // yHistogram
             // 
+            this.yHistogram.HandlesEnabled = false;
             histogram3.Data = ((System.Collections.Generic.IList<int>)(resources.GetObject("histogram3.Data")));
             this.yHistogram.Histogram = histogram3;
             this.yHistogram.Location = new System.Drawing.Point(265, 14);
@@ -199,10 +248,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 471);
+            this.ClientSize = new System.Drawing.Size(881, 561);
             this.Controls.Add(this.imagePanel);
             this.Controls.Add(this.channelsMenuStrip);
             this.MainMenuStrip = this.channelsMenuStrip;
+            this.MinimumSize = new System.Drawing.Size(600, 600);
             this.Name = "ChannelsForm";
             this.Text = "Channels View";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChannelsForm_FormClosing);
@@ -236,5 +286,10 @@
         private Controls.HistogramBox crHistogram;
         private Controls.HistogramBox cbHistogram;
         private Controls.HistogramBox yHistogram;
+        private System.Windows.Forms.ToolStripMenuItem histogramsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem showHandlesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applyCorrectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem averageReplacementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem highestReplacementToolStripMenuItem;
     }
 }

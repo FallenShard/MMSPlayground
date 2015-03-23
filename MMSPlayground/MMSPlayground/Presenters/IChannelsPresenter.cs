@@ -12,5 +12,7 @@ namespace MMSPlayground.Presenters
         void SetChannelsView(IChannelsView view);
         void ShowChannelsView(bool visible);
         void SendChannelsViewStatus(bool visibility);
+        void RequestAverageReplacement(int yLower, int yUpper, int cbLower, int cbUpper, int crLower, int crUpper);
+        void RequestHighestReplacement(int yLower, int yUpper, int cbLower, int cbUpper, int crLower, int crUpper);
     }
 }

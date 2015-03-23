@@ -53,6 +53,11 @@ namespace MMSPlayground.Model
             return m_channelBmps;
         }
 
+        public Histogram[] GetHistograms()
+        {
+            return m_channelHistograms;
+        }
+
         public Size GetSize()
         {
             return m_bitmap.Size;

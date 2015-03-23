@@ -15,6 +15,7 @@ namespace MMSPlayground.Model
         void SetBitmap(Bitmap bitmap);
         Bitmap GetBitmap();
         Bitmap[] GetChannels();
+        Histogram[] GetHistograms();
         Size GetSize();
         int GetBitmapByteSize();
 

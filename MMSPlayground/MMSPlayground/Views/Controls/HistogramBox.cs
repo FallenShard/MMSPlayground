@@ -23,16 +23,18 @@ namespace MMSPlayground.Views.Controls
         private Bitmap histoBmp = new Bitmap(256, 256);
         private Histogram m_histogram = null;
 
+        private string title;
         public string Title
         {
             get
             {
-                return mainLabel.Text;
+                return title;
             }
 
             set
             {
-                mainLabel.Text = value;
+                title = value;
+                mainLabel.Text = title;
             }
         }
 
@@ -46,28 +48,50 @@ namespace MMSPlayground.Views.Controls
             set
             {
                 m_histogram = value;
+                Invalidate();
+            }
+        }
 
-                Graphics g = Graphics.FromImage(histoBmp);
+        public bool HandlesEnabled
+        { 
+            get
+            {
+                return m_handlesEnabled;
+            }
+            set
+            {
+                m_handlesEnabled = value;
+                Invalidate();
+            }
+        }
 
-                g.Clear(Color.FromKnownColor(KnownColor.Control));
+        private bool m_handlesEnabled = false;
 
-                Pen pen = new Pen(Color.Black);
+        private bool m_greenSelected = false;
+        private Color m_blue = Color.FromKnownColor(KnownColor.Blue);
+        private int m_greenLeft = 0;
+        private int m_greenLeftBucket = 0;
+        private float m_greenLeftBucketF = 0.0f;
 
-                if (m_histogram != null && m_histogram.Data.Count > 0)
-                {
-                    float scaleFactor = 255.0f / m_histogram.MaxValue;
+        private bool m_blueSelected = false;
+        private Color m_green = Color.FromKnownColor(KnownColor.Green);
+        private int m_blueRight = 0;
+        private int m_blueRightBucket = 255;
+        private float m_blueRightBucketF = 255.0f;
 
-                    for (int index = 0; index < m_histogram.Data.Count; index++)
-                    {
-                        g.DrawLine(pen, new Point(index, 255), new Point(index, 255 - (int)(m_histogram.Data[index] * scaleFactor)));
-                    }
-                }
+        public int LowerBound
+        {
+            get
+            {
+                return Math.Max(0, m_greenLeftBucket);
+            }
+        }
 
-                histogramBox.Image = histoBmp;
-                histogramBox.Refresh();
-
-                pen.Dispose();
-                g.Dispose();
+        public int UpperBound
+        {
+            get
+            {
+                return Math.Min(255, m_blueRightBucket);
             }
         }
 
@@ -83,6 +107,13 @@ namespace MMSPlayground.Views.Controls
             UpdateStyles();
 
             Histogram = new Histogram();
+
+            m_greenLeft = LeftMargin;
+            m_blueRight = Width - RightMargin;
+            m_greenLeftBucketF = 0.0f;
+            m_blueRightBucketF = 255.0f;
+            
+            mainLabel.Text = title;
         }
 
         private void Histogram_Paint(object sender, PaintEventArgs e)
@@ -94,7 +125,10 @@ namespace MMSPlayground.Views.Controls
 
             DrawMarkers(g);
             DrawScale(g);
-            DrawSelections(g);
+            DrawHistogram(g);
+
+            if (m_handlesEnabled)
+                DrawSelections(g);
 
             g.SmoothingMode = smoothing;
         }
@@ -166,9 +200,41 @@ namespace MMSPlayground.Views.Controls
             linGrBrush.Dispose();
         }
 
+        private void DrawHistogram(Graphics g)
+        {
+            Graphics histoGraphics = Graphics.FromImage(histoBmp);
+
+            histoGraphics.Clear(Color.FromKnownColor(KnownColor.Control));
+
+            Pen pen = new Pen(Color.Black);
+
+            if (m_histogram != null && m_histogram.Data.Count > 0)
+            {
+                float scaleFactor = 255.0f / m_histogram.MaxValue;
+
+                for (int index = 0; index < m_histogram.Data.Count; index++)
+                {
+                    histoGraphics.DrawLine(pen, new Point(index, 255), new Point(index, 255 - (int)(m_histogram.Data[index] * scaleFactor)));
+                }
+            }
+
+            int histoWidth = Width - LeftMargin - RightMargin;
+            int histoHeight = Height - TopMargin - BottomMargin;
+            g.DrawImage(histoBmp, new Rectangle(LeftMargin, TopMargin, histoWidth, histoHeight), new Rectangle(0, 0, 256, 256), GraphicsUnit.Pixel);
+        }
+
         private void DrawSelections(Graphics g)
         {
+            Pen greenPen = new Pen(m_green, 3);
+            Pen bluePen = new Pen(m_blue, 3);
 
+            int histoHeight = Height - TopMargin - BottomMargin;
+            int histoWidth = Width - LeftMargin - RightMargin;
+            g.DrawRectangle(greenPen, m_greenLeft, TopMargin, histoWidth / 2 - (m_greenLeft - LeftMargin), histoHeight);
+            g.DrawRectangle(bluePen, LeftMargin + histoWidth / 2, TopMargin, m_blueRight - LeftMargin - histoWidth / 2, histoHeight);
+
+            greenPen.Dispose();
+            bluePen.Dispose();
         }
 
         private void Histogram_Resize(object sender, EventArgs e)
@@ -176,10 +242,117 @@ namespace MMSPlayground.Views.Controls
             int histoWidth = Width - LeftMargin - RightMargin;
             int histoHeight = Height - TopMargin - BottomMargin;
 
-            histogramBox.Location = new Point(LeftMargin, TopMargin);
-            histogramBox.Size = new Size(histoWidth, histoHeight);
+            m_greenLeft = ToControlSpace(m_greenLeftBucketF);
+            m_blueRight = ToControlSpace(m_blueRightBucketF);
 
             mainLabel.Location = new Point((Width - mainLabel.Width) / 2, Height - mainLabel.Height);
+        }
+
+        private void HistogramBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (m_handlesEnabled)
+            {
+                if (e.X > m_greenLeft - 3 && e.X < m_greenLeft + 3)
+                {
+                    m_green = Color.FromArgb(128, 255, 128);
+                    m_greenSelected = true;
+                    mainLabel.Text = "(" + m_greenLeftBucket + ")";
+                    Invalidate();
+                }
+                else if (e.X > m_blueRight - 3 && e.X < m_blueRight + 3)
+                {
+                    m_blue = Color.FromArgb(128, 128, 255);
+                    m_blueSelected = true;
+                    mainLabel.Text = "(" + m_blueRightBucket + ")";
+                    Invalidate();
+                }
+                else
+                {
+                    m_green = Color.FromKnownColor(KnownColor.Green);
+                    m_greenSelected = false;
+
+                    m_blue = Color.FromKnownColor(KnownColor.Blue);
+                    m_blueSelected = false;
+
+                    Invalidate();
+                }
+            }
+        }
+
+        private void HistogramBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (m_handlesEnabled)
+            {
+                if (m_greenSelected)
+                {
+                    m_greenLeft = Math.Min(Math.Max(e.X, LeftMargin), (Width - LeftMargin - RightMargin) / 2 + LeftMargin - 5);
+                    m_green = Color.FromKnownColor(KnownColor.Green);
+                    ToHistogramSpace(m_greenLeft, ref m_greenLeftBucket, ref m_greenLeftBucketF);
+                    m_greenSelected = false;
+                    Invalidate();
+
+                    mainLabel.Text = title;
+                }
+                else if (m_blueSelected)
+                {
+                    int blueLeftMargin = (Width - LeftMargin - RightMargin) / 2 + LeftMargin + 5;
+                    m_blueRight = Math.Min(Math.Max(e.X, blueLeftMargin), Width - RightMargin);
+                    m_blue = Color.FromKnownColor(KnownColor.Blue);
+                    ToHistogramSpace(m_blueRight, ref m_blueRightBucket, ref m_blueRightBucketF);
+                    m_blueSelected = false;
+                    Invalidate();
+
+                    mainLabel.Text = title;
+                }
+            }
+        }
+
+        private void HistogramBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (m_handlesEnabled)
+            {
+                if (!(e.X < LeftMargin || e.X > Width - RightMargin || e.Y < TopMargin || e.Y > Height - BottomMargin))
+                {
+                    if (m_greenSelected)
+                    {
+                        m_greenLeft = Math.Min(Math.Max(e.X, LeftMargin), (Width - LeftMargin - RightMargin) / 2 + LeftMargin - 5);
+
+                        ToHistogramSpace(m_greenLeft, ref m_greenLeftBucket, ref m_greenLeftBucketF);
+                        mainLabel.Text = "(" + m_greenLeftBucket + ")";
+
+                        Refresh();
+                    }
+                    else if (m_blueSelected)
+                    {
+                        int blueLeftMargin = (Width - LeftMargin - RightMargin) / 2 + LeftMargin + 5;
+                        m_blueRight = Math.Min(Math.Max(e.X, blueLeftMargin), Width - RightMargin);
+
+                        ToHistogramSpace(m_blueRight, ref m_blueRightBucket, ref m_blueRightBucketF);
+                        mainLabel.Text = "(" + m_blueRightBucket + ")";
+
+                        Refresh();
+                    }
+                }
+            }
+        }
+
+        private void ToHistogramSpace(int xCoord, ref int iRescaledX, ref float fRescaledX)
+        {
+            float histoWidth = Width - LeftMargin - RightMargin;
+
+            fRescaledX = (xCoord - LeftMargin) / histoWidth * 256.0f;
+
+            iRescaledX = (int)fRescaledX;
+        }
+
+        private int ToControlSpace(float histBucket)
+        {
+            float x = LeftMargin;
+            int histoWidth = Width - LeftMargin - RightMargin;
+            float xScale = histoWidth / 256.0f;
+            x += histBucket * xScale;
+
+            return (int)x;
         }
     }
 }

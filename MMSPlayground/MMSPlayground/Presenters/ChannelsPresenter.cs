@@ -5,6 +5,7 @@ using System.Text;
 
 using MMSPlayground.Model;
 using MMSPlayground.Views;
+using MMSPlayground.Filters;
 
 namespace MMSPlayground.Presenters
 {
@@ -20,7 +21,7 @@ namespace MMSPlayground.Presenters
         {
             m_model = model;
 
-            m_model.BitmapChanged += new BitmapChangedEventHandler(this.BitmapChanged);
+            m_model.BitmapChanged += new BitmapChangedEventHandler(this.OnBitmapChanged);
 
             m_mainPresenter = mainPresenter;
         }
@@ -40,7 +41,20 @@ namespace MMSPlayground.Presenters
             m_channelsView.SetVisible(visible);
         }
 
-        private void BitmapChanged(ImageModel model, BitmapChangedEventArgs args)
+        public void RequestAverageReplacement(int yLower, int yUpper, int cbLower, int cbUpper, int crLower, int crUpper)
+        {
+            HistoFilterPackage package = new HistoFilterPackage();
+            package.lower[0] = yLower; package.lower[1] = cbLower; package.lower[2] = crLower;
+            package.upper[0] = yUpper; package.upper[1] = cbUpper; package.upper[2] = crUpper;
+            m_mainPresenter.ApplyFilter(new HistoAverageFilter(m_model, package));
+        }
+
+        public void RequestHighestReplacement(int yLower, int yUpper, int cbLower, int cbUpper, int crLower, int crUpper)
+        {
+
+        }
+
+        private void OnBitmapChanged(ImageModel model, BitmapChangedEventArgs args)
         {
             m_channelsView.DisplayImages(args.Bitmap, args.Channels, args.ChannelHistograms);
         }

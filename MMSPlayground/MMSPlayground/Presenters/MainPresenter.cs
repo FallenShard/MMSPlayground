@@ -161,7 +161,7 @@ namespace MMSPlayground.Presenters
             m_memoryCapacity = megabytes << 20;
         }
 
-        private void ApplyFilter(IFilter filter)
+        public void ApplyFilter(IFilter filter)
         {
             filter.Apply();
 
