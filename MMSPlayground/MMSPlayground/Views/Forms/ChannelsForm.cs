@@ -146,7 +146,9 @@ namespace MMSPlayground.Views.Forms
 
         private void highestReplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            m_presenter.RequestHighestReplacement(yHistogram.LowerBound, yHistogram.UpperBound,
+                cbHistogram.LowerBound, cbHistogram.UpperBound,
+                crHistogram.LowerBound, crHistogram.UpperBound);
         }
 
         private void SetResizeMode(ToolStripMenuItem item, IResizeStrategy resizeMode)

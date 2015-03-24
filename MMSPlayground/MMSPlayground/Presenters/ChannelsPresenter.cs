@@ -51,7 +51,10 @@ namespace MMSPlayground.Presenters
 
         public void RequestHighestReplacement(int yLower, int yUpper, int cbLower, int cbUpper, int crLower, int crUpper)
         {
-
+            HistoFilterPackage package = new HistoFilterPackage();
+            package.lower[0] = yLower; package.lower[1] = cbLower; package.lower[2] = crLower;
+            package.upper[0] = yUpper; package.upper[1] = cbUpper; package.upper[2] = crUpper;
+            m_mainPresenter.ApplyFilter(new HistoHighestFilter(m_model, package));
         }
 
         private void OnBitmapChanged(ImageModel model, BitmapChangedEventArgs args)
