@@ -49,7 +49,7 @@ namespace MMSPlayground.IO
                 yData.Add(buff[iter++]);
             }
 
-            int step = width * height / 4;
+            int step = (buff.Length - iter) / 2;
             end += step;
             while (iter < end)
             {
@@ -62,44 +62,61 @@ namespace MMSPlayground.IO
             byte[] cbBytes = cbData.ToArray();
             byte[] crBytes = crData.ToArray();
 
-            int memPadding = width * 3 % 4;
-            int rowDataLength = memPadding == 0 ? width * 3 : width * 3 + 4 - memPadding;
-            byte[] mainData = new byte[height * rowDataLength];
+            Bitmap bitmap = new Bitmap(width, height, GetPixelFormat(width, stride));
+
+            Rectangle bmpRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            BitmapData bmd = bitmap.LockBits(bmpRect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+            int bpp = ImageUtils.GetComponentsPerPixel(bmd);
 
             byte[] yCbCr = new byte[3];
             byte[] rgb = new byte[3];
-
-
-            Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format24bppRgb);
-
+            int yIter = 0;
             int chromaIter = 0;
-            for (int i = 0; i < yBytes.Length; i++)
+
+            unsafe
             {
-                yCbCr[0] = yBytes[i];
-                yCbCr[1] = cbBytes[chromaIter];
-                yCbCr[2] = crBytes[chromaIter];
+                for (int y = 0; y < bmd.Height; y++)
+                {
+                    byte* dataRow = (byte*)bmd.Scan0 + (y * bmd.Stride);
 
-                ColorSpace.YCbCrToRgb(yCbCr, rgb);
+                    for (int x = 0; x < bmd.Width; x++)
+                    {
+                        int index = x * bpp;
 
-                mainData[3 * i + 2] = rgb[0];
-                mainData[3 * i + 1] = rgb[1];
-                mainData[3 * i + 0] = rgb[2];
+                        yCbCr[0] = yBytes[yIter];
+                        yCbCr[1] = cbBytes[chromaIter];
+                        yCbCr[2] = crBytes[chromaIter];
 
-                if ((i + 1) % 4 == 0)
-                    chromaIter++;
+                        ColorSpace.YCbCrToRgb(yCbCr, rgb);
+
+                        dataRow[index + 2] = rgb[0];
+                        dataRow[index + 1] = rgb[1];
+                        dataRow[index + 0] = rgb[2];
+
+                        yIter++;
+                        if ((x + 1) % 4 == 0)
+                            chromaIter++;
+                    }
+                }
             }
 
-            IntPtr unmanagedPointer = Marshal.AllocHGlobal(mainData.Length);
-            Marshal.Copy(mainData, 0, unmanagedPointer, mainData.Length);
-
-            //Bitmap bitmap = new Bitmap(width, height, stride, PixelFormat.Format24bppRgb, unmanagedPointer);
+            bitmap.UnlockBits(bmd);
 
             return bitmap;
         }
 
         private static PixelFormat GetPixelFormat(int width, int stride)
         {
-            return PixelFormat.Format24bppRgb;
+            int bpp = stride / width;
+            switch (bpp)
+            {
+                case 1:
+                    return PixelFormat.Format8bppIndexed;
+                case 3:
+                    return PixelFormat.Format24bppRgb;
+                default:
+                    return PixelFormat.Format24bppRgb;
+            }
         }
     }
 }

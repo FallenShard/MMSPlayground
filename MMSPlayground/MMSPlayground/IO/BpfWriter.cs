@@ -29,6 +29,8 @@ namespace MMSPlayground.IO
             IList<byte> cbChannel = new List<byte>();
             IList<byte> crChannel = new List<byte>();
 
+            int bpp = ImageUtils.GetComponentsPerPixel(bmdYCbCr);
+
             unsafe
             {
                 for (int y = 0; y < bmdYCbCr.Height; y++)
@@ -37,7 +39,7 @@ namespace MMSPlayground.IO
 
                     for (int x = 0; x < bmdYCbCr.Width; x++)
                     {
-                        int index = x * 3;
+                        int index = x * bpp;
 
                         yChannel.Add(dataRow[index + 0]);
                         if (x % 4 == 0)
