@@ -57,7 +57,7 @@ namespace MMSPlayground.Presenters
             m_mainPresenter.ApplyFilter(new HistoHighestFilter(m_model, package));
         }
 
-        private void OnBitmapChanged(ImageModel model, BitmapChangedEventArgs args)
+        private void OnBitmapChanged(IImageModel model, BitmapChangedEventArgs args)
         {
             m_channelsView.DisplayImages(args.Bitmap, args.Channels, args.ChannelHistograms);
         }

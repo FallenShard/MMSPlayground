@@ -8,7 +8,7 @@ using MMSPlayground.Data;
 
 namespace MMSPlayground.Model
 {
-    public delegate void BitmapChangedEventHandler(ImageModel model, BitmapChangedEventArgs args);
+    public delegate void BitmapChangedEventHandler(IImageModel model, BitmapChangedEventArgs args);
 
     public interface IImageModel
     {
