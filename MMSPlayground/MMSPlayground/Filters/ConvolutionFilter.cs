@@ -7,6 +7,7 @@ using System.Text;
 
 using MMSPlayground.Filters.Convolution;
 using MMSPlayground.Model;
+using MMSPlayground.Utils;
 
 namespace MMSPlayground.Filters
 {

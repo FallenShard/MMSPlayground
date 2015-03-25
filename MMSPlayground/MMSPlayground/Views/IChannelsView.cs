@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-using MMSPlayground.Model;
+using MMSPlayground.Data;
 
 namespace MMSPlayground.Views
 {

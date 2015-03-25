@@ -13,8 +13,6 @@ using System.Diagnostics;
 using MMSPlayground.Presenters;
 using MMSPlayground.Views;
 using MMSPlayground.Views.Dialogs;
-using MMSPlayground.Model;
-
 
 namespace MMSPlayground.Views.Forms
 {

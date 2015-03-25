@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MMSPlayground.Model
+namespace MMSPlayground.Data
 {
     public class Histogram
     {

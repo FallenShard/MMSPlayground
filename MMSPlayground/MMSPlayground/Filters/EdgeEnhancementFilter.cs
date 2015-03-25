@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
-using System.Drawing.Imaging;
 
-using MMSPlayground.Model;
 using MMSPlayground.Filters.Convolution;
-using System.Drawing;
-
+using MMSPlayground.Model;
+using MMSPlayground.Utils;
 
 namespace MMSPlayground.Filters
 {

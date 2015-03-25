@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            MMSPlayground.Model.Histogram histogram1 = new MMSPlayground.Model.Histogram();
+            MMSPlayground.Data.Histogram histogram1 = new MMSPlayground.Data.Histogram();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChannelsForm));
-            MMSPlayground.Model.Histogram histogram2 = new MMSPlayground.Model.Histogram();
-            MMSPlayground.Model.Histogram histogram3 = new MMSPlayground.Model.Histogram();
+            MMSPlayground.Data.Histogram histogram2 = new MMSPlayground.Data.Histogram();
+            MMSPlayground.Data.Histogram histogram3 = new MMSPlayground.Data.Histogram();
             this.fullPictureBox = new System.Windows.Forms.PictureBox();
             this.yPictureBox = new System.Windows.Forms.PictureBox();
             this.cbPictureBox = new System.Windows.Forms.PictureBox();

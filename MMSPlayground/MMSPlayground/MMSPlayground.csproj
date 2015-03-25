@@ -57,10 +57,11 @@
     <Compile Include="IO\BitmapIO.cs" />
     <Compile Include="IO\BpfReader.cs" />
     <Compile Include="IO\BpfWriter.cs" />
-    <Compile Include="Model\Histogram.cs" />
+    <Compile Include="Data\Histogram.cs" />
     <Compile Include="Model\IImageModel.cs" />
     <Compile Include="Presenters\IChannelsPresenter.cs" />
     <Compile Include="Presenters\IMainPresenter.cs" />
+    <Compile Include="Utils\ColorSpace.cs" />
     <Compile Include="Views\Controls\HistogramBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,7 +109,7 @@
     <Compile Include="Views\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\ImageUtils.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="Presenters\ChannelsPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />

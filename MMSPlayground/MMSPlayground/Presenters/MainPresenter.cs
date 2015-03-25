@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-using MMSPlayground.Views;
-using MMSPlayground.Views.Forms;
-using MMSPlayground.Model;
 using MMSPlayground.Filters;
 using MMSPlayground.IO;
-
+using MMSPlayground.Model;
+using MMSPlayground.Views;
+using MMSPlayground.Views.Forms;
 
 namespace MMSPlayground.Presenters
 {

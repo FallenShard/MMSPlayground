@@ -1,5 +1,4 @@
-﻿using MMSPlayground.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -7,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+
+using MMSPlayground.Utils;
 
 namespace MMSPlayground.IO
 {
@@ -61,21 +62,15 @@ namespace MMSPlayground.IO
             byte[] cbBytes = cbData.ToArray();
             byte[] crBytes = crData.ToArray();
 
-            byte[] mainData = new byte[height * width * 3];
+            int memPadding = width * 3 % 4;
+            int rowDataLength = memPadding == 0 ? width * 3 : width * 3 + 4 - memPadding;
+            byte[] mainData = new byte[height * rowDataLength];
 
             byte[] yCbCr = new byte[3];
             byte[] rgb = new byte[3];
 
-            rgb[0] = 15;
-            rgb[1] = 253;
-            rgb[2] = 67;
 
-            ImageUtils.RgbToYCbCr(rgb, yCbCr);
-
-
-            ImageUtils.YCbCrToRgb(yCbCr, rgb);
-
-
+            Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format24bppRgb);
 
             int chromaIter = 0;
             for (int i = 0; i < yBytes.Length; i++)
@@ -84,7 +79,7 @@ namespace MMSPlayground.IO
                 yCbCr[1] = cbBytes[chromaIter];
                 yCbCr[2] = crBytes[chromaIter];
 
-                ImageUtils.YCbCrToRgb(yCbCr, rgb);
+                ColorSpace.YCbCrToRgb(yCbCr, rgb);
 
                 mainData[3 * i + 2] = rgb[0];
                 mainData[3 * i + 1] = rgb[1];
@@ -94,14 +89,17 @@ namespace MMSPlayground.IO
                     chromaIter++;
             }
 
-
-
             IntPtr unmanagedPointer = Marshal.AllocHGlobal(mainData.Length);
             Marshal.Copy(mainData, 0, unmanagedPointer, mainData.Length);
 
-            Bitmap bitmap = new Bitmap(width, height, stride, PixelFormat.Format24bppRgb, unmanagedPointer);
+            //Bitmap bitmap = new Bitmap(width, height, stride, PixelFormat.Format24bppRgb, unmanagedPointer);
 
             return bitmap;
+        }
+
+        private static PixelFormat GetPixelFormat(int width, int stride)
+        {
+            return PixelFormat.Format24bppRgb;
         }
     }
 }

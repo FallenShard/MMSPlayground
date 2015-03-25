@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using MMSPlayground.Model;
+using MMSPlayground.Utils;
 
 namespace MMSPlayground.Filters.Convolution
 {

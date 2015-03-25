@@ -1,10 +1,13 @@
-﻿using MMSPlayground.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+
+using MMSPlayground.Data;
+using MMSPlayground.Model;
+using MMSPlayground.Utils;
 
 namespace MMSPlayground.Filters
 {
@@ -82,7 +85,7 @@ namespace MMSPlayground.Filters
                             rgb[1] = dataRow[index + 1];
                             rgb[2] = dataRow[index + 0];
 
-                            ImageUtils.RgbToYCbCr(rgb, yCbCr);
+                            ColorSpace.RgbToYCbCr(rgb, yCbCr);
 
                             for (int i = 0; i < 3; i++)
                             {
@@ -100,7 +103,7 @@ namespace MMSPlayground.Filters
                             }
 
                             if (changed)
-                                ImageUtils.YCbCrToRgb(yCbCr, rgb);
+                                ColorSpace.YCbCrToRgb(yCbCr, rgb);
 
 
                             dataRow[index + 0] = rgb[2];
@@ -114,21 +117,6 @@ namespace MMSPlayground.Filters
             }
             else
             {
-                //for (int y = 0; y < bitmap.Height; y++)
-                //{
-                //    for (int x = 0; x < bitmap.Width; x++)
-                //    {
-                //        Color currPixel = bitmap.GetPixel(x, y);
-
-                //        int newR = ImageUtils.Clamp(currPixel.R + m_bias, 0, 255);
-                //        int newG = ImageUtils.Clamp(currPixel.G + m_bias, 0, 255);
-                //        int newB = ImageUtils.Clamp(currPixel.B + m_bias, 0, 255);
-
-                //        Color newPixel = Color.FromArgb(newR, newG, newB);
-
-                //        bitmap.SetPixel(x, y, newPixel);
-                //    }
-                //}
             }
 
             m_model.SetBitmap(bitmap);

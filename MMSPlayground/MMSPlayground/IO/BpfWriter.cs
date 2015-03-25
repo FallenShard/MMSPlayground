@@ -1,11 +1,12 @@
-﻿using MMSPlayground.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+
+using MMSPlayground.Utils;
 
 namespace MMSPlayground.IO
 {
@@ -18,7 +19,7 @@ namespace MMSPlayground.IO
         public void SaveToFile(Bitmap bitmap, string fileName)
         {
             Bitmap yCbCrBmp = null;
-            ImageUtils.ComputeYCbCr(bitmap, ref yCbCrBmp);
+            ColorSpace.ComputeYCbCr(bitmap, ref yCbCrBmp);
 
 
             Rectangle bmpRect = new Rectangle(0, 0, yCbCrBmp.Width, yCbCrBmp.Height);

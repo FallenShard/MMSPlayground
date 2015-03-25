@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using MMSPlayground.Data;
 using MMSPlayground.Presenters;
 using MMSPlayground.Views;
-using MMSPlayground.Model;
 
 namespace MMSPlayground.Views.Forms
 {

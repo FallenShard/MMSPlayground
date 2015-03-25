@@ -7,6 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using MMSPlayground.Data;
+using MMSPlayground.Utils;
+
 namespace MMSPlayground.Model
 {
     public class ImageModel : IImageModel
@@ -38,7 +41,7 @@ namespace MMSPlayground.Model
                 m_channelHistograms[i] = new Histogram();
             }
                 
-            ImageUtils.ComputeYCbCr(m_bitmap, ref m_channelBmps, ref m_channelHistograms);
+            ColorSpace.ComputeYCbCr(m_bitmap, ref m_channelBmps, ref m_channelHistograms);
 
             BitmapChanged(this, new BitmapChangedEventArgs(m_bitmap, m_channelBmps, m_channelHistograms));
         }

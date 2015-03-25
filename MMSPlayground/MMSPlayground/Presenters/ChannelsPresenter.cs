@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MMSPlayground.Filters;
 using MMSPlayground.Model;
 using MMSPlayground.Views;
-using MMSPlayground.Filters;
 
 namespace MMSPlayground.Presenters
 {
