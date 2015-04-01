@@ -28,7 +28,7 @@ namespace MMSPlayground.Views.Forms
         private float m_cachedAspectRatio = 1.0f;
 
         private ToolStripMenuItem m_activeResizeItem = null;
-        private IResizeStrategy m_resizeMode = new PreserveAspectResize();
+        private IResizeMode m_resizeMode = new PreserveAspectResize();
 
         public MainForm(MainPresenter presenter)
         {
@@ -243,7 +243,7 @@ namespace MMSPlayground.Views.Forms
             repeatToolStripMenuItem.Text = "Repeat " + repeatActionName;
         }
 
-        private void SetResizeMode(ToolStripMenuItem clickedItem, IResizeStrategy resizeMode)
+        private void SetResizeMode(ToolStripMenuItem clickedItem, IResizeMode resizeMode)
         {
             m_resizeMode = resizeMode;
             m_activeResizeItem.Checked = false;

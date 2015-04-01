@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace MMSPlayground.Views
 {
-    public class StretchResize : IResizeStrategy
+    public class StretchResize : IResizeMode
     {
         public void Resize(Control control, float aspectRatio, int leftMargin, int topMargin, int rightMargin, int bottomMargin)
         {

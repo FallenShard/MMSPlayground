@@ -58,6 +58,11 @@
     <Compile Include="IO\BpfReader.cs" />
     <Compile Include="IO\BpfWriter.cs" />
     <Compile Include="Data\Histogram.cs" />
+    <Compile Include="IO\Downsampler.cs" />
+    <Compile Include="IO\IImageReader.cs" />
+    <Compile Include="IO\IImageWriter.cs" />
+    <Compile Include="IO\ShannonFanoReader.cs" />
+    <Compile Include="IO\ShannonFanoWriter.cs" />
     <Compile Include="Model\IImageModel.cs" />
     <Compile Include="Presenters\IChannelsPresenter.cs" />
     <Compile Include="Presenters\IMainPresenter.cs" />
@@ -103,6 +108,18 @@
     <Compile Include="Views\Dialogs\EdgeEnhancementDialog.Designer.cs">
       <DependentUpon>EdgeEnhancementDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Forms\ConvolutionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Forms\ConvolutionForm.Designer.cs">
+      <DependentUpon>ConvolutionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Forms\DownsamplingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Forms\DownsamplingForm.Designer.cs">
+      <DependentUpon>DownsamplingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,7 +139,7 @@
     </Compile>
     <Compile Include="Views\IChannelsView.cs" />
     <Compile Include="Views\IMainView.cs" />
-    <Compile Include="Views\IResizeStrategy.cs" />
+    <Compile Include="Views\IResizeMode.cs" />
     <Compile Include="Views\PreserveAspectResize.cs" />
     <Compile Include="Views\StretchResize.cs" />
     <EmbeddedResource Include="Views\Controls\HistogramBox.resx">
@@ -142,6 +159,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Dialogs\EdgeEnhancementDialog.resx">
       <DependentUpon>EdgeEnhancementDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Forms\ConvolutionForm.resx">
+      <DependentUpon>ConvolutionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Forms\DownsamplingForm.resx">
+      <DependentUpon>DownsamplingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

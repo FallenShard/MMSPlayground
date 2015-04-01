@@ -9,6 +9,8 @@ using MMSPlayground.IO;
 using MMSPlayground.Model;
 using MMSPlayground.Views;
 using MMSPlayground.Views.Forms;
+using System.IO;
+using System.Windows.Forms;
 
 namespace MMSPlayground.Presenters
 {
@@ -73,6 +75,7 @@ namespace MMSPlayground.Presenters
         public void SaveBitmap(string fileName)
         {
             Bitmap bitmap = m_model.GetBitmap();
+
             BitmapIO.Save(bitmap, fileName);
         }
 
@@ -99,6 +102,16 @@ namespace MMSPlayground.Presenters
         public void RequestSharpen(int kernelSize, int baseFactor)
         {
             ApplyFilter(new SharpenFilter(m_model, kernelSize, baseFactor));
+
+            Bitmap[] bitmaps = new Bitmap[4];
+            bitmaps[0] = (Bitmap)m_model.GetBitmap().Clone();
+            bitmaps[1] = new SharpenFilter(m_model, 3, baseFactor).GetRawResults();
+            bitmaps[2] = new SharpenFilter(m_model, 5, baseFactor).GetRawResults();
+            bitmaps[3] = new SharpenFilter(m_model, 7, baseFactor).GetRawResults();
+
+            ConvolutionForm convForm = new ConvolutionForm();
+            convForm.DisplayConvolutionResults(bitmaps);
+            convForm.Show();
         }
 
         public void RequestEdgeEnhancement(int threshold)

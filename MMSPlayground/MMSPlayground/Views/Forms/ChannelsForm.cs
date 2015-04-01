@@ -26,7 +26,7 @@ namespace MMSPlayground.Views.Forms
         private float m_cachedAspectRatio = 1.0f;
 
         private ToolStripMenuItem m_activeResizeItem = null;
-        private IResizeStrategy m_resizeMode = new PreserveAspectResize();
+        private IResizeMode m_resizeMode = new PreserveAspectResize();
 
         private ToolStripMenuItem m_activeViewItem = null;
         private IList<Control> m_activeControls = new List<Control>();
@@ -151,7 +151,7 @@ namespace MMSPlayground.Views.Forms
                 crHistogram.LowerBound, crHistogram.UpperBound);
         }
 
-        private void SetResizeMode(ToolStripMenuItem item, IResizeStrategy resizeMode)
+        private void SetResizeMode(ToolStripMenuItem item, IResizeMode resizeMode)
         {
             m_resizeMode = resizeMode;
             m_activeResizeItem.Checked = false;
