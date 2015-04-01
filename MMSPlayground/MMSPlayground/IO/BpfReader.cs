@@ -10,11 +10,13 @@ using MMSPlayground.Utils;
 
 namespace MMSPlayground.IO
 {
-    public class BpfReader
+    public class BpfReader : IImageReader
     {
         private readonly int WidthOffset = 0;
         private readonly int HeightOffset = 4;
         private readonly int StrideOffset = 8;
+        private readonly int SamplingModeOffset = 12;
+        private readonly int DataOffset = 16;
 
         public BpfReader()
         {
@@ -32,34 +34,17 @@ namespace MMSPlayground.IO
                 buff = memoryStream.ToArray();
             }
 
+            return ReadFromBytes(buff);
+        }
+
+        public Bitmap ReadFromBytes(byte[] buff)
+        {
             int width = BitConverter.ToInt32(buff, WidthOffset);
             int height = BitConverter.ToInt32(buff, HeightOffset);
             int stride = BitConverter.ToInt32(buff, StrideOffset);
+            DownsamplingMode samplingMode = GetDownsamplingMode(BitConverter.ToInt32(buff, SamplingModeOffset));
 
-            IList<byte> yData = new List<byte>();
-            IList<byte> cbData = new List<byte>();
-            IList<byte> crData = new List<byte>();
-
-            int iter = 12;
-            int end = iter + width * height;
-
-            while (iter < end)
-            {
-                yData.Add(buff[iter++]);
-            }
-
-            int step = (buff.Length - iter) / 2;
-            end += step;
-            while (iter < end)
-            {
-                cbData.Add(buff[iter]);
-                crData.Add(buff[iter + step]);
-                iter++;
-            }
-
-            byte[] yBytes = yData.ToArray();
-            byte[] cbBytes = cbData.ToArray();
-            byte[] crBytes = crData.ToArray();
+            byte[][] channels = GetChannelData(buff, width, height, samplingMode);
 
             Bitmap bitmap = new Bitmap(width, height, GetPixelFormat(width, stride));
 
@@ -69,8 +54,8 @@ namespace MMSPlayground.IO
 
             byte[] yCbCr = new byte[3];
             byte[] rgb = new byte[3];
-            int yIter = 0;
-            int chromaIter = 0;
+            int fullIter = -1;
+            int shortIter = -1;
 
             unsafe
             {
@@ -81,20 +66,17 @@ namespace MMSPlayground.IO
                     for (int x = 0; x < bmd.Width; x++)
                     {
                         int index = x * bpp;
+                        fullIter++;
+                        if (x % 4 == 0)
+                            shortIter++;
 
-                        yCbCr[0] = yBytes[yIter];
-                        yCbCr[1] = cbBytes[chromaIter];
-                        yCbCr[2] = crBytes[chromaIter];
+                        ReadFromChannels(yCbCr, channels, fullIter, shortIter, samplingMode);
 
                         ColorSpace.YCbCrToRgb(yCbCr, rgb);
 
                         dataRow[index + 2] = rgb[0];
                         dataRow[index + 1] = rgb[1];
                         dataRow[index + 0] = rgb[2];
-
-                        yIter++;
-                        if ((x + 1) % 4 == 0)
-                            chromaIter++;
                     }
                 }
             }
@@ -102,6 +84,98 @@ namespace MMSPlayground.IO
             bitmap.UnlockBits(bmd);
 
             return bitmap;
+        }
+
+        private byte[][] GetChannelData(byte[] buff, int width, int height, DownsamplingMode mode)
+        {
+            IList<byte> yData = new List<byte>();
+            IList<byte> cbData = new List<byte>();
+            IList<byte> crData = new List<byte>();
+
+            int iter = DataOffset;
+            int shortLen = height * (width % 4 == 0 ? width / 4 : width / 4 + 1);
+            int len = height * width;
+
+            int yEnd = 0, cbEnd = 0, crEnd = 0;
+
+            switch(mode)
+            {
+                case DownsamplingMode.Y:
+                    {
+                        yEnd = iter + len;
+                        cbEnd = yEnd + shortLen;
+                        crEnd = cbEnd + shortLen;
+                        break;
+                    }
+
+                case DownsamplingMode.Cb:
+                    {
+                        yEnd = iter + shortLen;
+                        cbEnd = yEnd + len;
+                        crEnd = cbEnd + shortLen;
+                        break;
+                    }
+
+                case DownsamplingMode.Cr:
+                    {
+                        yEnd = iter + shortLen;
+                        cbEnd = yEnd + shortLen;
+                        crEnd = cbEnd + len;
+                        break;
+                    }
+            }
+
+            while (iter < yEnd)
+            {
+                yData.Add(buff[iter++]);
+            }
+
+            while (iter < cbEnd)
+            {
+                cbData.Add(buff[iter++]);
+            }
+
+            while (iter < crEnd)
+            {
+                crData.Add(buff[iter++]);
+            }
+
+            byte[][] channels = new byte[3][];
+            channels[0] = yData.ToArray();
+            channels[1] = cbData.ToArray();
+            channels[2] = crData.ToArray();
+
+            return channels;
+        }
+
+        private void ReadFromChannels(byte[] yCbCr, byte[][] channels, int fullIter, int shortIter, DownsamplingMode mode)
+        {
+            switch(mode)
+            {
+                case DownsamplingMode.Y:
+                    {
+                        yCbCr[0] = channels[0][fullIter];
+                        yCbCr[1] = channels[1][shortIter];
+                        yCbCr[2] = channels[2][shortIter];
+                        break;
+                    }
+
+                case DownsamplingMode.Cb:
+                    {
+                        yCbCr[0] = channels[0][shortIter];
+                        yCbCr[1] = channels[1][fullIter];
+                        yCbCr[2] = channels[2][shortIter];
+                        break;
+                    }
+
+                case DownsamplingMode.Cr:
+                    {
+                        yCbCr[0] = channels[0][shortIter];
+                        yCbCr[1] = channels[1][shortIter];
+                        yCbCr[2] = channels[2][fullIter];
+                        break;
+                    }
+            }
         }
 
         private static PixelFormat GetPixelFormat(int width, int stride)
@@ -116,6 +190,11 @@ namespace MMSPlayground.IO
                 default:
                     return PixelFormat.Format24bppRgb;
             }
+        }
+
+        private static DownsamplingMode GetDownsamplingMode(int samplingMode)
+        {
+            return (DownsamplingMode)samplingMode;
         }
     }
 }
