@@ -26,8 +26,14 @@ namespace MMSPlayground.Filters
 
         public void Apply()
         {
-            Bitmap bitmap = m_model.GetBitmap();
-            m_prevBitmap = (Bitmap)bitmap.Clone();
+            m_prevBitmap = (Bitmap)m_model.GetBitmap().Clone();
+
+            m_model.SetBitmap(GetRawResults());
+        }
+
+        public Bitmap GetRawResults()
+        {
+            Bitmap bitmap = (Bitmap)m_model.GetBitmap().Clone();
 
             if (m_model.GetWin32CoreUsageMode())
             {
@@ -78,7 +84,7 @@ namespace MMSPlayground.Filters
                 }
             }
 
-            m_model.SetBitmap(bitmap);
+            return bitmap;
         }
 
         public void Undo()

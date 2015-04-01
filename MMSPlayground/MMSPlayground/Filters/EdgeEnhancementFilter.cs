@@ -77,31 +77,12 @@ namespace MMSPlayground.Filters
                     int max2 = Math.Max(diff3, diff4);
                     int max3 = Math.Max(max1, max2);
 
-                    int max = -9999;
-
-                    //for (int yy = 0; yy < 3; yy++)
-                    //    for (int xx = 0; xx < 3; xx++)
-                    //        if (yy == 1 && xx == 1)
-                    //            continue;
-                    //        else if (grayNb[yy][xx] - grayNb[1][1] > max)
-                    //            max = grayNb[yy][xx] - grayNb[1][1];
-
-                    //int finalVal = max > m_threshold ? max : 0;
-
-                    for (int yy = 0; yy < 3; yy++)
-                        for (int xx = 0; xx < 3; xx++)
-                            if (grayNb[yy][xx] > max)
-                                max = grayNb[yy][xx];
-
-                    int finalVal = grayNb[1][1];
-                    if (max > m_threshold && max > grayNb[1][1])
+                    if (max3 > m_threshold && max3 > grayNb[1][1])
                     {
-                        finalVal = max;
+                        dataRow[index + 2] = (byte)ImageUtils.Clamp(max3, 0, 255);
+                        dataRow[index + 1] = (byte)ImageUtils.Clamp(max3, 0, 255);
+                        dataRow[index + 0] = (byte)ImageUtils.Clamp(max3, 0, 255);
                     }
-
-                    dataRow[index + 2] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
-                    dataRow[index + 1] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
-                    dataRow[index + 0] = (byte)ImageUtils.Clamp(finalVal, 0, 255);
                 }
             }
         }
@@ -135,13 +116,10 @@ namespace MMSPlayground.Filters
                     int max2 = Math.Max(diff3, diff4);
                     int max3 = Math.Max(max1, max2);
 
-                    int finalVal = grayNb[1][1];
                     if (max3 > m_threshold && max3 > grayNb[1][1])
                     {
-                        finalVal = max3;
+                        bmp.SetPixel(x, y, Color.FromArgb(max3, max3, max3));
                     }
-
-                    bmp.SetPixel(x, y, Color.FromArgb(finalVal, finalVal, finalVal));
                 }
             }
         }
