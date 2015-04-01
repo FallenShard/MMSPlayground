@@ -54,6 +54,7 @@
     <Compile Include="Filters\HistoFilterPackage.cs" />
     <Compile Include="Filters\HistoHighestFilter.cs" />
     <Compile Include="Filters\SharpenFilter.cs" />
+    <Compile Include="Filters\TimeWarpFilter.cs" />
     <Compile Include="IO\BitmapIO.cs" />
     <Compile Include="IO\BpfReader.cs" />
     <Compile Include="IO\BpfWriter.cs" />
@@ -84,6 +85,12 @@
     </Compile>
     <Compile Include="Views\Dialogs\CapacityDialog.Designer.cs">
       <DependentUpon>CapacityDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\TimeWarpDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Dialogs\TimeWarpDialog.Designer.cs">
+      <DependentUpon>TimeWarpDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Forms\ChannelsForm.cs">
       <SubType>Form</SubType>
@@ -150,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Dialogs\CapacityDialog.resx">
       <DependentUpon>CapacityDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Dialogs\TimeWarpDialog.resx">
+      <DependentUpon>TimeWarpDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Forms\ChannelsForm.resx">
       <DependentUpon>ChannelsForm.cs</DependentUpon>

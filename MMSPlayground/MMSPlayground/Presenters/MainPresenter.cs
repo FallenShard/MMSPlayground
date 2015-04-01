@@ -119,6 +119,11 @@ namespace MMSPlayground.Presenters
             ApplyFilter(new EdgeEnhancementFilter(m_model, threshold));
         }
 
+        public void RequestTimeWarp(int factor)
+        {
+            ApplyFilter(new TimeWarpFilter(m_model, factor));
+        }
+
         public void RequestUndo()
         {
             if (m_undoDeque.Count > 0)

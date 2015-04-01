@@ -61,6 +61,8 @@
             this.dimToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppMetaToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timeWarpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -103,7 +105,7 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.ToolTipText = "Provides a dialog to open an image in .BMP, .JPG, .PNG or .BPX format.";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
@@ -114,7 +116,7 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.ToolTipText = "Provides a dialog to save the current image in .BMP, .JPG, .PNG or .BPX format.\r\n" +
     "";
@@ -123,12 +125,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -143,6 +145,8 @@
             this.sharpenToolStripMenuItem,
             this.edgeEnhancementToolStripMenuItem,
             this.toolStripSeparator4,
+            this.timeWarpToolStripMenuItem,
+            this.toolStripSeparator5,
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
             this.repeatToolStripMenuItem});
@@ -345,6 +349,20 @@
             this.bppToolStripStatusLabel.Size = new System.Drawing.Size(29, 17);
             this.bppToolStripStatusLabel.Text = "N/A";
             // 
+            // timeWarpToolStripMenuItem
+            // 
+            this.timeWarpToolStripMenuItem.Enabled = false;
+            this.timeWarpToolStripMenuItem.Name = "timeWarpToolStripMenuItem";
+            this.timeWarpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
+            this.timeWarpToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
+            this.timeWarpToolStripMenuItem.Text = "TimeWarp";
+            this.timeWarpToolStripMenuItem.Click += new System.EventHandler(this.timeWarpToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(261, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -403,6 +421,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem repeatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem memoryCapacityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem timeWarpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

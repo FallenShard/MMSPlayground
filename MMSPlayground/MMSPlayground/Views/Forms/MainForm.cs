@@ -129,6 +129,18 @@ namespace MMSPlayground.Views.Forms
             dialog.Dispose();
         }
 
+        private void timeWarpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimeWarpDialog dialog = new TimeWarpDialog();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_presenter.RequestTimeWarp(dialog.GetFactor());
+            }
+
+            dialog.Dispose();
+        }
+
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_presenter.RequestUndo();
@@ -267,8 +279,10 @@ namespace MMSPlayground.Views.Forms
             contrastToolStripMenuItem.Enabled = true;
             sharpenToolStripMenuItem.Enabled = true;
             edgeEnhancementToolStripMenuItem.Enabled = true;
+            timeWarpToolStripMenuItem.Enabled = true;
 
             resizeToOriginalToolStripMenuItem.Enabled = true;
         }
+
     }
 }
