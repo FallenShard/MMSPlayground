@@ -86,6 +86,11 @@ namespace WAVPlayer
             m_soundPlayer.Stop();
         }
 
+        public void SaveWavFile(string fileName)
+        {
+            File.WriteAllBytes(fileName, m_model.AudioData);
+        }
+
         public void CleanUp()
         {
             m_soundPlayer.Stop();

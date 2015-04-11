@@ -101,7 +101,14 @@ namespace WAVPlayer
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save WAV";
+            dlg.Filter = "WAV Files(*.WAV)|*.WAV";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                m_presenter.SaveWavFile(dlg.FileName);
+            }
+            dlg.Dispose();
         }
 
         private void playButton_Click(object sender, EventArgs e)
