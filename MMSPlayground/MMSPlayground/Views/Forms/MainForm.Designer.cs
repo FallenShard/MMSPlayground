@@ -44,6 +44,8 @@
             this.sharpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeEnhancementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.timeWarpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.repeatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,8 +63,8 @@
             this.dimToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppMetaToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.bppToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.timeWarpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.audioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openWAVPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.mainPictureBox)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -82,7 +84,8 @@
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.filtersToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.audioToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.Size = new System.Drawing.Size(541, 24);
@@ -214,6 +217,20 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(261, 6);
+            // 
+            // timeWarpToolStripMenuItem
+            // 
+            this.timeWarpToolStripMenuItem.Enabled = false;
+            this.timeWarpToolStripMenuItem.Name = "timeWarpToolStripMenuItem";
+            this.timeWarpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
+            this.timeWarpToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
+            this.timeWarpToolStripMenuItem.Text = "TimeWarp";
+            this.timeWarpToolStripMenuItem.Click += new System.EventHandler(this.timeWarpToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(261, 6);
             // 
             // undoToolStripMenuItem
             // 
@@ -349,19 +366,20 @@
             this.bppToolStripStatusLabel.Size = new System.Drawing.Size(29, 17);
             this.bppToolStripStatusLabel.Text = "N/A";
             // 
-            // timeWarpToolStripMenuItem
+            // audioToolStripMenuItem
             // 
-            this.timeWarpToolStripMenuItem.Enabled = false;
-            this.timeWarpToolStripMenuItem.Name = "timeWarpToolStripMenuItem";
-            this.timeWarpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.T)));
-            this.timeWarpToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
-            this.timeWarpToolStripMenuItem.Text = "TimeWarp";
-            this.timeWarpToolStripMenuItem.Click += new System.EventHandler(this.timeWarpToolStripMenuItem_Click);
+            this.audioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openWAVPlayerToolStripMenuItem});
+            this.audioToolStripMenuItem.Name = "audioToolStripMenuItem";
+            this.audioToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.audioToolStripMenuItem.Text = "Audio";
             // 
-            // toolStripSeparator5
+            // openWAVPlayerToolStripMenuItem
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(261, 6);
+            this.openWAVPlayerToolStripMenuItem.Name = "openWAVPlayerToolStripMenuItem";
+            this.openWAVPlayerToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.openWAVPlayerToolStripMenuItem.Text = "Open WAVPlayer";
+            this.openWAVPlayerToolStripMenuItem.Click += new System.EventHandler(this.openWAVPlayerToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -423,6 +441,8 @@
         private System.Windows.Forms.ToolStripMenuItem memoryCapacityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timeWarpToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem audioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openWAVPlayerToolStripMenuItem;
     }
 }
 

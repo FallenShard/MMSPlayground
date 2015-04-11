@@ -31,5 +31,7 @@ namespace MMSPlayground.Presenters
         void RequestRedo();
         void RequestRepeat();
         void SetUndoMemoryCapacity(int megabytes);
+
+        void OpenWAVPlayer();
     }
 }

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 using MMSPlayground.Filters;
 using MMSPlayground.IO;
 using MMSPlayground.Model;
 using MMSPlayground.Views;
 using MMSPlayground.Views.Forms;
-using System.IO;
-using System.Windows.Forms;
+
+using WAVPlayer;
 
 namespace MMSPlayground.Presenters
 {
@@ -200,6 +202,12 @@ namespace MMSPlayground.Presenters
             m_mainView.SetRedoEnabled(false, "");
 
             GC.Collect();
+        }
+
+        public void OpenWAVPlayer()
+        {
+            WAVPlayerPresenter wavPresenter = new WAVPlayerPresenter();
+            wavPresenter.DisplayView();
         }
 
         private void OnBitmapChanged(IImageModel model, BitmapChangedEventArgs args)

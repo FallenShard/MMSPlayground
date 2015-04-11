@@ -188,6 +188,11 @@ namespace MMSPlayground.Views.Forms
             }
         }
 
+        private void openWAVPlayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            m_presenter.OpenWAVPlayer();
+        }
+
         public void DisplayImage(Bitmap bitmap)
         {
             mainPictureBox.Image = bitmap;
@@ -283,6 +288,5 @@ namespace MMSPlayground.Views.Forms
 
             resizeToOriginalToolStripMenuItem.Enabled = true;
         }
-
     }
 }
