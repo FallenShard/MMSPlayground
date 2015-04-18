@@ -43,12 +43,12 @@
             // 
             this.numericUpDown.Location = new System.Drawing.Point(12, 35);
             this.numericUpDown.Maximum = new decimal(new int[] {
-            50,
+            75,
             0,
             0,
             0});
             this.numericUpDown.Minimum = new decimal(new int[] {
-            50,
+            75,
             0,
             0,
             -2147483648});
@@ -64,7 +64,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(115, 13);
             this.label1.TabIndex = 7;
-            this.label1.Text = "Base Factor (-20 to 20)";
+            this.label1.Text = "Base Factor (-75 to 75)";
             // 
             // closeButton
             // 

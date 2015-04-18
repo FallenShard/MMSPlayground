@@ -49,7 +49,7 @@ namespace MMSPlayground.Filters
                 for (int x = 0; x < bitmap.Width; x++)
                 {
                     int trueX = x - mid.X;
-                    int trueY = x - mid.Y;
+                    int trueY = y - mid.Y;
                     double theta = Math.Atan2((double)trueY, (double)trueX);
                     double radius = Math.Sqrt(trueX * trueX + trueY * trueY);
                     double newRadius = Math.Sqrt(radius) * m_factor;
@@ -89,8 +89,8 @@ namespace MMSPlayground.Filters
                             int xOffset = offsetMat[y][x].X;
                             int yOffset = offsetMat[y][x].Y;
 
-                            int origX = x + xOffset;
-                            int origY = y + yOffset;
+                            int origX = xOffset;
+                            int origY = yOffset;
 
                             if (origX >= 0 && origX < bmdOrig.Width && origY >= 0 && origY < bmdOrig.Height)
                             {

@@ -50,7 +50,10 @@ namespace MMSPlayground.Filters
                     while (iter.MoveNext())
                     {
                         if (iter.Current > current)
-                            highestLow[i] = k + m_package.lower[i];
+                        {
+                            highestLow[i] = k;
+                            current = iter.Current;
+                        }
                         k++;
                     }
 
@@ -61,7 +64,10 @@ namespace MMSPlayground.Filters
                     while (iter.MoveNext())
                     {
                         if (iter.Current > current)
-                            highestLow[i] = k;
+                        {
+                            highestHigh[i] = k;
+                            current = iter.Current;
+                        }
                         k++;
                     }
                 }

@@ -103,8 +103,6 @@ namespace MMSPlayground.Presenters
 
         public void RequestSharpen(int kernelSize, int baseFactor)
         {
-            ApplyFilter(new SharpenFilter(m_model, kernelSize, baseFactor));
-
             Bitmap[] bitmaps = new Bitmap[4];
             bitmaps[0] = (Bitmap)m_model.GetBitmap().Clone();
             bitmaps[1] = new SharpenFilter(m_model, 3, baseFactor).GetRawResults();
@@ -114,6 +112,8 @@ namespace MMSPlayground.Presenters
             ConvolutionForm convForm = new ConvolutionForm();
             convForm.DisplayConvolutionResults(bitmaps);
             convForm.Show();
+
+            ApplyFilter(new SharpenFilter(m_model, kernelSize, baseFactor));
         }
 
         public void RequestEdgeEnhancement(int threshold)
